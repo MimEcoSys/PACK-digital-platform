@@ -9,7 +9,7 @@ sources:
   - session-transcript 2026-05-17
 related:
   complements: [DP.M.028]  # Stateless Worker Cursor Pattern — там negative signal (exit 1 на errors>0), здесь positive signal на no-op
-  applies_to: [scheduled GH Actions, cron, drift-watcher, security-scan, low-rate watcher]
+  applies_to: [scheduled GH Actions, cron, drift-watcher, security-scan, low-rate watcher, daily reindex внешнего корпуса (FPF/SPF) в knowledge-mcp]
 ---
 
 # DP.M.075: No-op heartbeat для детекции silent-fail в scheduled workflow
@@ -37,6 +37,8 @@ _Какие конкурирующие давления удерживает м�
 
 - **Да** → добавить heartbeat в no-op ветку.
 - **Нет** (workflow реагирует на events и любой запуск что-то меняет) → не нужен.
+
+- **Пример (2026-09, WP-532 Ф9):** ежесуточная переиндексация FPF в поиске год работала в проде без heartbeat — «жива ли» никто не проверял, и по той же причине для второго источника (SPF) такая же задача не была заведена вовсе. Отсутствие наблюдателя скрывает не только отказ задачи, но и отсутствие задачи для соседнего источника.
 
 ## Компоненты heartbeat-сигнала
 
