@@ -14,7 +14,7 @@ schema_version: 1
 trust: medium
 epistemic_stage: forming
 source: "git commit 4c119a93e в DS-my-strategy (WP-484, WP-561)"
-source_capture: "DS-my-strategy/inbox/captures/2026-09.md:1987"
+source_capture: "DS-my-strategy/inbox/captures/2026-09.md:1987, DS-my-strategy/inbox/captures/2026-09.md:3777"
 related:
   see_also: []
 ---
@@ -37,10 +37,14 @@ week-open-проверки использовали `echo "$PLAN_BLOCK" | grep -
 
 «Конвейер вида `echo/cat большой_вход | grep -q/head/…` работает под `set -o pipefail`, и читающая команда способна завершиться раньше конца ввода?» Да → воспроизведён DP.FM.457, истинное совпадение может флакающе читаться как ложное. Фикс — here-string (`grep -q pattern <<< "$var"`) вместо пайпа: убирает вторую команду и связанную с ней гонку по SIGPIPE целиком.
 
+Если производитель — не переменная, а команда с большим потоком (`cat big.md | grep -q`, `git log | grep -q`), here-string потребовал бы буферизации всего вывода; тогда читать статус именно grep — `"${PIPESTATUS[1]}"` сразу после конвейера (в bash `PIPESTATUS` живёт только до следующей команды), не итоговый `$?`. Верификация любого из двух фиксов обязана включать два входа: совпадение в начале большого файла (грозит SIGPIPE) и в конце (SIGPIPE невозможен) — одна позиционная проверка гонку не воспроизводит.
+
 ## Происхождение и статус проверки
 
 Источник: git commit 4c119a93e в DS-my-strategy (WP-484, WP-561). Захват: `DS-my-strategy/inbox/captures/2026-09.md:1987`. Связь: WP-484, WP-561, peer-session 2026-09-14-07-pochemu-ne-sostoyalos.
 
 Обратная сторона уже записанной 12.09 карточки «`cmd1|cmd2 || fallback` не защищает от провала cmd1 без `set -o pipefail`» — здесь `pipefail` ЕСТЬ, и именно он создаёт новый отказ в противоположном направлении: истинное совпадение регистрируется как ложное.
+
+Второй инстанс: git commit a02d73e98 в DS-my-strategy (`fpf-sync`, `fpf-check-references.sh`) — конвейер `producer | grep -q code` под `pipefail` репортил ранние совпадения как «broken» в зависимости от позиции кода в файле; вскрылось на известном переименовании A.6.8 → A.6.P, фикс через `PIPESTATUS[1]`, проверено на known-good (71/71) и known-bad окнах. Захват: `DS-my-strategy/inbox/captures/2026-09.md:3777`.
 
 Описанная проверка задаёт критерий приёмки. Её прохождение исходной реализацией этой карточкой не утверждается.
