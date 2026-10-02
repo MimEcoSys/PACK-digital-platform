@@ -6,6 +6,7 @@ domain: digital-platform
 pack_refs: []
 status: active
 valid_from: 2026-08-09
+summary: "Если ответ на вопрос сохраняется как значение и автоматически определяет решение без проверки человеком, вопрос не должен предполагать факт или величину; вопрос для рефлексии может содержать пресуппозицию при свободном отказе от неё."
 schema_version: 1
 source: "session 2026-08-09 (DS-my-strategy/sessions/2026-08/2026-08-09-nlp-book-presuppositions-fpf-critique.md) — разбор nlp-book (comonoid) «Пресуппозиции», сверка с /diagnose и /discovery-session"
 related:
