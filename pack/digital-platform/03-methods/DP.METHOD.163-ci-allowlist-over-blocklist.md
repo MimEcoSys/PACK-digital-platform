@@ -9,7 +9,7 @@ valid_from: 2026-06-30
 version: v1.0
 source: "session-transcript 2026-06-30-05-wp410-mcp-unification; WP-410 decision-log-2026-06.md (решение 3)"
 related:
-  see_also: [DP.M.090, DP.METHOD.162]
+  see_also: [DP.M.090, DP.METHOD.162, DP.M.460]
 ---
 
 # DP.METHOD.163: CI allowlist вместо blocklist для защиты конфига от дрейфа
@@ -61,6 +61,10 @@ WP-410 multi-mode MCP (public/personal режимы): нужна защита ч
 Любой конфиг с явными режимами (public/private, prod/staging, multi-tenant):
 - При добавлении нового allowed binding → обновить allowlist явно.
 - При CI fail → осознанное решение: разрешить или убрать binding.
+
+## Другие применения
+
+- Allowlist изоляции исполнения сценариев (`isolated_allowlist`, commit `e7b417f` в FMT-exocortex-template, #972): путь day-plan, evening, day-close, session-prep, week-review нельзя подтвердить безопасным по промптам и коду, поэтому по умолчанию сценарий в allowlist не входит (отказ по умолчанию), а причина не-включения записывается над списком, рядом с ним. Источник: кандидат 10/01.2#4 (`2026-10-01-inbox-check-2.md`).
 
 ## Тест
 
