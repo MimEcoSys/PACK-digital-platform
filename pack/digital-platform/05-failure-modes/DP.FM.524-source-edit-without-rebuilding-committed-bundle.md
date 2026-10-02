@@ -11,8 +11,8 @@ summary: "Сервис отдаёт страницы гида и `llms.txt` из
 pack: PACK-digital-platform
 domain: digital-platform
 schema_version: 1
-trust: empirical
-epistemic_stage: pattern
+trust: medium
+epistemic_stage: forming
 source: "git commit 4b482f1 и 9bbbd0a в open.system-school.ru (WP-581); пир-сессия 2026-09-26-01-wp581-guide-content-handoff"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:4663"
 extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-09-28-inbox-check-3.md"
@@ -43,4 +43,3 @@ tags: [build-artifact, committed-bundle, rebuild, stale-artifact]
 ## Связанные документы
 
 - Источник: коммиты 4b482f1 и 9bbbd0a в `open.system-school.ru` (WP-581, гид FPF).
-- Тот же случай записан в памяти агента как урок «зелёные тесты не означают обновлённый артефакт» (пир-сессия 2026-09-26-01-wp581-guide-content-handoff).

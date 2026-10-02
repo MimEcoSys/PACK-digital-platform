@@ -16,7 +16,7 @@ epistemic_stage: forming
 source: "git commit 55ad935 в iwe-local-config (WP-7 Ф174); отчёты Экстрактора 2026-09-25-inbox-check-2 кандидат 2 и 2026-09-26-inbox-check-2 кандидат 5"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3440"
 related:
-  see_also: ["DP.FM.208", "DP.FM.403", "DP.METHOD.059"]
+  see_also: ["DP.FM.208", "DP.FM.403", "DP.METHOD.059", "DP.FM.521"]
 tags: [bash, macos, portability, eval, launchd, stderr-suppression]
 ---
 

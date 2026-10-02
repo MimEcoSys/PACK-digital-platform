@@ -18,7 +18,7 @@ source_capture: "DS-my-strategy/inbox/captures/2026-09.md:4695"
 extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-09-28-inbox-check-4.md"
 source_candidate: 2
 related:
-  see_also: ["DP.IWE.011", "DP.FM.249", "AR.273"]
+  see_also: ["DP.IWE.011", "DP.FM.249", "AR.273", "DP.FM.516"]
 tags: [env-var, name-collision, override, state-directory, smoke-test-masking, silent-failure]
 ---
 

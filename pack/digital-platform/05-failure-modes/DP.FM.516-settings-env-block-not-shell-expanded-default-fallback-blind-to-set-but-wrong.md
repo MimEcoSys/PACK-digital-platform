@@ -16,7 +16,7 @@ epistemic_stage: forming
 source: "git commit 7fde18a в iwe-local-config; отчёт Экстрактора 2026-09-24-inbox-check, кандидат 1"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3300"
 related:
-  see_also: ["DP.FM.130", "DP.FM.430"]
+  see_also: ["DP.FM.130", "DP.FM.430", "DP.FM.525"]
 tags: [settings-json, env-block, shell-expansion, default-fallback, silent-failure]
 ---
 

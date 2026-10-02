@@ -13,7 +13,7 @@ domain: digital-platform / config-sync
 schema_version: 1
 trust: medium
 epistemic_stage: forming
-source: "git commit 00abdcb в iwe-server-config (WP-484); отчёт Экстрактора 2026-09-26-inbox-check-3, кандидат 3"
+source: "git commit 00abdcb в iwe-server-config (WP-484); докстринг iwe-server-config/scripts/classify-memory.py, строки 10-12; отчёт Экстрактора 2026-09-26-inbox-check-3, кандидат 3"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3836"
 related:
   see_also: ["DP.FM.017", "DP.M.157"]
@@ -35,7 +35,7 @@ tags: [config-sync, rsync, enumerated-list, silent-scope-gap, extensions]
 - **Антипаттерн:** синхронизация по ручному перечню категорий без проверки, что перечень покрывает исходное дерево.
 - **Паттерн:** при добавлении категории править перечень пар; в источнике добавлена недостающая строка rsync в `sync-extensions.sh`, снимок `server-extensions/claude-lib/` обновлён с 1 до 8 файлов и проверен на сервере.
 
-Второй экземпляр того же класса описан в докстринге `classify-memory.py`: прежний механизм доставки памяти копировал всю память Mac (905 и более личных файлов) без разрешительного списка, кроме захардкоженного списка из 9 имён внутри `sync-extensions.sh`. Автор докстринга относит это к тому же классу пробела, что и находка 2026-08-03 про 17 скриптов вне манифеста.
+Второй экземпляр того же класса описан в докстринге `classify-memory.py` (репозиторий `iwe-server-config`, файл `scripts/classify-memory.py`, строки 10-12): прежний механизм доставки памяти копировал всю память Mac (905 и более личных файлов) без разрешительного списка, кроме захардкоженного списка из 9 имён внутри `sync-extensions.sh`. Автор докстринга относит это к тому же классу пробела, что и находка 2026-08-03 про 17 скриптов вне манифеста.
 
 ## Тест обнаружения
 

@@ -8,7 +8,7 @@ severity: medium
 status: draft
 valid_from: 2026-07-03
 source: "git commit b020ddb (fix(day-open): dc_committed guard used a nonexistent repo path)"
-see_also: [DP.FM.016, DP.FM.031, DP.FM.017]
+see_also: [DP.FM.016, DP.FM.031, DP.FM.017, DP.FM.414]
 ---
 
 # DP.FM.249 — Env-var с устаревшим дефолтом переименованного репо

@@ -16,7 +16,7 @@ epistemic_stage: forming
 source: "git commit 6ba52a9 в iwe-server-config (WP-7 Ф174); отчёт Экстрактора 2026-09-26-inbox-check-3, кандидат 2"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3827"
 related:
-  see_also: ["DP.FM.137", "DP.FM.451"]
+  see_also: ["DP.FM.137", "DP.FM.451", "DP.FM.518"]
 tags: [alerting, telegram, env-sourcing, silent-failure, escalation]
 ---
 

@@ -15,7 +15,7 @@ source: "git commit e2132ce в iwe-local-config (WP-484); отчёт Экстр�
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3368"
 summary: "Проверка доказательства публикации различает «доставлено байт-в-байт» и «разошлось», но не «потеряно» и «доставлено, затем законно перезаписано». Когда более поздний REPLACE затрагивает путь PREPARED-снимка (обычно для горячих файлов WP-REGISTRY.md и WeekPlan), доказательство уже не может пройти, и закрытие зависает навсегда. Метод: строго ручной выход, записываемый отдельной видимой схемой, которую нельзя спутать с криптографической."
 related:
-  see_also: [DP.M.465, DP.METHOD.174, DP.M.438]
+  see_also: [DP.M.465, DP.METHOD.174, DP.M.438, DP.FM.510]
 tags: [session-close, prepared-snapshot, publish-proof, escape-hatch, manual-attestation]
 schema_version: 1
 ---
