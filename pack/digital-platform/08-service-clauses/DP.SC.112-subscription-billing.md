@@ -7,7 +7,7 @@ layer: L2-Platform
 summary: "От бесплатного старта к устойчивой подписке — тиры T1-T4, YooKassa/Stripe/TG Stars, баллы, revenue sharing"
 consumer: Участник (платит), Бухгалтер (видит), Администратор (управляет), Sales-менеджер (регистрирует)
 created: 2026-03-17
-updated: 2026-04-16
+updated: 2026-10-02
 related:
   realizes: []
   extends: []
@@ -129,7 +129,7 @@ related:
 **Двухуровневый доступ Gateway (mcp.aisystant.com), обновлено 16 апреля 2026:**
 
 Gateway имеет два уровня доступа:
-1. **Бесплатный (авторизация Ory):** `get_instructions` + `knowledge_*` (knowledge_search, knowledge_get_document, knowledge_list_sources, knowledge_graph_stats и др.) — L2 платформенное знание. Требует только валидный Ory JWT.
+1. **Бесплатный (авторизация Ory):** копия своих доверенных данных в объявленном составе (решение от 2026-10-02, ADR-IWE-014 §3.4: доступна без подписки, не отзывается при её окончании, защитные пределы одинаковы для всех) + `get_instructions` + `knowledge_*` (knowledge_search, knowledge_get_document, knowledge_list_sources, knowledge_graph_stats и др.) — L2 платформенное знание. Доступ требует валидный Ory JWT; выдача копии включается после реализации и приёмки проверок привязки учётной записи и журнала выдач (решение 2026-10-02).
 2. **Подписка БР:** `dt_*`, `personal_*`, `search` (unified), `github_*`, `create_repository` — ЦД, персональные знания, GitHub-интеграция. Требует активную подписку в `subscription_grants`.
 
 Source of truth для подписки: `subscription_grants` в Neon (DATABASE_URL). Kratos `metadata_public.subscription_status` — НЕ source of truth. Колонка `interns.trial_start_date` существует в БД, но больше не используется в tier-определении (WP-210 Ф2a, убрано). Единственный источник T2+ = активная БР в `subscription_grants`.
@@ -141,6 +141,7 @@ Source of truth для подписки: `subscription_grants` в Neon (DATABASE
 | Бот — Марафон, Тест, Навигатор, Диагност | ✅ | ✅ | ✅ |
 | Бот — Лента, расширенные программы | ❌ | ✅ | ✅ |
 | Gateway — knowledge_* (L2 платформенные знания) | ✅ | ✅ | ✅ |
+| Gateway — копия своих доверенных данных (выгрузка по запросу; после включения выдачи) | ✅ | ✅ | ✅ |
 | Gateway — dt_*, personal_*, search, github_* | ❌ 403 | ✅ | ✅ |
 
 **Почему такая граница:**
