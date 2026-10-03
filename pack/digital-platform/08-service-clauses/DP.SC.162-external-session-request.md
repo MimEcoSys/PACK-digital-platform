@@ -200,13 +200,26 @@ Claude: inbox/WP-361.md создан с Ф1 IntegrationGate (~2h): SC + Role + s
 
 ### Frontmatter report.md (минимум)
 
+> **Решение пилота (WP-7 Ф121, Day Close 07.09, пир-сессия
+> `2026-09-07-19-day-close-decisions-fpf-ar112-sessions`):** архивные
+> метаданные (`tg_chat_id`, `target_bot`, `executor`) переезжают сюда из
+> отдельного `session.md`, который не вводится. Колонка статуса в
+> `sessions/external/00-index.md` не возвращается — пользы не несёт,
+> `outcome` уже виден в самом отчёте. Реализовано 03.10.2026
+> (`aist_bot_newarchitecture` ветка `pilot`, `_build_report_md()` в
+> `handlers/external_session.py`) — ранее финализированные сессии не
+> переделываются.
+
 ```yaml
 ---
 session_id: SESSION-<id>
+tg_chat_id: <int>            # из SESSION-<id>.md, архивная метаданная
+target_bot: <flavour>        # из SESSION-<id>.md, какой бот-токен вёл диалог
+executor: claude | kimi      # из SESSION-<id>.md, какой рантайм вёл диалог
 date: YYYY-MM-DD
 topic: "<one-line summary>"
 outcome: consensus | abandoned | escalated | utility
-wp: NNN | null              # связь с РП если упомянут в thread
+wp: NNN | null               # связь с РП если упомянут в thread
 turns: N
 finalized_at: ISO8601
 ---
