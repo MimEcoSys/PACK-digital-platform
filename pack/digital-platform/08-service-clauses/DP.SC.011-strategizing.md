@@ -48,13 +48,13 @@ related:
 
 | Сервис | Роль | Триггер |
 |--------|------|---------|
-| S02 Session Prep | R1 Стратег | ⏰ Пн 04:00 |
-| S03 Week Review | R1 Стратег | ⏰ Пн 00:00 |
-| S41 Strategy Session | R17 Стратег-интерактив | 👤 по запросу |
-| S05 Evening Review | R1 Стратег | 👤 по запросу |
-| S06 Check Plan | R1 Стратег | 👤 по запросу |
+| S02 Session Prep | Плановик (DP.ROLE.066) | ⏰ Пн 04:00 |
+| S03 Week Review | Плановик (DP.ROLE.066) | ⏰ Пн 00:00 |
+| S41 Strategy Session | Стратег (R1) + Плановик (DP.ROLE.066) | 👤 по запросу |
+| S05 Evening Review | Плановик (DP.ROLE.066) | 👤 по запросу |
+| S06 Check Plan | Плановик (DP.ROLE.066) | 👤 по запросу |
 | S07 Update Priorities | R1 Стратег | 👤 по запросу |
-| S08 Add Workproduct | R1 Стратег | 👤 по запросу |
+| S08 Add Workproduct | Плановик (DP.ROLE.066) | 👤 по запросу |
 
 ## Пользовательский путь
 
