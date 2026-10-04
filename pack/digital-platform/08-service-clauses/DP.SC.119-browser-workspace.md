@@ -238,7 +238,7 @@ GitHub, git, repo, fork, clone, commit, push, CLI, терминал, bash, npm, 
 | `POST /scaffold` endpoint | ✅ код готов | personal-knowledge-mcp HTTP endpoint для Gateway callback |
 | `github_connect` | ✅ deployed | GitHub App install flow |
 | `personal_write` | ✅ deployed | Запись доступна в компактном наборе IWE-School через Gateway |
-| `personal_delete` | ⚠️ частично доступен | Серверное удаление и полный каталог Gateway работают; компактный набор IWE-School инструмент не показывает |
+| `personal_delete` | ✅ deployed | Удаление доступно в компактном наборе IWE-School; агент запрашивает подтверждение, сервер сверяет SHA файла и права доступа |
 | `get_instructions` | ✅ deployed | System prompt обновлён для auto-scaffold flow |
 | `github_status` (С4) | ✅ deployed | Аккаунт, пространства, количество документов |
 | `github_disconnect` (С4) | ✅ deployed | Revoke installation + deactivate sources, данные в GitHub сохраняются |
