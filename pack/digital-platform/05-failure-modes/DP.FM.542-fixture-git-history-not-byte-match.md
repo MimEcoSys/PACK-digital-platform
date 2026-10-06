@@ -12,7 +12,7 @@ domain: digital-platform / test-infrastructure
 schema_version: 1
 trust: medium
 epistemic_stage: forming
-source: "git commit ff67e94b50f29db8a0d9b0afdb01ea0eef21fbdc в memory; WP-485 Ф17, FMT-exocortex-template"
+source: "заметка памяти агента (не git-репозиторий, коммит не проверяем извне); WP-485 Ф17, FMT-exocortex-template"
 source_capture: "DS-my-strategy/inbox/captures/2026-10.md:902"
 related:
   see_also: ["DP.FM.509"]
@@ -41,6 +41,6 @@ tags: [ci, git, test-fixture, git-history]
 
 ## Происхождение и статус проверки
 
-Источник: git commit `ff67e94b50f29db8a0d9b0afdb01ea0eef21fbdc` в memory (WP-485 Ф17, FMT-exocortex-template). Захват: `DS-my-strategy/inbox/captures/2026-10.md:902`.
+Источник: заметка памяти агента, не git-репозиторий — коммит не проверяем извне (WP-485 Ф17, FMT-exocortex-template). Захват: `DS-my-strategy/inbox/captures/2026-10.md:902`.
 
 Описанная проверка задаёт критерий приёмки. Её прохождение исходной реализацией этой карточкой не утверждается.
