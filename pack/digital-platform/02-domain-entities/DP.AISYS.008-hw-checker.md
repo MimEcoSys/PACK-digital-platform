@@ -37,7 +37,7 @@ related:
 | **Ориентация** | system | Вызывается из LMS Aisystant, не прямой диалог с человеком |
 | **Инициатива** | by-request | Запускается при отправке ДЗ учеником |
 | **Интерфейс** | api | Webhook POST /check |
-| **Grade** | 2 | LLM + tool use (semantic_search), решения в рамках |
+| **Grade** (дидактическая метка, не критерий допуска) | 2 | LLM + tool use (semantic_search), решения в рамках |
 
 ## 3. IPO-паттерн
 

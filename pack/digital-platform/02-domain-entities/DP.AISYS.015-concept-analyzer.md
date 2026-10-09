@@ -38,7 +38,7 @@ s2r_families: [F5]
 | **Ориентация** | system | Вызывается другими системами через MCP |
 | **Инициатива** | by-request | Запускается при анализе текста/ответа |
 | **Интерфейс** | api | MCP tools через Gateway |
-| **Grade** | 2 | LLM + concept graph (решения в рамках scope) |
+| **Grade** (дидактическая метка, не критерий допуска) | 2 | LLM + concept graph (решения в рамках scope) |
 
 ## 3. IPO (Input → Process → Output)
 
