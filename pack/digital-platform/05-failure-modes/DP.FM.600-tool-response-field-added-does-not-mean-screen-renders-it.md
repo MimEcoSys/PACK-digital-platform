@@ -47,4 +47,4 @@ tags: [acceptance-criteria, frontend-backend-gap, dashboard, multi-hop-pipeline,
 
 - **VR.D.006** (структурная корректность ≠ визуально применённый результат) — тот же абстрактный тест «проверил промежуточное представление или то, что видит человек на выходе ВСЕГО конвейера», другой конкретный механизм: там — рендер-конвейер (CSS/DOM/растеризация), здесь — многозвенная сервисная цепочка (данные/API/страница). Companion, не дубликат.
 - **DP.FM.445** (marp inline style не применяется визуально) — первый задокументированный конкретный инцидент той же абстрактной оси VR.D.006, другой домен (презентации, не дашборд).
-- WP-578 Ф6/Ф17, peer-session 2026-10-11-06-wp578-dashboard-stall-root-cause, `memory/lessons_backend_field_added_does_not_mean_frontend_renders_it_check_both_ends_before_writing_remaining`.
+- WP-578 Ф6/Ф17, peer-session 2026-10-11-06-wp578-dashboard-stall-root-cause.
