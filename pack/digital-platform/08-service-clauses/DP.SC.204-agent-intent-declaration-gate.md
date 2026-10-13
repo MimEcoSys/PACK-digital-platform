@@ -1,6 +1,8 @@
 ---
 id: DP.SC.204
 name: Гейт объявления намерения агента (pre-action intent gate)
+name_ru: Гейт объявления намерения агента
+name_en: Agent intent pre-action gate
 type: sc
 status: draft
 layer: L2-Platform
@@ -9,7 +11,7 @@ consumer: ["DP.ROLE.001 IWE Creator (видит, кто чем занят)", "л
 created: 2026-10-13
 updated: 2026-10-13
 related:
-  realizes: []
+  realizes: [DP.ROLE.102]
   uses: []
   extends: []
 ---
