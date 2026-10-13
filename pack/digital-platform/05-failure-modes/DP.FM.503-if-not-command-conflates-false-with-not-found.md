@@ -12,7 +12,7 @@ epistemic_stage: observed
 source: "session-transcript 2026-09-26 + git diff (iwe-server-config@4e4e629, DS-my-strategy@35eda1cc1b), WP-530 Ф66"
 source_capture: "DS-my-strategy/inbox/captures/2026-09.md:4086"
 related:
-  see_also: [DP.FM.400, DP.FM.491]
+  see_also: [DP.FM.400, DP.FM.491, DP.FM.588]
 tags: [bash, flock, exit-code, silent-failure, systemd]
 schema_version: 1
 ---
@@ -45,6 +45,14 @@ PATH сервиса не включал `util-linux`, поэтому `flock` р�
 Тест: «Записывается ли вывод инструмента в целевой файл до проверки того, что инструмент отработал? Различает ли код возврата «конфликт» и «сбой инструмента»?»
 
 Источник: кандидат 10/02.2#4, часть (А) (`2026-10-02-inbox-check-2.md`).
+
+## Третий прецедент: `flock -n 7` без проверки наличия в FMT-exocortex-template (issue #1108)
+
+Тот же антипаттерн `if ! flock ...` без отдельной проверки наличия команды, третий раз: на стоковом macOS без Homebrew `flock` отсутствовал в PATH, и `flock -n 7` резолвился в «command not found» (exit 127) — но скрипт интерпретировал это как «another run already holds the lock» (замок уже занят другим экземпляром), неверный диагноз вместо фактической причины. Пойман в одном аудите кросс-платформенной совместимости (issue #1108) вместе с двумя смежными дефектами того же корня («GNU/Homebrew-инструмент предполагается доступным на стоковом macOS») — отсутствие `timeout` (см. `DP.FM.431`, третий инстанс) и синтаксическая несовместимость bash4-измов (см. `DP.FM.588`).
+
+Исправление: централизованная обёртка + статический guard-линтер, сразу нашедший 3 похожих нарушения в другом коде репозитория.
+
+Источник: git commit `0954bfba` в FMT-exocortex-template (issue #1108). Захват: `DS-my-strategy/inbox/captures/2026-10.md:2061`.
 
 ## Применимость
 
