@@ -1,11 +1,11 @@
 ---
 id: DP.ARCH.004
-version: v2.6
+version: v2.7
 name: Архитектура данных Neon (Database-per-BoundedContext)
 type: domain-entity
 status: active
-valid_from: 2026-05-15
-supersedes: "DP.ARCH.004 v2.5 (14 мая 2026) — 16 БД (12+4 special); v2.6 добавляет §3.14 маркер Т (event ingestion tables)"
+valid_from: 2026-10-22
+supersedes: "DP.ARCH.004 v2.6 (15 мая 2026) — 16 БД (12+4 special) в проекте `aisystant`; v2.7 добавляет §10.13 — 13-ю базу `mentorship` (РП-578), физически отдельный Neon-проект вне кластера `aisystant`"
 summary: "12 баз данных Neon по принципу database-per-BoundedContext. Сводная таблица, карта, ERD по каждой БД, связи, потоки, реестр физ.объектов с маркерами О/С/Р/К, revenue-sharing механика (контракты/сплиты/выплаты), points-ledger (event-sourcing) + эмиссионный отчёт, верификация по чеклистам SPF.SPEC.005, замечаниям Андрея Д1-Д12 и категориям WP-257."
 related:
   specializes: [U.System]
@@ -35,6 +35,8 @@ decision_source: "Встречи ИТ 8 и 10 (14 апр, 21 апр 2026); ре�
 | `fsm` | aiogram fsm_states (state file бота) | §10.10 — рядом с исполнителем |
 | `directus` | admin/CMS metadata (29 таблиц framework state) | §10.10 — рядом с исполнителем |
 | `railway` | пилотный bot data (служебная Railway) | dev-окружение |
+
+**13-я база, вне кластера `aisystant` (с 22 окт 2026):** `mentorship` — архив переписки наставник↔участник (РП-578). Физически ОТДЕЛЬНЫЙ Neon-проект (не `aisystant`), поэтому не входит в таблицы §1/§3.14 ниже (те описывают только кластер `aisystant`) — см. §10.13.
 
 **Документ построен так:** сначала — сводная таблица 12 БД (§1), затем карта (§2), потом ERD по каждой БД (§3), связи между БД (§4), потоки (§5), писатели-читатели (§6), что осталось вне Neon (§7), миграция (§8), верификация по трём чеклистам (§9), открытые вопросы (§10).
 
@@ -1972,6 +1974,20 @@ LMS Aisystant — монолит **старой архитектуры**, на �
 **Принципы покрытия:** OwnerIntegrity (Directus owns свои metadata, нет внешних writers), DDD Strategic SOTA.001 (BC изолирован — separate DB engine, separate ownership), DP.D.049 (State file ≠ Лог: state-файлы рядом с исполнителем).
 
 **Артефакты ArchGate:** профиль ЭМОГССБ для 5 вариантов (а: новая Neon БД directus / б: Railway Postgres / в: reference.directus / г: health.directus / д: status quo) — вариант (б) принят как наименьшее число ⚠️ при отсутствии ❌ в критических Безопасность+Эволюционируемость; conjunctive screening отбраковал (в),(г),(д).
+
+### 10.13. 13-я база `mentorship` — физически отдельный Neon-проект (РП-578, патч 22 окт 2026)
+
+> **Решение пилота 16.09.2026** (пир-сессия Claude+Kimi, `DS-my-strategy/inbox/WP-578/DRR-f1-storage.md` §«Физическое размещение»). Два очевидных кандидата отклонены: тот же Neon-проект `aisystant` (один API-ключ открывает доступ ко всем 12+4 боевым базам сразу — компрометация архива переписки не ограничена новой базой) и Railway Postgres пилотного бота (физически отдельная инфраструктура, но без подтверждённых резервных копий). **Выбран третий вариант:** новый, отдельный Neon-проект (управляемые бэкапы Neon по умолчанию, не делит точку входа с прод-кластером `aisystant`).
+
+**Отличие от vault-БД §10.12:** vault-БД (`payment_registry`, `secrets`) — изоляция писателя/роли **внутри того же** Neon-проекта `aisystant`. `mentorship` — изоляция на уровень выше: отдельный Neon-проект целиком, с собственным API-ключом и billing-границей. Поэтому `mentorship` не входит в счёт «12 entity + 4 special = 16 «наших» БД» §1 — та таблица описывает только кластер `aisystant`.
+
+| База | Назначение | Writer-owner | Clients | Проект Neon |
+|---|---|---|---|---|
+| `mentorship` | Архив переписки наставник↔участник (`correspondence_archive`, `stream`, `stream_reader`, `participant_core`/`participant_private`), роль приложения `mentorship_app` | `mentorship-service` (платформенный сервис, Cloudflare Worker) — единственный писатель домена | бот (`aist_bot_newarchitecture`, HTTP), `gateway-mcp` (MCP-клиент), сам сервис (markdown MVP-рендер) | отдельный, не `aisystant` |
+
+**Схема и место файла:** `neon-migrations/sandbox/2026-09-16-wp578-f1-mentorship-storage.sql` — до промоции этого патча лежал в `sandbox/`, не в `mvp/`, именно по причине «13-я база сверх канонических 12 DP.ARCH.004, патч документа — отдельный шаг» (комментарий в самом файле). Патчем 22.10.2026 этот шаг закрыт; промоция SQL из `sandbox/` в постоянное место — следующий шаг, за пилотом/следующей сессией РП-578.
+
+**RLS:** DORMANT до появления живого producer'а GUC `app.current_account_id` в боте/шлюзе (см. комментарий в самой миграции) — прикладной код обязан фильтровать по stream/participant сам, RLS пока не единственная защита.
 
 </details>
 
