@@ -72,6 +72,7 @@ related:
 | md5-сверка копий = 0 расхождений | Week Close: `sync-communication-style.py --check` |
 | Лог нарушений стиля | `~/.iwe/style-violations.log` (единый для всех агентов) |
 | Аудит ответов | Month Close: 5 случайных report.md, оценка по A1-A11 |
+| Профиль «чат с пилотом» блока «Дальше:» (база, правило 6) | Предупреждения `A12_NEXT_MISSING` / `A12_NEXT_NO_PILOT_ADDRESSEE` в `~/.claude/logs/style-violations.log` (детектор `a12-next-block.py`, не блокирует; реплики напарников в пир-канале не проверяются) |
 
 ## Реализующие сервисы (MAP.002)
 
