@@ -1,4 +1,5 @@
 ---
+# <!-- index-health: skip --> Это описание сбоя, а не индекс; имя совпало с маской *-registry.md.
 id: DP.FM.630
 type: failure-mode
 status: draft
