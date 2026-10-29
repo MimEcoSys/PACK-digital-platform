@@ -40,4 +40,4 @@ source: "файл scripts/lib/run-limited.sh в iwe-local-config (закрыти
 
 ## Источник
 
-Файл `scripts/lib/run-limited.sh` в iwe-local-config; закрытие сессии 2026-10-28. Конкретный commit не указан: в источнике названный хэш относился к другому изменению.
+Файл `scripts/lib/run-limited.sh` в iwe-local-config; закрытие сессии 2026-10-28. Git commit `32d382799994fbf993aa46f9da9ee36b066b4f6a` в iwe-local-config создал файл `scripts/lib/run-limited.sh`, уже содержащий `wait "$watcher" ... || true`.
