@@ -190,7 +190,7 @@ Manifest updated: /Users/tserentserenov/IWE/PACK-digital-platform/pack/digital-p
 | DP.D.175 | Зона суверенитета данных = машина владельца, не managed cloud | D | — | active |
 | DP.D.176 | Учебный контент (guide/) ≠ Операционный контент (panel/) | D | — | active |
 | DP.D.177 | Прокси-метрика ≠ прямая метрика | D | — | draft |
-| DP.D.178 | LPF — сквозная классификация фрагментов ≠ физический контейнер (папка, репо) | D | — | active |
+| DP.D.178 | Личная практика носителя роли — сквозная классификация фрагментов ≠ физический контейнер (папка, репо) | D | — | active |
 | DP.D.179 | Политика при сбое ≠ видимость сбоя в мониторинге | D | — | draft |
 | DP.D.180 | Сгенерированный файл ≠ Живой файл — машиночитаемый критерий | D | — | active |
 | DP.D.181 | Платформенный LLM-кошелёк ≠ личный BYOK-кошелёк | D | — | — |
@@ -255,7 +255,7 @@ Manifest updated: /Users/tserentserenov/IWE/PACK-digital-platform/pack/digital-p
 | DP.D.241 | Реестр (registry) ≠ Продовое состояние (production state) | D | — | active |
 | DP.D.242 | Событие перехода (per-transition) ≠ Событие состояния (per-state) | D | — | active |
 | DP.D.243 | Контур IWE ≠ Физическое место ≠ Доверие/Контроль (Substrate Criterion) | D | — | active |
-| DP.D.244 | Формализуемое знание (Pack/FPF/SPF) ≠ LPF-знание (встроено в личный опыт носителя роли) | D | — | active |
+| DP.D.244 | Формализуемое знание (Pack/FPF/SPF) ≠ Личное знание носителя роли (встроено в личный опыт) | D | — | active |
 | DP.D.245 | Владение (универсальное ≠ персональное) ≠ Держатель (мы курируем ≠ пользователь принёс) — источники Портного | D | — | active |
 | DP.D.246 | indexable knowledge ≠ pointer record | D | — | active |
 | DP.D.247 | local user compute ≠ AI/human work in our zone | D | — | active |
@@ -1293,9 +1293,9 @@ Manifest updated: /Users/tserentserenov/IWE/PACK-digital-platform/pack/digital-p
 | DP.METHOD.099 | Local Gateway Render Extension | METHOD | Local Gateway = тонкий MCP-сервер, расширяемый операциями над локальными файлами пилота. Каждое расширение = отдельный Service Clause. Ограничение: онлайн только при работающей машине пилота. | draft |
 | DP.METHOD.100 | Testing As Specification | METHOD | Тест задаёт форму ожидаемого выхода — это и есть спецификация. Хороший тест читается как требование: при этом входе — этот выход. Тест без observable assertion (assert True, вечно-зелёный тест) — не тест, а шум. Документация устаревает; тест — вместе с кодом. | draft |
 | DP.METHOD.101 | Append Only Audit Journal Integrity | METHOD | Hash-chain trigger + SELECT FOR UPDATE на stream_tip + JCS + OTS anchors = дизайн append-only аудит-журнала с tamper-evidence и serialized writes без гонки хешей. Применимо к любому журналу с требованием non-repudiation. | draft |
-| DP.METHOD.102 | Principle Hierarchy Zpf Tpf | METHOD | Иерархия ZPF→FPF→SPF→TPF→LPF классифицирует принципы по специфичности применения. Поиск: сверху вниз (от универсального к инстансу/носителю). Загрузка в агента: снизу вверх (LPF→ZPF), чтобы специфические перевешивали общие при конфликте. | draft |
+| DP.METHOD.102 | Лестница сводов принципов: ядро FPF → DPF → LPF | METHOD | Лестница сводов FPF: ядро FPF → DPF (у нас Pack) → LPF (свод местной практики). ZPF, SPF, TPF — внутренние обозначения IWE. Поиск сверху вниз, загрузка в агента снизу вверх. | draft |
 | DP.METHOD.103 | Language Parametric Onboarding Route | METHOD | — | — |
-| DP.METHOD.104 | Lpf Role Substitution Test | METHOD | — | — |
+| DP.METHOD.104 | Тест замены носителя роли (Pack или личное) | METHOD | — | — |
 | DP.METHOD.105 | Rule By Function Not Location | METHOD | — | — |
 | DP.METHOD.106 | Mutation Test Honesty Check | METHOD | — | — |
 | DP.METHOD.107 | Rule By Template Structure | METHOD | — | — |

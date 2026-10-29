@@ -103,7 +103,7 @@ kinds:
 
 terms:
   # ---- системы ----
-  - {term: агент, kind: system, stems: [агент], status: pilot, basis: "Tier-A «Агент ≠ Роль»"}
+  - {term: агент, kind: system, stems: [агент], status: pilot, basis: "решение пилота 29.10: действующая система — человек, ИИ-агент, команда, организация (FPF A.13:4.1, MIMDEV1:1); Tier-A «Агент ≠ Роль»"}
   - {term: инструмент, kind: system, stems: [инструмент], status: pilot, basis: "ответ 1A принят 23.10"}
   - {term: сервер, kind: system, stems: [сервер], status: pilot, basis: "тест «отключить от питания»"}
   - {term: бот, kind: system, stems: [бот], status: pilot, basis: "подтверждено пилотом 23.10: работающая программа"}
