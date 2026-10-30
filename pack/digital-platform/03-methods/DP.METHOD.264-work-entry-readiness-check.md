@@ -2,6 +2,8 @@
 id: DP.METHOD.264
 name: "Проверка готовности агента перед работой"
 type: method
+name_ru: "Проверка готовности агента перед работой"
+name_en: "Agent work-entry readiness check"
 status: draft
 pack: PACK-digital-platform
 domain: digital-platform / session-open

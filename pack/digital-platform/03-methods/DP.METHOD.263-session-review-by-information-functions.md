@@ -2,6 +2,8 @@
 id: DP.METHOD.263
 name: "Разбор завершённой сессии по функциям сведений"
 type: method
+name_ru: "Разбор завершённой сессии по функциям сведений"
+name_en: "Reviewing a completed session by information functions"
 status: draft
 pack: PACK-digital-platform
 domain: digital-platform / work-review
