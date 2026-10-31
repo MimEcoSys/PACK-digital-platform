@@ -3,7 +3,7 @@ id: DP.METHOD.263
 name: "Разбор завершённой сессии по отношениям сведений к работе"
 type: method
 name_ru: "Разбор завершённой сессии по отношениям сведений к работе"
-name_en: "Reviewing a completed session by information functions"
+name_en: "Reviewing a completed session by information-to-work relations"
 status: draft
 pack: PACK-digital-platform
 domain: digital-platform / work-review
