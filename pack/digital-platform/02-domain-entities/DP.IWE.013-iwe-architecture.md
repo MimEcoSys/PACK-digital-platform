@@ -12,7 +12,7 @@ trust:
 epistemic_stage: emerging
 related:
   refines: [DP.IWE.001]
-  uses: [DP.IWE.003, DP.IWE.005, DP.IWE.010, DP.D.095, DP.ROLE.001]
+  uses: [DP.ARCH.001, DP.IWE.003, DP.IWE.005, DP.IWE.010, DP.D.095, DP.ROLE.001]
   distinguishes: [DP.IWE.001, DP.IWE.009, DP.IWE.010, DP.D.095]
 wp: WP-616
 sources:
@@ -21,6 +21,8 @@ sources:
 ---
 
 # Архитектура IWE (DP.IWE.013)
+
+> **Архитектура по уровням.** Экосистема — [ECO.ARCH.001](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/02-domain-entities/ECO.ARCH.001-ecosystem-architecture.md) · платформа — [DP.ARCH.001](DP.ARCH.001-platform-architecture.md) · IWE — **DP.IWE.013 (этот документ)**.
 
 > **Статус — черновик.** Описание уточняет главное описание IWE (DP.IWE.001). Там IWE описана через пять видов (системы, описания, роли, методы, рабочие продукты), и пять видов читаются как состав. Здесь — устройство IWE как системы. Расхождения с другими описаниями пака собраны в §11.
 

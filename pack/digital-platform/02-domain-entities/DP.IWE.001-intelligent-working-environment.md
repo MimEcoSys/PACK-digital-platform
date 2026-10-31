@@ -20,6 +20,8 @@ related:
 
 # Intellectual Work Environment (IWE)
 
+> **Устройство IWE как системы** (функции, модули, внешние системы, размещение; пользователь вне IWE) — [DP.IWE.013 Архитектура IWE](DP.IWE.013-iwe-architecture.md). Пять видов §3 этого документа будут переведены на эту модель.
+
 > **Implementation Note.** Конкретные инструменты (Claude Code, Telegram-бот, MCP-серверы, Neon DB) упоминаются как текущая реализация IWE. Доменная модель (5 видов, контуры, тиры, harness) не зависит от вендора. Детали реализации: [C2.IT-Platform](../../../DS-ecosystem-development/C.IT-Platform/C2.IT-Platform/).
 
 ## 1. Определение
@@ -467,6 +469,9 @@ DP.D.021 (Вайб-моделирование ≠ Профессионально
 
 ## 10. Связанные документы
 
+- [DP.IWE.013](DP.IWE.013-iwe-architecture.md) — архитектура IWE: функции, модули, размещение, соответствия
+- [DP.ARCH.001](DP.ARCH.001-platform-architecture.md) — архитектура платформы
+- [ECO.ARCH.001](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/02-domain-entities/ECO.ARCH.001-ecosystem-architecture.md) — архитектура экосистемы
 - [DP.IWE.002](DP.IWE.002-iwe-template-and-setup.md) — **практическое**: установка, пререквизиты, ОРЗ, роли, FAQ, безопасность
 - [DP.IWE.004](DP.IWE.004-iwe-interfaces.md) — интерфейсы IWE и сборка сеанса (§ 1.2 выше — сжатая версия)
 - [DP.EXOCORTEX.001](DP.EXOCORTEX.001-modular-exocortex.md) — описания и инструкции IWE (Вид 2: Описания)

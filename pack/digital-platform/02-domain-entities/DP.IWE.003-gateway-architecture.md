@@ -267,6 +267,7 @@ Blue/green с health-check вместо in-place миграции: gateway v2 п
 
 ## 9. Связанные документы
 
+- **[DP.IWE.013](DP.IWE.013-iwe-architecture.md)** — архитектура IWE: модули, внешние системы и размещение; сверка с этим документом — там §11.
 - [DP.ARCH.001](DP.ARCH.001-platform-architecture.md) — архитектура платформы (принципы ЭМОГССБ)
 - [DP.EXOCORTEX.001](DP.EXOCORTEX.001-modular-exocortex.md) — модульный экзокортекс
 - [DP.IWE.001](DP.IWE.001-intelligent-working-environment.md) — IWE как концепция
