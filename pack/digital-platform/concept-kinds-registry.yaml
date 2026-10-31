@@ -130,6 +130,7 @@ terms:
   # ---- документы ----
   - {term: файл, kind: document, stems: [файл, страниц], status: pilot, basis: "правило 8"}
   - {term: журнал, kind: document, stems: [журнал, реестр, карточк], status: pack, basis: "носитель записей"}
+  - {term: документ, kind: document, stems: [документ], status: pack, basis: "правило 8: документ - носитель описания; приёмка Ф21 (31.10): «состоит из ... документации» не ловилось, слова не было в реестре"}
   # ---- методы ----
   - {term: метод, kind: method, stems: [метод], status: pilot, basis: "правило 8; A.3.1. Слово «method» в перечне перегруженных голов E.10 — при сомнении уточнить: метод, его описание, план или работа"}
   - {term: ритуал, kind: method, stems: [ритуал], status: pilot, basis: "Tier-A: ритуал ОРЗ"}
