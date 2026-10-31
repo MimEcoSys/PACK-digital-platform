@@ -589,7 +589,7 @@ LMS/Клуб → Activity Hub → Proof-of-Impact → Token Economy
 
 > **Архитектура по уровням.** Экосистема — [ECO.ARCH.001](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/02-domain-entities/ECO.ARCH.001-ecosystem-architecture.md) · платформа — **DP.ARCH.001 (этот документ)** · IWE — [DP.IWE.013](DP.IWE.013-iwe-architecture.md).
 
-- [DP.IWE.013 Архитектура IWE](DP.IWE.013-iwe-architecture.md) — устройство IWE: функции, модули, внешние системы (в том числе эта платформа), размещение
+- [DP.IWE.013 Архитектура IWE](DP.IWE.013-iwe-architecture.md) — устройство IWE: функциональные подсистемы, модули, системы окружения (в том числе эта платформа), размещение
 - [ECO.ARCH.001 Архитектура экосистемы](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/02-domain-entities/ECO.ARCH.001-ecosystem-architecture.md) — уровень выше: участники, роли, потоки, экономика
 - [DP.CONCEPT.001 Концепция платформы](DP.CONCEPT.001-platform-concept.md)
 - [DP.ROLE.001 ИИ-системы платформы](DP.ROLE.001-platform-roles.md)
