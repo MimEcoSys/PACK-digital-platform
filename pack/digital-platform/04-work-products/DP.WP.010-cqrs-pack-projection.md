@@ -46,7 +46,7 @@ entities:
 
 Генерируется `pack-project.sh` в директорию, доступную knowledge-mcp.
 
-## 4. Жизненный цикл
+## 4. Рабочий процесс
 
 ```
 Pack-файлы → pack-project.sh (S19, после S18) → YAML projection → knowledge-mcp (I4) → агенты/бот

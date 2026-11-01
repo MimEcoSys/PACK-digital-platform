@@ -1,7 +1,7 @@
 ---
 id: DP.M.010
-name: Управление жизненным циклом рабочего продукта
-name_ru: Управление жизненным циклом РП
+name: Управление состояниями рабочего продукта
+name_ru: Управление состояниями РП
 name_en: Work Product Lifecycle Management
 type: method
 status: active
@@ -21,9 +21,9 @@ tags: [wp, lifecycle, governance, registry, iwe, consistency]
 wp: WP-297
 ---
 
-# Управление жизненным циклом РП (DP.M.010)
+# Управление состояниями РП (DP.M.010)
 
-## 1. Жизненный цикл РП
+## 1. Состояния РП
 
 РП (Рабочий продукт) — это артефакт с критериями приёмки. Не описание намерения, не процесс.
 
@@ -119,7 +119,7 @@ _Куда систематически съезжает внимание пра�
 **Инструмент диагностики:** `bash active-wp-sweep.sh` — секция `⚠️ Drift` показывает Type A.
 Ручная проверка: `grep -c "in_progress\|active" DS-my-strategy/inbox/WP-*.md` vs `grep -c "🔄" DS-my-strategy/docs/WP-REGISTRY.md`.
 
-## 5. Процессы (5 операций жизненного цикла)
+## 5. Процессы (5 операций с РП)
 
 Полное описание → `DS-my-strategy/docs/PROCESSES-wp-lifecycle.md`.
 

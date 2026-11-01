@@ -6,7 +6,7 @@ name_en: Skill Maintainer
 type: role-description
 status: draft
 valid_from: 2026-05-21
-summary: "Владеет каталогом скиллов IWE. Принимает решения о promote L3→L1, отвечает за обратную совместимость при обновлении L1-скиллов, управляет жизненным циклом скилла (active→experimental→deprecated)."
+summary: "Владеет каталогом скиллов IWE. Принимает решения о promote L3→L1, отвечает за обратную совместимость при обновлении L1-скиллов, управляет состояниями скилла (active→experimental→deprecated)."
 related:
   specializes: [U.RoleAssignment]
   component_of: [DP.ROLE.001]

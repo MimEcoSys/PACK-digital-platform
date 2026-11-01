@@ -41,7 +41,7 @@ related:
 DS-agent-workspace/scheduler/feedback-triage/YYYY-MM-DD.md
 ```
 
-## 4. Жизненный цикл
+## 4. Рабочий процесс
 
 ```
 Генерация (S21, еженедельно) → Ревью (R7, сессия техдолга S30) → Backlog → Исправление → resolved
