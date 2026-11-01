@@ -21,7 +21,7 @@ related:
 - **Append-only events** — `decision`, `hypothesis`, `tool_call`, `snapshot`, `fork_session`.
   UPDATE/DELETE запрещены. Корректировка только через **compensating event** (новая запись,
   отменяющая предыдущую). Inv: «после записи факт не меняется».
-- **Aggregate-cards** — `session`, любая «карточка с жизненным циклом» (start/identification
+- **Aggregate-cards** — `session`, любая «карточка с состояниями» (start/identification
   поля immutable, closing-fields мутируют **один раз** при `session.end`). Inv:
   «после `end`-перехода значение фиксируется и больше не меняется».
 

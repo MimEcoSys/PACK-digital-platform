@@ -85,7 +85,7 @@ Emerging. Каждая из трёх под-областей имеет зрел
 
 | Архитектурный выбор | Рекомендация на основе SOTA |
 |---------------------|------------------------------|
-| **Модель хранения** | Гибрид: Temporal-style execution log (для replay шагов) + EventStoreDB-style domain trace (для аудита решений). НЕ смешивать слои — разные жизненные циклы и потребители |
+| **Модель хранения** | Гибрид: Temporal-style execution log (для replay шагов) + EventStoreDB-style domain trace (для аудита решений). НЕ смешивать слои — разные процессы создания и развития и потребители |
 | **Snapshot policy** | Каждые 20-50 решений или 5-10 минут (отправная точка, калибровать по реальной длине трасс) |
 | **Schema evolution** | Weak schema (JSON) + upcasters на чтении. Жёсткая схема (Protobuf strict) → боль через 3 месяца |
 | **PII / GDPR** | Crypto-shredding с первого дня (per-subject key + tombstone). Совместимо с B7.3 — закрывает PII-блокер ArchGate |

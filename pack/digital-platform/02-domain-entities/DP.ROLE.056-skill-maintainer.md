@@ -50,7 +50,7 @@ wp: WP-348
 | Актуализировать `skills-catalog.yaml` | `generate-skills-catalog.sh` | При каждом promote |
 | Принять решение о promote L3→L1 | Критерии: SKILL.md v2 + smoke-test + DP.SC | По запросу Автора |
 | Поддерживать обратную совместимость | Версионирование + `depends_on` граф | При обновлении L1-скилла |
-| Управлять жизненным циклом | `status: deprecated` + `sunset:` | При устаревании |
+| Управлять состояниями скилла | `status: deprecated` + `sunset:` | При устаревании |
 | Рецензировать новые скиллы | Чеклист IntegrationGate для скиллов | Перед promote |
 
 ---

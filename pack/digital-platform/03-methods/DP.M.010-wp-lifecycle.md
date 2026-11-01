@@ -44,7 +44,7 @@ pending ──► in_progress ──► done ──► archived
 | `done` | Критерии приёмки выполнены | frontmatter → `done` + mv archive/ |
 | `archived` | Перемещён в archive/wp-contexts/ | archive/ frontmatter |
 
-**Инвариант жизненного цикла:**
+**Инвариант состояний РП:**
 > Статус РП в inbox/frontmatter, WP-REGISTRY.md, MEMORY.md и WeekPlan ВСЕГДА консистентен. Расхождение = drift, требует немедленного ремонта.
 
 ## Forces
