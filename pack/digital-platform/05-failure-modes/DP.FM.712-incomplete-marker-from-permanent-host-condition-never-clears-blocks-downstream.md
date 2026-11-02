@@ -1,8 +1,8 @@
 ---
 id: DP.FM.712
-name: "Маркер незавершённого обновления, оставленный постоянной причиной на хосте, не снимался и блокировал последующий процесс 10 дней"
-name_ru: "Маркер незавершённого обновления, оставленный постоянной причиной на хосте, не снимался и блокировал последующий процесс 10 дней"
-name_en: "An update-incomplete marker left by a permanent host condition never cleared and blocked a downstream process for 10 days"
+name: "Маркер незавершённого обновления, оставленный постоянной причиной на хосте, не снимался и блокировал последующий процесс (по описанию коммитов — 10 дней)"
+name_ru: "Маркер незавершённого обновления, оставленный постоянной причиной на хосте, не снимался и блокировал последующий процесс (по описанию коммитов — 10 дней)"
+name_en: "An update-incomplete marker left by a permanent host condition never cleared and blocked a downstream process (10 days, per commit messages)"
 type: failure-mode
 status: draft
 created: "2026-11-02"

@@ -2,7 +2,7 @@
 id: DP.FM.708
 name: "Дубль ключа задания CI после слияния веток: загрузчик YAML вроде PyYAML молча берёт последний, проверка «YAML валиден» зелёная, а GitHub отклоняет workflow"
 name_ru: "Дубль ключа задания CI после слияния веток: загрузчик YAML вроде PyYAML молча берёт последний, проверка «YAML валиден» зелёная, а GitHub отклоняет workflow"
-name_en: "Duplicate CI job key after a branch merge: PyYAML silently keeps the last one, the 'YAML is valid' check passes, and GitHub rejects the workflow"
+name_en: "Duplicate CI job key after a branch merge: a YAML loader such as PyYAML silently keeps the last one, the 'YAML is valid' check passes, and GitHub rejects the workflow"
 type: failure-mode
 status: draft
 created: "2026-11-02"
