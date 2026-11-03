@@ -5,6 +5,8 @@ type: reference
 generated_from: concept-kinds-registry.yaml
 ---
 
+<!-- index-health: skip-cells reference table, long basis cells are expected -->
+
 # Реестр понятий и родов
 
 > Сгенерировано из `concept-kinds-registry.yaml` скриптом `scripts/build-concept-kinds-tsv.py` — руками не править. Первоисточник — YAML.
