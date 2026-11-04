@@ -34,7 +34,7 @@ sources:
 
 **Пять документов и как они связаны.** Набор описан в общем документе [«Пять документов экосистемы»](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/07-map/ECO.MAP.003-five-documents.md) (ECO.MAP.003, пак экосистемы). Этот документ — третий: как устроены платформа и IWE.
 - **Получает** номер цели из [«Целей и сценариев»](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md) и связывает его с подсистемой и модулем (§11.2 «Средства по целям»).
-- **Передаёт** подсистемы и модули [«Состоянию по целям»](https://github.com/aisystant/DS-ecosystem-development/blob/main/C.IT-Platform/C2.IT-Platform/C2.3.Operations/Goals-State/state-by-goals.md), а оттуда получает обратно метки состояния на схемы — срезом с датой.
+- **Передаёт** подсистемы и модули [«Состоянию по целям»](https://github.com/aisystant/DS-ecosystem-development/blob/main/C.IT-Platform/C2.IT-Platform/C2.3.Operations/Goals-State/state-by-goals.md): там по ним ставится состояние. Обратно в этот документ состояние не возвращается.
 - **Почему так решено** — в [рабочих записях](https://github.com/aisystant/DS-ecosystem-development/tree/main/C.IT-Platform/C2.IT-Platform/C2.3.Operations/Goals-State/working-records).
 
 > **Implementation Note.** Конкретные вендоры (Neon, Cloudflare Workers, ORY) упоминаются как текущая реализация. Доменные концепции (функциональные подсистемы, слои, ЭМОГССБ, принципы, IPO-паттерн) не зависят от вендора. Детали реализации: [C2.IT-Platform](https://github.com/aisystant/DS-ecosystem-development/tree/main/C.IT-Platform/C2.IT-Platform).
@@ -49,7 +49,7 @@ sources:
 - **MCP** — открытый протокол, описание. Сервер MCP относится к программам и служит модулем платформы. Для IWE он находится вне границы: внутри IWE работают только клиент MCP в рантайме и локальный шлюз.
 - **Цели человека** определены в DP.MAP.005; здесь они связаны с устройством цепочкой «цель → средство → подсистема → модуль» (§11).
 
-**Как читать метки.** Метки {есть}, {строится}, {замысел}, {не установлено} на схемах — срез документа 4 [«Состояние по целям»](https://github.com/aisystant/DS-ecosystem-development/blob/main/C.IT-Platform/C2.IT-Platform/C2.3.Operations/Goals-State/state-by-goals.md) на 03.11.2026, не самостоятельная оценка. Правится метка только там; здесь схема пересобирается вместе с датой среза. В таблицах этого документа меток состояния нет.
+**Что из этого уже работает** — в документе 4 [«Состояние по целям»](https://github.com/aisystant/DS-ecosystem-development/blob/main/C.IT-Platform/C2.IT-Platform/C2.3.Operations/Goals-State/state-by-goals.md). Здесь описано устройство без отметок состояния: на схемах и в таблицах показаны и действующие, и задуманные функции и модули.
 
 ## 2. Системы и границы
 
@@ -98,48 +98,46 @@ IWE — система. Пользователь — отдельная сист
 
 ### Схема 1. Функциональная: что делают части и что между ними передаётся
 
-Здесь нет программ, баз и MCP-серверов: только функции платформы и IWE и то, что они передают друг другу. Функция и модуль — разные точки зрения на одну систему, они связываются назначением «какой модуль выполняет какую функцию» (FPF, A.6.F:4.6 и A.6.M). Запущенная программа — модуль, а не функциональная часть: её место на схеме 2. Поэтому три состояния IWE здесь не показаны: это три способа выполнить одни и те же функции разными модулями. Шаблон и репозитории относятся к документам, а не к функциям, они тоже на схеме 2. Сторож исправности и Хранитель копий обслуживают все подсистемы, их стрелки не рисуем. Цвет рамки — метка состояния: **срез на 03.11.2026 по документу 4 «Состояние по целям»**. Метки правятся только там; здесь схема пересобирается вместе с датой среза.
+Здесь нет программ, баз и MCP-серверов: только функции платформы и IWE и то, что они передают друг другу. Функция и модуль — разные точки зрения на одну систему, они связываются назначением «какой модуль выполняет какую функцию» (FPF, A.6.F:4.6 и A.6.M). Запущенная программа — модуль, а не функциональная часть: её место на схеме 2. Поэтому три состояния IWE здесь не показаны: это три способа выполнить одни и те же функции разными модулями. Шаблон и репозитории относятся к документам, а не к функциям, они тоже на схеме 2. Сторож исправности и Хранитель копий обслуживают все подсистемы, их стрелки не рисуем.
 
 ```mermaid
 flowchart LR
-  classDef have fill:#ffffff,stroke:#2f7d4f,stroke-width:3px,color:#18202b
-  classDef build fill:#ffffff,stroke:#b8860b,stroke-width:3px,color:#18202b
-  classDef future fill:#ffffff,stroke:#8e44ad,stroke-width:3px,stroke-dasharray:6 4,color:#18202b,font-weight:bold
+  classDef sys fill:#ffffff,stroke:#2f3b4f,stroke-width:3px,color:#18202b
   classDef env fill:#ffffff,stroke:#7a8494,stroke-width:1px,stroke-dasharray:3 3,color:#18202b
   subgraph IH["Железный человек"]
-    H["Человек"]:::have
+    H["Человек"]:::sys
     subgraph IWE["IWE: функции"]
-      IX["Исполнитель работы"]:::have
-      IC["Загрузчик контекста"]:::have
-      IA["Учётчик работы"]:::have
-      IK["Поставщик знаний платформы"]:::have
-      IU["Доставщик обновлений"]:::have
-      IR["Остальные функции IWE: координация агентов, защита секретов, техосмотр и др."]:::have
-      IN["Предложение изменений среды: замечает ограничение, человек решает"]:::build
-      IP["Перенос без потерь при смене модели, вендора, состояния"]:::build
-      IS2["Поиск по своим материалам у человека"]:::future
-      IRS["Приём результатов сервиса"]:::future
+      IX["Исполнитель работы"]:::sys
+      IC["Загрузчик контекста"]:::sys
+      IA["Учётчик работы"]:::sys
+      IK["Поставщик знаний платформы"]:::sys
+      IU["Доставщик обновлений"]:::sys
+      IR["Остальные функции IWE: координация агентов, защита секретов, техосмотр и др."]:::sys
+      IN["Предложение изменений среды: замечает ограничение, человек решает"]:::sys
+      IP["Перенос без потерь при смене модели, вендора, состояния"]:::sys
+      IS2["Поиск по своим материалам у человека"]:::sys
+      IRS["Приём результатов сервиса"]:::sys
     end
   end
   subgraph P["Платформа: функции"]
-    DI["Диспетчер инструментов"]:::have
-    PR["Привратник"]:::have
-    ZN["Поставщик общих знаний"]:::have
-    LZ["Хранитель личных знаний"]:::have
-    KM["Библиотека методов"]:::future
-    PO["Держатель портрета"]:::have
-    PU["Проводник по пути"]:::have
-    UE["Учётчик событий"]:::have
-    KA["Кассир"]:::have
-    NA["Рабочее место наставника"]:::have
-    IS["Исполнитель серверных агентов"]:::have
-    RM["Раздатчик моделей"]:::have
-    SO["Собеседник в мессенджере"]:::have
-    VI["Витрина"]:::have
-    ST["Сторож исправности: следит за всеми"]:::have
-    XK["Хранитель копий: копирует данные всех"]:::have
-    EX["Выход участника: удаление копии, перенос поиска к себе"]:::build
-    CW["Совместная работа"]:::future
+    DI["Диспетчер инструментов"]:::sys
+    PR["Привратник"]:::sys
+    ZN["Поставщик общих знаний"]:::sys
+    LZ["Хранитель личных знаний"]:::sys
+    KM["Библиотека методов"]:::sys
+    PO["Держатель портрета"]:::sys
+    PU["Проводник по пути"]:::sys
+    UE["Учётчик событий"]:::sys
+    KA["Кассир"]:::sys
+    NA["Рабочее место наставника"]:::sys
+    IS["Исполнитель серверных агентов"]:::sys
+    RM["Раздатчик моделей"]:::sys
+    SO["Собеседник в мессенджере"]:::sys
+    VI["Витрина"]:::sys
+    ST["Сторож исправности: следит за всеми"]:::sys
+    XK["Хранитель копий: копирует данные всех"]:::sys
+    EX["Выход участника: удаление копии, перенос поиска к себе"]:::sys
+    CW["Совместная работа"]:::sys
   end
   MOD["Модели вендоров"]:::env
   H -->|ставит задачи и принимает результат| IX
@@ -181,37 +179,35 @@ flowchart LR
 
 ### Схема 2. Модульная: какие программы выполняют эти функции
 
-Здесь названы программы, базы и серверы, то есть модули, и показано, где лежат документы. Показаны три состояния IWE и не все модули платформы, а те, что нужны, чтобы увидеть путь запроса. Полный перечень — раздел 5, размещение — раздел 6. Цвет рамки — метка состояния: **срез на 03.11.2026 по документу 4 «Состояние по целям»**. Метки правятся только там; здесь схема пересобирается вместе с датой среза.
+Здесь названы программы, базы и серверы, то есть модули, и показано, где лежат документы. Показаны три состояния IWE и не все модули платформы, а те, что нужны, чтобы увидеть путь запроса. Полный перечень — раздел 5, размещение — раздел 6.
 
 ```mermaid
 flowchart LR
-  classDef have fill:#ffffff,stroke:#2f7d4f,stroke-width:3px,color:#18202b
-  classDef build fill:#ffffff,stroke:#b8860b,stroke-width:3px,color:#18202b
-  classDef future fill:#ffffff,stroke:#8e44ad,stroke-width:3px,stroke-dasharray:6 4,color:#18202b,font-weight:bold
+  classDef sys fill:#ffffff,stroke:#2f3b4f,stroke-width:3px,color:#18202b
   classDef env fill:#ffffff,stroke:#7a8494,stroke-width:1px,stroke-dasharray:3 3,color:#18202b
   classDef doc fill:#ffffff,stroke:#7a8494,stroke-width:1px,stroke-dasharray:8 4,color:#18202b
   subgraph IH["Железный человек"]
-    H["Человек"]:::have
+    H["Человек"]:::sys
     subgraph IWE2["IWE по шаблону, на компьютере человека"]
-      RT["Рантайм агента с клиентом MCP"]:::have
-      LG["Локальный шлюз"]:::have
-      SCR["Программы хуков и скриптов"]:::have
-      UPD["Программа установки и обновления"]:::have
+      RT["Рантайм агента с клиентом MCP"]:::sys
+      LG["Локальный шлюз"]:::sys
+      SCR["Программы хуков и скриптов"]:::sys
+      UPD["Программа установки и обновления"]:::sys
       LC>"Рабочие копии: развёрнутый шаблон и материалы человека"]:::doc
     end
-    VC["IWE у вендора: чат вендора с нашим шаблоном и открытым MCP"]:::build
-    OWN["Своя IWE: поиск по материалам у самого человека"]:::future
+    VC["IWE у вендора: чат вендора с нашим шаблоном и открытым MCP"]:::sys
+    OWN["Своя IWE: поиск по материалам у самого человека"]:::sys
   end
   subgraph P["Платформа"]
-    GW["gateway-mcp, вход MCP подписки"]:::have
-    KN["knowledge-mcp и другие бэкенды"]:::have
-    BOT["Telegram-бот"]:::have
-    EV["event-gateway и обработчики событий"]:::have
-    DB[("Neon")]:::have
-    TS["Программы на tsekh-1: профилировщик, оценщик ступени, сборщик руководств"]:::have
-    OPEN["Open МИМ"]:::build
-    OPA["Open Aisystant"]:::build
-    AIM["Aisystant MCP"]:::future
+    GW["gateway-mcp, вход MCP подписки"]:::sys
+    KN["knowledge-mcp и другие бэкенды"]:::sys
+    BOT["Telegram-бот"]:::sys
+    EV["event-gateway и обработчики событий"]:::sys
+    DB[("Neon")]:::sys
+    TS["Программы на tsekh-1: профилировщик, оценщик ступени, сборщик руководств"]:::sys
+    OPEN["Open МИМ"]:::sys
+    OPA["Open Aisystant"]:::sys
+    AIM["Aisystant MCP"]:::sys
   end
   subgraph GHB["GitHub: хранит репозитории"]
     T>"Шаблон IWE: репозиторий автора"]:::doc
@@ -243,7 +239,7 @@ flowchart LR
   style GHB fill:#ffffff,stroke:#7a8494,stroke-dasharray:3 3,color:#18202b
 ```
 
-**Обозначения для обеих схем.** Цвет толстой рамки: зелёная — {есть}, жёлтая — {строится}, фиолетовая пунктирная с жирным шрифтом — {замысел} (срез на 03.11.2026 по документу 4 «Состояние по целям»). Фон у всех объектов белый. Сплошной толстой рамкой показаны системы под нашим управлением: человек, программа, база данных (цилиндром). Мелким пунктиром показаны системы окружения, ими управляет не организация. Флажком с длинным пунктиром показаны документы. Сплошная стрелка идёт от системы, которая действует: вызывает, читает, пишет. Документы сами ничего не делают, поэтому стрелки идут только к ним: программа читает, разворачивает или скачивает документ, GitHub их хранит (рамка вокруг двух документов). На схеме 1 пунктирная стрелка — связь не по вызову: показ, обновление, самостоятельная сборка, будущая связь с Каталогом методов.
+**Обозначения для обеих схем.** Фон у всех объектов белый. Сплошной толстой рамкой показаны системы под нашим управлением: человек, программа, база данных (цилиндром). Мелким пунктиром показаны системы окружения, ими управляет не организация. Флажком с длинным пунктиром показаны документы. Сплошная стрелка идёт от системы, которая действует: вызывает, читает, пишет. Документы сами ничего не делают, поэтому стрелки идут только к ним: программа читает, разворачивает или скачивает документ, GitHub их хранит (рамка вокруг двух документов). На схеме 1 пунктирная стрелка — связь не по вызову: показ, обновление, самостоятельная сборка, связь с Библиотекой методов.
 
 ## 4. Функциональное описание
 
@@ -758,115 +754,216 @@ CREATE TABLE learning.behavior_indicators (
 
 ### 11.2. Средства по целям: цель → подсистема → модуль
 
-Команды бота, инструменты MCP, скиллы и страницы названы поимённо. Строка — номер цели; формулировка цели — в [DP.MAP.005 «Цели и сценарии»](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md), здесь она не повторяется. Строки сгруппированы по блокам DP.MAP.005. Модули подсистем — §4.1 и §11.1.
+Команды бота, инструменты MCP, скиллы и страницы названы поимённо. Строка — номер цели; формулировка цели — в [DP.MAP.005 «Цели и сценарии»](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md), здесь она не повторяется. Таблица разбита на 12 блоков, как в DP.MAP.005; номер цели ведёт к её блоку там.
 
-<details><summary>Таблица: средства по целям (103 строки)</summary>
+#### А. Знакомство без регистрации
+
+<details><summary>Таблица: А. Знакомство без регистрации (8 строк)</summary>
 
 | № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | — | — | — | `/connect`, `/iwe`, `/support`, `connect (plugins)`, `plugin iwe (ChatGPT/Codex)`, `plugin iwe-kimi` | Витрина | — |
-| 2 | `/privacy`, `/tos` | — | — | `/chat-analyst`, `/privacy, /terms` | Витрина, Собеседник в мессенджере | — |
-| 3 | `/navigator` | — | — | `/ (open.system-school.ru)`, `/fpf`, `/howtostart`, `/work-with-ai` | Витрина, Поставщик общих знаний, Собеседник в мессенджере | — |
-| 4 | — | `fetch`, `search` | — | — | Поставщик общих знаний | — |
-| 5 | — | — | — | — | — | — |
-| 6 | — | — | — | — | — | — |
-| 7 | `/about` | — | — | `/ (главная)`, `/guides`, `/programs, /qualification, /about, /offer` | Витрина, Собеседник в мессенджере | — |
-| 91 | — | — | — | `/subscribe` | Витрина | — |
-| 8 | `/connect_external`, `/my_clients` | — | — | — | Собеседник в мессенджере | — |
-| 9 | `/profile`, `/tier` | `switch_mim_account`, `user_profile_get_tier`, `whoami` | — | — | Диспетчер инструментов, Привратник, Собеседник в мессенджере | — |
-| 10 | `/buy`, `/subscribe_stars`, `/subscription` | — | — | `/quick-purchase` | Витрина, Собеседник в мессенджере | — |
-| 11 | — | — | — | — | — | — |
-| 12 | — | — | — | `routes/auth`, `routes/dashboard` | Проводник по пути | — |
-| 13 | `/link`, `/unlink` | — | — | — | Собеседник в мессенджере | — |
-| 14 | `/consent`, `/mentor_consent_history`, `/mentor_consent` | `grant_consent`, `learning_ctx_get_consent`, `learning_ctx_grant_consent`, `learning_ctx_set_mentor_self_assessment_consent` | `consent` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | Защитник секретов |
-| 15 | `/status` | — | — | — | Собеседник в мессенджере | — |
-| 16 | — | — | — | — | — | — |
-| 17 | `/mydata_delete`, `/mydata` | `personal_delete`, `personal_purge_source` | — | — | Поставщик общих знаний, Собеседник в мессенджере | — |
-| 18 | — | — | — | `routes/guide_onboarding`, `routes/guide_personal` | Проводник по пути | — |
-| 19 | `/invite`, `/invites`, `/points`, `/rules` | — | — | — | Собеседник в мессенджере | — |
-| 20 | — | — | — | — | — | Загрузчик контекста |
-| 21 | `/calendar` | — | — | — | Собеседник в мессенджере | — |
-| 22 | `/byok` | `user_profile_grant_llm_key`, `user_profile_list_llm_keys`, `user_profile_revoke_llm_key` | — | — | Привратник, Собеседник в мессенджере | Поставщик знаний платформы |
-| 23 | `/connect`, `/setup` | `create_personal_data_space`, `create_repository`, `fork_platform_template`, `request_equipment_upgrade` | `repo-new` | `templates/setup.html` | Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | Исполнитель работы |
-| 24 | `/connect_guide`, `/github` | `github_connect`, `github_disconnect`, `github_status`, `personal_connect_source`, `personal_disconnect_source`, `personal_list_sources`, `personal_reindex_status`, `personal_reindex`, `user_profile_get_github_connected`, `user_profile_get_user_context` | — | — | Диспетчер инструментов, Поставщик общих знаний, Привратник, Собеседник в мессенджере | — |
-| 25 | `/reflect` | `personal_concept_expand`, `personal_concept_search_by_name`, `personal_get_document`, `personal_history`, `personal_list_documents`, `personal_list_path`, `personal_memory_search`, `personal_search`, `personal_write`, `select_governance_repository` | — | — | Диспетчер инструментов, Поставщик общих знаний, Собеседник в мессенджере | — |
-| 26 | — | `personal_new_post` | — | — | Поставщик общих знаний | — |
-| 27 | `/remind` | `send_telegram_message` | — | — | Диспетчер инструментов, Собеседник в мессенджере | Фоновый монитор |
-| 28 | — | — | — | — | — | — |
-| 29 | — | — | — | — | — | — |
-| 30 | `/me`, `/twin` | `dt_read_digital_twin`, `dt_write_digital_twin` | — | — | Держатель портрета, Собеседник в мессенджере | Фоновый монитор |
-| 31 | — | — | — | — | — | — |
-| 32 | — | `gdrive_add_mapping`, `gdrive_list_mappings`, `gdrive_sync`, `gdrive_upload` | — | — | — | — |
-| 33 | `/iwe` | — | — | `iwe-browser-extension` | Собеседник в мессенджере | — |
-| 34 | — | — | `day-close`, `day-open` | — | — | Учётчик работы, Фоновый монитор |
-| 35 | — | — | `week-close-pilot`, `week-close` | — | — | Учётчик работы |
-| 36 | — | — | `month-close` | — | — | Учётчик работы |
-| 37 | — | `run_strategist` | `discovery-session`, `strategy-session`, `verify-hypotheses` | — | Диспетчер инструментов | Исполнитель работы |
-| 38 | — | `create_wp`, `reconcile_governance_repository` | `run-protocol`, `wp-new` | — | Диспетчер инструментов | Учётчик работы |
-| 39 | — | — | `bottleneck-pick`, `decompose`, `platform-bottleneck` | — | — | Исполнитель работы |
-| 40 | — | — | `archgate`, `fpf`, `integration-gate`, `think`, `vdv`, `verify` | — | — | Исполнитель работы, Поставщик знаний платформы |
-| 41 | — | — | `route`, `transcribe` | — | — | Исполнитель работы, Маршрутизатор знаний |
-| 42 | — | `get_run_status` | — | — | Диспетчер инструментов | Координатор агентов, Маршрутизатор задач |
-| 43 | — | `agent_status_list`, `agent_status_update`, `list_peer_statuses`, `update_peer_status` | — | `iweWpPanel.openDashboard`, `iweWpPanel.refresh`, `iweWpPanel.setDashboardAccessToken` | Диспетчер инструментов, Исполнитель серверных агентов | Координатор агентов, Табло работы |
-| 44 | — | — | — | — | — | Контролёр ясности |
-| 45 | — | — | — | — | — | — |
-| 46 | — | `hermes_chat` | — | — | Диспетчер инструментов | — |
-| 47 | `/agent`, `/cancel`, `/claude`, `/close`, `/finalize` | — | — | — | Собеседник в мессенджере | — |
-| 48 | — | `knowledge_concept_expand`, `knowledge_concept_search_by_name`, `knowledge_feedback`, `knowledge_get_document`, `knowledge_list_documents`, `knowledge_list_path`, `knowledge_list_sources`, `knowledge_resolve_document`, `knowledge_search`, `search`, `semantic_search` | — | — | Диспетчер инструментов, Поставщик общих знаний | — |
-| 49 | — | — | — | — | — | — |
-| 50 | — | `get_instructions`, `knowledge_load_skill`, `personal_load_skill` | — | — | Диспетчер инструментов, Поставщик общих знаний | — |
-| 51 | — | `fetch`, `search` | — | — | Поставщик общих знаний | — |
-| 102 | — | — | — | — | Поставщик общих знаний | — |
-| 52 | `/assessment`, `/diagnose`, `/test` | `checklist_get_checklist_status`, `dt_get_cp_profile`, `dt_update_profile_rcs`, `get_journey_state`, `learning_ctx_get_my_cp_assessment`, `learning_ctx_get_onboarding_state`, `learning_ctx_record_cp_assessment` | `diagnose`, `w-reflection` | — | Держатель портрета, Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | Проводник развития |
-| 53 | `/guide` | `get_personal_guide_state`, `learning_ctx_get_personal_guide_state`, `learning_ctx_mark_personal_guide_bootstrap_completed`, `learning_ctx_mark_personal_guide_recommended`, `mark_personal_guide_bootstrap_completed`, `mark_personal_guide_recommended`, `render_personal_guide` | `connect-guide`, `lesson-close`, `lesson`, `personal-guide-render`, `personal-guide-start` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | Проводник развития |
-| 54 | — | `knowledge_analyze_verbalization`, `knowledge_concept_status`, `personal_analyze_verbalization`, `personal_concept_status` | `project-analysis` | — | Поставщик общих знаний | Проводник развития |
-| 55 | `/progress` | `get_instruction`, `knowledge_learner_progress`, `learning_ctx_get_my_platform_work`, `personal_learner_progress` | — | — | Держатель портрета, Поставщик общих знаний, Проводник по пути, Собеседник в мессенджере | — |
-| 56 | `/club`, `/contacts`, `/features`, `/help`, `/language`, `/mode`, `/settings`, `/support` | — | — | — | Собеседник в мессенджере | — |
-| 57 | — | `get_cognitive_brief`, `get_next_onboarding_step`, `learning_ctx_get_cognitive_brief` | — | — | Держатель портрета, Диспетчер инструментов | — |
-| 58 | — | `get_guide_sections`, `get_guides_list`, `get_section_content` | — | `routes/guide_universal` | Поставщик общих знаний, Проводник по пути | — |
-| 59 | `/schedule` | `mentorship_create_consultation_case` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
-| 60 | — | `mentorship_begin_survey_result`, `mentorship_grant_survey_accompaniment`, `mentorship_list_survey_results`, `mentorship_read_survey_result`, `mentorship_revoke_survey_accompaniment`, `mentorship_revoke_survey_self_history`, `mentorship_submit_survey_result` | — | — | Рабочее место наставника | — |
-| 61 | `/simulator` | `dt_get_profile_rcs`, `dt_snapshot_rcs` | — | — | Держатель портрета, Собеседник в мессенджере | — |
-| 62 | `/learn`, `/marathon_info`, `/marathon_pause`, `/marathon_progress`, `/marathon_start`, `/marathon_stop` | — | — | — | Собеседник в мессенджере | — |
-| 63 | `/channels`, `/feed_info`, `/feed_status`, `/feed` | — | — | — | Собеседник в мессенджере | — |
-| 90 | `/train_info`, `/train` | — | — | — | Собеседник в мессенджере | — |
-| 97 | — | — | — | — | — | — |
-| 64 | `/mentor_card`, `/mentor_invite`, `/mentor_note` | `mentorship_get_participant_card`, `mentorship_read_consultation_case`, `mentorship_resolve_participant_names` | `mentor-participant-brief` | — | Рабочее место наставника, Собеседник в мессенджере | Проводник развития |
-| 65 | — | `mentorship_get_stream_overview` | — | — | Рабочее место наставника | — |
-| 66 | `/mentor_stream` | `mentorship_grant_consultation_case_access`, `mentorship_grant_survey_mentor_access`, `mentorship_revoke_consultation_case_access`, `mentorship_revoke_survey_mentor_access`, `mentorship_sync_stream_readers` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
-| 103 | `/mentor_stream` | `mentorship_grant_consultation_case_access`, `mentorship_grant_survey_mentor_access`, `mentorship_revoke_consultation_case_access`, `mentorship_revoke_survey_mentor_access`, `mentorship_sync_stream_readers` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
-| 67 | — | — | — | — | — | — |
-| 68 | `/chat_collect`, `/chat_digest` | — | — | — | Собеседник в мессенджере | — |
-| 69 | — | `mentorship_add_participant_note` | — | — | Рабочее место наставника | — |
-| 70 | — | `personal_propose_capture`, `run_extractor` | `apply-captures`, `ke` | — | Диспетчер инструментов, Поставщик общих знаний | Маршрутизатор знаний, Фоновый монитор |
-| 71 | — | — | `pack-creator`, `pack-new` | — | — | Защитник секретов, Исполнитель работы |
-| 72 | — | `knowledge_pack_traverse`, `personal_pack_traverse` | `pack-subscribe` | — | Поставщик общих знаний | Поставщик знаний платформы |
-| 73 | — | — | — | — | — | — |
-| 74 | — | — | — | — | — | — |
-| 75 | `/feedback` | — | `agent-fault`, `iwe-bug-report` | — | Собеседник в мессенджере | Загрузчик контекста, Исполнитель работы |
-| 76 | — | `knowledge_feedback_stats` | — | — | Поставщик общих знаний | — |
-| 77 | — | — | `iwe-update` | — | — | Доставщик обновлений |
-| 78 | — | — | `audit-docs`, `audit-installation` | — | — | Контролёр реестров, Техосмотрщик |
-| 79 | — | — | `iwe-restore`, `remediate`, `restore-exocortex` | — | — | Наладчик, Хранитель |
-| 80 | `/edit_time`, `/onboarding_time`, `/slot`, `/waka`, `/wakatime` | — | `extend`, `iwe-rules-review`, `local-llm`, `setup-wakatime` | — | Собеседник в мессенджере | Исполнитель работы, Контролёр реестров, Техосмотрщик, Учётчик времени |
-| 81 | — | `acquire_file_lock`, `release_file_lock` | `check-secret`, `residency-gate` | — | — | Защитник секретов |
-| 82 | — | — | `kimi-peer-writer`, `peer-conversation` | — | — | Координатор агентов |
-| 83 | — | — | — | — | — | Контролёр реестров |
-| 93 | — | — | — | — | — | — |
-| 94 | — | — | — | — | — | — |
-| 95 | — | — | — | — | — | — |
-| 96 | — | — | — | — | — | — |
-| 98 | — | — | `iwe-update` | — | — | Доставщик обновлений, Публикатор |
-| 84 | — | — | `_template`, `author-mode`, `iwe-platform-redteam`, `skill-creator` | — | — | Публикатор |
-| 85 | — | — | `org-dev` | — | — | Исполнитель работы |
-| 101 | — | — | `org-dev` | — | — | Исполнитель работы |
-| 86 | — | — | — | — | — | Поставщик знаний платформы |
-| 87 | `/image`, `/video` | — | — | — | Собеседник в мессенджере | — |
-| 88 | — | — | — | — | — | — |
-| 89 | — | — | — | — | — | — |
-| 92 | — | — | — | — | — | — |
-| 99 | — | — | — | — | — | Загрузчик контекста, Учётчик работы |
-| 100 | — | — | — | — | — | Учётчик работы |
+| [1](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | — | — | — | `/connect`, `/iwe`, `/support`, `connect (plugins)`, `plugin iwe (ChatGPT/Codex)`, `plugin iwe-kimi` | Витрина | — |
+| [2](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | `/privacy`, `/tos` | — | — | `/chat-analyst`, `/privacy, /terms` | Витрина, Собеседник в мессенджере | — |
+| [3](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | `/navigator` | — | — | `/ (open.system-school.ru)`, `/fpf`, `/howtostart`, `/work-with-ai` | Витрина, Поставщик общих знаний, Собеседник в мессенджере | — |
+| [4](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | — | `fetch`, `search` | — | — | Поставщик общих знаний | — |
+| [5](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | — | — | — | — | — | — |
+| [6](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | — | — | — | — | — | — |
+| [7](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | `/about` | — | — | `/ (главная)`, `/guides`, `/programs, /qualification, /about, /offer` | Витрина, Собеседник в мессенджере | — |
+| [91](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#а-знакомство-без-регистрации) | — | — | — | `/subscribe` | Витрина | — |
+
+</details>
+
+#### Б. Аккаунт и подписка
+
+<details><summary>Таблица: Б. Аккаунт и подписка (15 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [8](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/connect_external`, `/my_clients` | — | — | — | Собеседник в мессенджере | — |
+| [9](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/profile`, `/tier` | `switch_mim_account`, `user_profile_get_tier`, `whoami` | — | — | Диспетчер инструментов, Привратник, Собеседник в мессенджере | — |
+| [10](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/buy`, `/subscribe_stars`, `/subscription` | — | — | `/quick-purchase` | Витрина, Собеседник в мессенджере | — |
+| [11](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | — | — | — |
+| [12](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | `routes/auth`, `routes/dashboard` | Проводник по пути | — |
+| [13](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/link`, `/unlink` | — | — | — | Собеседник в мессенджере | — |
+| [14](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/consent`, `/mentor_consent_history`, `/mentor_consent` | `grant_consent`, `learning_ctx_get_consent`, `learning_ctx_grant_consent`, `learning_ctx_set_mentor_self_assessment_consent` | `consent` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | Защитник секретов |
+| [15](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/status` | — | — | — | Собеседник в мессенджере | — |
+| [16](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | — | — | — |
+| [17](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/mydata_delete`, `/mydata` | `personal_delete`, `personal_purge_source` | — | — | Поставщик общих знаний, Собеседник в мессенджере | — |
+| [18](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | `routes/guide_onboarding`, `routes/guide_personal` | Проводник по пути | — |
+| [19](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/invite`, `/invites`, `/points`, `/rules` | — | — | — | Собеседник в мессенджере | — |
+| [20](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | — | — | Загрузчик контекста |
+| [21](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/calendar` | — | — | — | Собеседник в мессенджере | — |
+| [22](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/byok` | `user_profile_grant_llm_key`, `user_profile_list_llm_keys`, `user_profile_revoke_llm_key` | — | — | Привратник, Собеседник в мессенджере | Поставщик знаний платформы |
+
+</details>
+
+#### В. Своё пространство и записи
+
+<details><summary>Таблица: В. Своё пространство и записи (11 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [23](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/connect`, `/setup` | `create_personal_data_space`, `create_repository`, `fork_platform_template`, `request_equipment_upgrade` | `repo-new` | `templates/setup.html` | Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | Исполнитель работы |
+| [24](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/connect_guide`, `/github` | `github_connect`, `github_disconnect`, `github_status`, `personal_connect_source`, `personal_disconnect_source`, `personal_list_sources`, `personal_reindex_status`, `personal_reindex`, `user_profile_get_github_connected`, `user_profile_get_user_context` | — | — | Диспетчер инструментов, Поставщик общих знаний, Привратник, Собеседник в мессенджере | — |
+| [25](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/reflect` | `personal_concept_expand`, `personal_concept_search_by_name`, `personal_get_document`, `personal_history`, `personal_list_documents`, `personal_list_path`, `personal_memory_search`, `personal_search`, `personal_write`, `select_governance_repository` | — | — | Диспетчер инструментов, Поставщик общих знаний, Собеседник в мессенджере | — |
+| [26](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | `personal_new_post` | — | — | Поставщик общих знаний | — |
+| [27](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/remind` | `send_telegram_message` | — | — | Диспетчер инструментов, Собеседник в мессенджере | Фоновый монитор |
+| [28](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | — |
+| [29](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | — |
+| [30](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/me`, `/twin` | `dt_read_digital_twin`, `dt_write_digital_twin` | — | — | Держатель портрета, Собеседник в мессенджере | Фоновый монитор |
+| [31](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | — |
+| [32](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | `gdrive_add_mapping`, `gdrive_list_mappings`, `gdrive_sync`, `gdrive_upload` | — | — | — | — |
+| [33](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/iwe` | — | — | `iwe-browser-extension` | Собеседник в мессенджере | — |
+
+</details>
+
+#### Г. Личная работа по методам
+
+<details><summary>Таблица: Г. Личная работа по методам (14 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [34](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `day-close`, `day-open` | — | — | Учётчик работы, Фоновый монитор |
+| [35](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `week-close-pilot`, `week-close` | — | — | Учётчик работы |
+| [36](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `month-close` | — | — | Учётчик работы |
+| [37](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `run_strategist` | `discovery-session`, `strategy-session`, `verify-hypotheses` | — | Диспетчер инструментов | Исполнитель работы |
+| [38](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `create_wp`, `reconcile_governance_repository` | `run-protocol`, `wp-new` | — | Диспетчер инструментов | Учётчик работы |
+| [39](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `bottleneck-pick`, `decompose`, `platform-bottleneck` | — | — | Исполнитель работы |
+| [40](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `archgate`, `fpf`, `integration-gate`, `think`, `vdv`, `verify` | — | — | Исполнитель работы, Поставщик знаний платформы |
+| [41](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | `route`, `transcribe` | — | — | Исполнитель работы, Маршрутизатор знаний |
+| [42](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `get_run_status` | — | — | Диспетчер инструментов | Координатор агентов, Маршрутизатор задач |
+| [43](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `agent_status_list`, `agent_status_update`, `list_peer_statuses`, `update_peer_status` | — | `iweWpPanel.openDashboard`, `iweWpPanel.refresh`, `iweWpPanel.setDashboardAccessToken` | Диспетчер инструментов, Исполнитель серверных агентов | Координатор агентов, Табло работы |
+| [44](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | — | — | — | Контролёр ясности |
+| [45](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | — | — | — | — |
+| [46](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `hermes_chat` | — | — | Диспетчер инструментов | — |
+| [47](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | `/agent`, `/cancel`, `/claude`, `/close`, `/finalize` | — | — | — | Собеседник в мессенджере | — |
+
+</details>
+
+#### Д. Общие знания и роли ИИ
+
+<details><summary>Таблица: Д. Общие знания и роли ИИ (5 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [48](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#д-общие-знания-и-роли-ии) | — | `knowledge_concept_expand`, `knowledge_concept_search_by_name`, `knowledge_feedback`, `knowledge_get_document`, `knowledge_list_documents`, `knowledge_list_path`, `knowledge_list_sources`, `knowledge_resolve_document`, `knowledge_search`, `search`, `semantic_search` | — | — | Диспетчер инструментов, Поставщик общих знаний | — |
+| [49](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#д-общие-знания-и-роли-ии) | — | — | — | — | — | — |
+| [50](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#д-общие-знания-и-роли-ии) | — | `get_instructions`, `knowledge_load_skill`, `personal_load_skill` | — | — | Диспетчер инструментов, Поставщик общих знаний | — |
+| [51](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#д-общие-знания-и-роли-ии) | — | `fetch`, `search` | — | — | Поставщик общих знаний | — |
+| [102](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#д-общие-знания-и-роли-ии) | — | — | — | — | Поставщик общих знаний | — |
+
+</details>
+
+#### Е. Развитие
+
+<details><summary>Таблица: Е. Развитие (14 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [52](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/assessment`, `/diagnose`, `/test` | `checklist_get_checklist_status`, `dt_get_cp_profile`, `dt_update_profile_rcs`, `get_journey_state`, `learning_ctx_get_my_cp_assessment`, `learning_ctx_get_onboarding_state`, `learning_ctx_record_cp_assessment` | `diagnose`, `w-reflection` | — | Держатель портрета, Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | Проводник развития |
+| [53](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/guide` | `get_personal_guide_state`, `learning_ctx_get_personal_guide_state`, `learning_ctx_mark_personal_guide_bootstrap_completed`, `learning_ctx_mark_personal_guide_recommended`, `mark_personal_guide_bootstrap_completed`, `mark_personal_guide_recommended`, `render_personal_guide` | `connect-guide`, `lesson-close`, `lesson`, `personal-guide-render`, `personal-guide-start` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | Проводник развития |
+| [54](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `knowledge_analyze_verbalization`, `knowledge_concept_status`, `personal_analyze_verbalization`, `personal_concept_status` | `project-analysis` | — | Поставщик общих знаний | Проводник развития |
+| [55](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/progress` | `get_instruction`, `knowledge_learner_progress`, `learning_ctx_get_my_platform_work`, `personal_learner_progress` | — | — | Держатель портрета, Поставщик общих знаний, Проводник по пути, Собеседник в мессенджере | — |
+| [56](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/club`, `/contacts`, `/features`, `/help`, `/language`, `/mode`, `/settings`, `/support` | — | — | — | Собеседник в мессенджере | — |
+| [57](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `get_cognitive_brief`, `get_next_onboarding_step`, `learning_ctx_get_cognitive_brief` | — | — | Держатель портрета, Диспетчер инструментов | — |
+| [58](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `get_guide_sections`, `get_guides_list`, `get_section_content` | — | `routes/guide_universal` | Поставщик общих знаний, Проводник по пути | — |
+| [59](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/schedule` | `mentorship_create_consultation_case` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
+| [60](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `mentorship_begin_survey_result`, `mentorship_grant_survey_accompaniment`, `mentorship_list_survey_results`, `mentorship_read_survey_result`, `mentorship_revoke_survey_accompaniment`, `mentorship_revoke_survey_self_history`, `mentorship_submit_survey_result` | — | — | Рабочее место наставника | — |
+| [61](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/simulator` | `dt_get_profile_rcs`, `dt_snapshot_rcs` | — | — | Держатель портрета, Собеседник в мессенджере | — |
+| [62](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/learn`, `/marathon_info`, `/marathon_pause`, `/marathon_progress`, `/marathon_start`, `/marathon_stop` | — | — | — | Собеседник в мессенджере | — |
+| [63](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/channels`, `/feed_info`, `/feed_status`, `/feed` | — | — | — | Собеседник в мессенджере | — |
+| [90](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/train_info`, `/train` | — | — | — | Собеседник в мессенджере | — |
+| [97](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | — | — | — | — | — |
+
+</details>
+
+#### Ж. Наставничество
+
+<details><summary>Таблица: Ж. Наставничество (7 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [64](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/mentor_card`, `/mentor_invite`, `/mentor_note` | `mentorship_get_participant_card`, `mentorship_read_consultation_case`, `mentorship_resolve_participant_names` | `mentor-participant-brief` | — | Рабочее место наставника, Собеседник в мессенджере | Проводник развития |
+| [65](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | — | `mentorship_get_stream_overview` | — | — | Рабочее место наставника | — |
+| [66](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/mentor_stream` | `mentorship_grant_consultation_case_access`, `mentorship_grant_survey_mentor_access`, `mentorship_revoke_consultation_case_access`, `mentorship_revoke_survey_mentor_access`, `mentorship_sync_stream_readers` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
+| [103](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | средства не разнесены | — | — | — | — | — |
+| [67](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | — | — | — | — | — | — |
+| [68](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/chat_collect`, `/chat_digest` | — | — | — | Собеседник в мессенджере | — |
+| [69](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | — | `mentorship_add_participant_note` | — | — | Рабочее место наставника | — |
+
+</details>
+
+#### З. Вклад в знания
+
+<details><summary>Таблица: З. Вклад в знания (7 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [70](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | `personal_propose_capture`, `run_extractor` | `apply-captures`, `ke` | — | Диспетчер инструментов, Поставщик общих знаний | Маршрутизатор знаний, Фоновый монитор |
+| [71](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | — | `pack-creator`, `pack-new` | — | — | Защитник секретов, Исполнитель работы |
+| [72](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | `knowledge_pack_traverse`, `personal_pack_traverse` | `pack-subscribe` | — | Поставщик общих знаний | Поставщик знаний платформы |
+| [73](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | — | — | — | — | — |
+| [74](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | — | — | — | — | — |
+| [75](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | `/feedback` | — | `agent-fault`, `iwe-bug-report` | — | Собеседник в мессенджере | Загрузчик контекста, Исполнитель работы |
+| [76](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#з-вклад-в-знания) | — | `knowledge_feedback_stats` | — | — | Поставщик общих знаний | — |
+
+</details>
+
+#### И. Своя IWE
+
+<details><summary>Таблица: И. Своя IWE (12 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [77](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений |
+| [78](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `audit-docs`, `audit-installation` | — | — | Контролёр реестров, Техосмотрщик |
+| [79](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-restore`, `remediate`, `restore-exocortex` | — | — | Наладчик, Хранитель |
+| [80](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | `/edit_time`, `/onboarding_time`, `/slot`, `/waka`, `/wakatime` | — | `extend`, `iwe-rules-review`, `local-llm`, `setup-wakatime` | — | Собеседник в мессенджере | Исполнитель работы, Контролёр реестров, Техосмотрщик, Учётчик времени |
+| [81](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | `acquire_file_lock`, `release_file_lock` | `check-secret`, `residency-gate` | — | — | Защитник секретов |
+| [82](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `kimi-peer-writer`, `peer-conversation` | — | — | Координатор агентов |
+| [83](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | Контролёр реестров |
+| [93](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
+| [94](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
+| [95](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
+| [96](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
+| [98](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений, Публикатор |
+
+</details>
+
+#### К. Выпуск шаблона
+
+<details><summary>Таблица: К. Выпуск шаблона (1 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [84](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#к-выпуск-шаблона) | — | — | `_template`, `author-mode`, `iwe-platform-redteam`, `skill-creator` | — | — | Публикатор |
+
+</details>
+
+#### Л. Команда, организация, отдельные продукты
+
+<details><summary>Таблица: Л. Команда, организация, отдельные продукты (7 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [85](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | `org-dev` | — | — | Исполнитель работы |
+| [86](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | Поставщик знаний платформы |
+| [87](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | `/image`, `/video` | — | — | — | Собеседник в мессенджере | — |
+| [88](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
+| [89](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
+| [92](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
+| [101](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | `org-dev` | — | — | Исполнитель работы |
+
+</details>
+
+#### М. Внешняя работа с приёмкой
+
+<details><summary>Таблица: М. Внешняя работа с приёмкой (2 строк)</summary>
+
+| № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
+| --- | --- | --- | --- | --- | --- | --- |
+| [99](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#м-внешняя-работа-с-приёмкой) | — | — | — | — | — | Загрузчик контекста, Учётчик работы |
+| [100](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#м-внешняя-работа-с-приёмкой) | — | — | — | — | — | Учётчик работы |
 
 </details>
 
