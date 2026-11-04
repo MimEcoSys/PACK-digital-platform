@@ -17,6 +17,11 @@ related:
   - DP.D.095
   - DP.SC.056
 name_en: An own copy and a new service request
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.D.374 — Своя копия и новый запрос к сервису

@@ -6,7 +6,7 @@ type: method
 status: active
 created: '2026-11-04'
 updated: '2026-11-04'
-summary: Перед откатом задать ожидаемый результат.
+summary: "Проверять откат по ожидаемому состоянию: полное дерево при точном возврате, сохраняемые изменения при выборочной отмене; базу данных, настройки и внешнее состояние проверять отдельно."
 source: MC-sessions/2026-11/04/2026-11-04-17-session/report-draft.md — №15; восстановленный кандидат 26, DS-my-strategy@6f44782728adb3c412ba4f3ff0cacfe4d69af2b0
 decision_source: pilot
 decision_session: 2026-11-04-17-session
@@ -15,6 +15,11 @@ related:
   see_also:
   - DP.M.532
 name_en: Verify the entire rollback result
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.M.586 — Проверять результат отката целиком

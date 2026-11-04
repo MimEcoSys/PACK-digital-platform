@@ -16,6 +16,11 @@ related:
   see_also:
   - DP.FM.607
 name_en: Check each catalog source separately
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.FM.713 — Проверять каждый источник каталога отдельно

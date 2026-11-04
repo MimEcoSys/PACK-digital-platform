@@ -6,7 +6,7 @@ type: method
 status: active
 created: '2026-11-04'
 updated: '2026-11-04'
-summary: Для контракта «событие → правило → операция» классифицировать сверху вниз по первому совпадению:.
+summary: "Классифицировать обработку события по первому совпадению, проверяя сохранённый результат раньше очереди и курсора; не подменять историческую причину текущей конфигурацией или расчёт зачислением."
 source: MC-sessions/2026-11/04/2026-11-04-17-session/report-draft.md — №17; восстановленный кандидат 28, DS-my-strategy@fbcd314022f8754e4580bc0314cce112773fc17a
 decision_source: pilot
 decision_session: 2026-11-04-17-session
@@ -16,6 +16,11 @@ related:
   - DP.FM.689
   - DP.M.028
 name_en: Classify top down, checking the result before the cursor
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.M.587 — Классифицировать сверху вниз, проверяя результат раньше курсора

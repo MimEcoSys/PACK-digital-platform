@@ -16,6 +16,11 @@ related:
   - DP.D.372
   - DP.D.374
 name_en: Distinguish service conditions from four execution questions
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.D.373 — Различать условия услуги и четыре вопроса о её исполнении

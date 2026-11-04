@@ -16,6 +16,11 @@ related:
   - DP.D.373
   - DP.SC.070
 name_en: Showing does not prove mastery
+pack: PACK-digital-platform
+valid_from: '2026-11-04'
+schema_version: 1
+trust: medium
+epistemic_stage: forming
 ---
 
 # DP.D.372 — Показ не доказывает освоение
