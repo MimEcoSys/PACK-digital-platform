@@ -452,7 +452,7 @@ flowchart LR
 | hetzner-backstage (времянка предпродовой БД) | Хозяйство сервера | Docker-compose: PostgreSQL 16 с pgvector и Caddy для проверок переноса; описание времянки на том же сервере. | Hetzner dedicated | pgvector |
 | iwe-browser-extension | Модуль IWE, не платформы | Расширение Chrome считает набор текста на claude.ai и отправляет боту. | браузер пользователя | бот |
 | DS-iwe-session-trigger (расширение VS Code) | Модуль IWE, не платформы | Наблюдает за файлами сессий и запускает Claude Code автоматически. | VS Code пользователя | Claude Code |
-| DS-iwe-wp-panel (панель РП) | Модуль IWE, не платформы | Расширение VS Code: панель проектов и сессий агентов. | VS Code пользователя; launchd-таймер синхронизации на Mac | карточки и реестр РП, снимок tsekh-1 |
+| DS-iwe-wp-panel (панель РП) | Модуль IWE, не платформы | Расширение VS Code: панель проектов и сессий агентов. | VS Code пользователя; launchd-таймер синхронизации на Mac | карточки и реестр РП |
 | local-gateway (iwe-local-gateway) | Модуль IWE, не платформы | Локальный MCP для блокировок файлов и статусов параллельных агентов. | машина пользователя | - |
 | google-drive-mcp | Модуль IWE, не платформы | Локальный MCP-коннектор к Google Drive владельца. | машина владельца | Google Drive |
 | agent-trace-recorder и agent-trace-uploader (программы хуков Claude Code) | Модуль IWE, не платформы | Хуки записи трассы работы агентов и отправки её в event-gateway. | машины пользователей | event-gateway |
@@ -732,7 +732,7 @@ CREATE TABLE learning.behavior_indicators (
 | 48. Участник ищет в общих материалах | клиент → gateway-mcp → Ory и проверка тарифа → knowledge-mcp → Neon knowledge → ответ; шлюз пишет счётчик в mcp_access_events |
 | 10. Участник оплачивает подписку | ЮKassa → payment-receiver → event-gateway → learning.domain_event → обработчик проекций → база subscription; шлюз читает право при вызове |
 | 53. Участник получает руководство | по таймеру сборщик руководств (временно на tsekh-1) → репозиторий DS-personal-guide на GitHub → iwe-guide-web показывает; бот и MCP дают ссылки и запись |
-| 34. Пользователь открывает день | таймер launchd или systemd → диспетчер и `day-open-pipeline.sh` → файл плана в git; в сессии рантайм и MCP дополняют знаниями |
+| 34. Пользователь открывает день | таймер launchd или systemd → `day-open-pipeline.sh` → файл плана в git; в сессии рантайм и MCP дополняют знаниями |
 | 77. Пользователь обновляет IWE | `update.sh` канала release, main или rc → GitHub шаблона → проверка манифеста → файлы установки; при смене адреса MCP правит настройку |
 
 ## 11. Соответствия и средства по целям
