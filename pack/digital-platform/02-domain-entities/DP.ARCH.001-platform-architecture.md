@@ -1215,8 +1215,6 @@ CREATE TABLE learning.behavior_indicators (
 | [85](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | `org-dev` | — | — | Исполнитель работы |
 | [86](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | Поставщик знаний платформы |
 | [87](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | `/image`, `/video` | — | — | — | Собеседник в мессенджере | — |
-| [88](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
-| [89](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
 | [92](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | — | — | — | — |
 | [101](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#л-команда-организация-отдельные-продукты) | — | — | `org-dev` | — | — | Исполнитель работы |
 
