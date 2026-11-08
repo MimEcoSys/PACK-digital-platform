@@ -108,7 +108,7 @@ wp: WP-313
 → `/platform-bottleneck --horizon quarter`
 → Получает: топ-3 подсистемы по failing SC → приоритизированный бэклог подсистем
 
-### СЦ-3: Diagnosis boundary (Диагност R28)
+### СЦ-3: Diagnosis boundary (Диагност, DP.ROLE.042)
 «Пилот не прогрессирует — это C2 не работает или поведение пилота?»
 → `/platform-bottleneck --subsystem C2.S05` (подсистема, связанная с пилотом)
 → Получает: SC-status для подсистемы → если SC работают = behaviour issue; если failing = C2 issue

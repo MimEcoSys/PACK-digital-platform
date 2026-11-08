@@ -41,7 +41,7 @@ characteristic(final) = Σᵢ wᵢ ⋅ providerᵢ(input)
 1. **Activity provider** — детерминированный счёт по `activity_log` (правила FORM.089 §6.1).
 2. **Content provider** — LLM-производный proxy по первичному контенту (W-рефлексии, captures, переписка). Реализация: Honcho/Mem0/Hindsight-style memory.
 3. **Self-assessment provider** — опрос пользователя (структурированный, рубрики 1-5).
-4. **Peer-review provider** — экспертная оценка (R28 Диагност, наставник, peer-агент).
+4. **Peer-review provider** — экспертная оценка (Диагност (DP.ROLE.042), наставник, peer-агент).
 
 ## Контракт верификации
 
@@ -56,7 +56,7 @@ characteristic(final) = Σᵢ wᵢ ⋅ providerᵢ(input)
 cp.wld(final) = 0.3 ⋅ deterministic(activity_log)     # сильный сигнал для cp.rhy/skl/iwe/int, слабый для wld
               + 0.4 ⋅ proxy_world_systems(Honcho)     # семантический поиск признаков «системного взгляда» в captures/W-рефлексиях
               + 0.2 ⋅ self_assessment(survey)         # пилот сам оценивает 1-5 по рубрике
-              + 0.1 ⋅ peer_review(R28 Диагност)       # экспертная коррекция
+              + 0.1 ⋅ peer_review(Диагност)       # экспертная коррекция
 ```
 
 ## Bias-Annotation
