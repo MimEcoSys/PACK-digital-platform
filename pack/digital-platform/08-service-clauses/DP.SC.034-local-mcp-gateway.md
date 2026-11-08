@@ -146,7 +146,7 @@ Claude рефакторит `src/auth.py`, Kimikode пишет тесты в `te
 - Реализует: **DP.IWE.005** (Local Gateway Pack-сущность)
 - Использует: **DP.SC.023** (mcp-extensibility — расширяемость tool-набора)
 - Использует: **DP.SC.129** (generic-mcp-tool-discovery — для allowlist на агента)
-- Отличается от: **DP.SC.021** (mcp-knowledge-access — это про cloud knowledge, не про local routing)
+- Отличается от: **DP.SC.021** (свои знания через облачный сервер МИМ с подпиской, не локальная маршрутизация)
 - Парный SC: **DP.SC.035** (peer-agent-choreography — turn-based протокол поверх Gateway)
 - Не пересекается с: **DP.IWE.003 / Aisystant MCP** (другой паттерн, другая аудитория)
 
