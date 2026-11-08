@@ -22,7 +22,7 @@ related:
     - get_journey_state MCP (содержательная ось: cp_stage + bottleneck + has_diagnosis → journey_state, WP-349 Ф28)
     - Наставник (MIM.R.001 Режим 2, DP.SC.197, WP-498) — роль-компонент связки always-on чата; единственный контекст, где действует исключение из запрета читать raw-текст (§5, §6)
 created: 2026-05-16
-updated: 2026-07-20
+updated: 2026-11-08
 wp: WP-349
 ---
 
