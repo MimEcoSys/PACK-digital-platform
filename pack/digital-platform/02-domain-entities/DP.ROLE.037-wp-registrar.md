@@ -16,7 +16,7 @@ related:
     - DP.M.010   # методика lifecycle
     - DP.SC.013  # work-session (реализует через протокол)
 created: 2026-05-08
-updated: 2026-05-08
+updated: 2026-11-08
 wp: WP-297
 ---
 
@@ -82,7 +82,7 @@ wp: WP-297
 R1 Стратег (DP.ROLE.012)
     │ owner
     ▼
-Регистратор РП (DP.ROLE.037)
+Учётчик работы (DP.ROLE.037)
     │ реализует
     ├── DP.SC.033 (lifecycle integrity)
     │
