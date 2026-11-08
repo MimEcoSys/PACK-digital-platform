@@ -1,8 +1,10 @@
 ---
 id: DP.ROLE.037
-name: Регистратор РП
-name_ru: Регистратор РП
-name_en: WP Registrar
+name: Учётчик работы
+name_ru: Учётчик работы
+name_en: Work Recorder
+aliases:
+  - Регистратор РП
 type: role-description
 status: active
 valid_from: 2026-05-08
@@ -18,7 +20,9 @@ updated: 2026-05-08
 wp: WP-297
 ---
 
-# Регистратор РП (DP.ROLE.037)
+# Учётчик работы (DP.ROLE.037)
+
+> **Прежнее имя** — «Регистратор РП»; переименовано решением пилота 07.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > **Kind:** Integrity Coordinator (координатор целостности метаданных).
 > **Owner Role:** R1 Стратег (DP.ROLE.012) — владелец надсистемы governance IWE.
