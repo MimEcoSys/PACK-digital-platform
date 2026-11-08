@@ -20,7 +20,7 @@ related:
   see_also:
     - DP.SC.164  # Доставка персонального руководства (managed-обещание платформы; L2 расширяет этот SC через extends)
     - DP.SC.034  # Local MCP Gateway (in-process / Unix socket, single-user)
-    - DP.SC.021  # MCP knowledge access (универсальное знание)
+    - DP.SC.021  # свои знания через сервер МИМ с подпиской (знания платформы — переходно, до Open МИМ)
     - DP.D.052   # Персона / Память / Контекст (HD #27) — граница derived/raw
     - WP-410     # Чистый MCP-шлюз (Mode A: per-tool auth, gateway-asserted scope)
     - WP-404     # Локальный LLM-исполнитель (MLX/Apple Silicon)
