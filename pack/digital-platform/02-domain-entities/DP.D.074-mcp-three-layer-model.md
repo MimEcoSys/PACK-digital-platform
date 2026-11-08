@@ -9,7 +9,7 @@ edition: "2026-04"
 related:
   uses: [DP.ARCH.001, DP.D.031]
   realized_by: [WP-189]
-  expressed_in: [DP.SC.021, DP.SC.022, DP.SC.023]
+  expressed_in: [DP.SC.022, DP.SC.023]  # DP.SC.021 снят 08.11.2026 (РП-611 Ф23): слой знаний платформы больше не выражает
 ---
 
 # DP.D.074 — Трёхслойная модель MCP в IWE

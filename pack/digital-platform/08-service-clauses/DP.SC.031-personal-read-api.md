@@ -118,7 +118,7 @@ related:
 
 ## Связь с другими обещаниями
 
-- **Extends:** DP.SC.021 (mcp-knowledge-access) — паттерн «единая точка доступа для MCP tools» повторяется для Памяти.Derived.
+- **Связано с:** DP.SC.021 (свои знания через сервер МИМ с подпиской) — тот же сервер с подпиской отдаёт личные данные; прежний тезис 021 о единой точке доступа снят 08.11.2026 (РП-611 Ф23).
 - **Feeds:** DP.SC.032 (audit trail view personal data) — каждое обращение через этот API логируется.
 - **Related:** WP-187 (Gateway MVP), WP-227 (/twin service), WP-73 (Platform Architecture), WP-258 (Plugin API L2).
 - **Potentially-conflicts:** нет. Write-path (WP-253 event-gateway) идёт в другую сторону, не пересекается.
