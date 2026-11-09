@@ -1,6 +1,8 @@
 ---
 id: DP.METHOD.053
 name: Метод извлечения НЭП (Неудовлетворённость / Эмоция / Проблема)
+name_ru: Метод извлечения НЭП
+name_en: DEP Extraction Method
 type: method
 status: active
 valid_from: 2026-06-04
