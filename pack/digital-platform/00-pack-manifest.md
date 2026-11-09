@@ -1048,7 +1048,7 @@ Manifest updated: /Users/tserentserenov/IWE/PACK-digital-platform/pack/digital-p
 | DP.IWE.006 | Personal Guide Channels | IWE | — | draft |
 | DP.IWE.007 | 5 природ IWE (Five Natures of IWE) | IWE | Пять UX-природ IWE — чем IWE является для пилота: Мастерская (среда ежедневной работы), Железный человек (костюм-расширитель), Аватар (узел сети сопроизводителей), Тамагочи (выращиваемый питомец, требующий ухода), Наставник (ведёт по траектории развития). Дополняет 5 архитектурных видов DP.IWE.001 (ISO 42010) — другая онтологическая ось: природы про «чем IWE является для пилота», виды архитектуры про «как описывать IWE». Порядок природ отражает приоритет: работа → жизнь → обучение. Источники: пост club-126 (4 мая 2026), посты TG 675 + 679 + 143, уточнение пилота 2026-05-18 (+5-я природа), уточнение пилота 2026-05-20 (Со-творец → Тамагочи, reorder). | draft |
 | DP.IWE.008 | BYOB (Bring Your Own Base) | IWE | — | draft |
-| DP.IWE.009 | IWE Perimeter (Контур IWE) | IWE | — | draft |
+| DP.IWE.009 | Pilot Authority Boundary (Граница полномочий пилота в IWE) | IWE | — | draft |
 | DP.IWE.010 | IWE Machine (Машина IWE) | IWE | — | draft |
 | DP.IWE.011 | IWE Runtime Host Contract | IWE | — | draft |
 | DP.IWE.011-adapter-claude-code | Claude Code Adapter for IWE Host Contract | IWE | — | active |
