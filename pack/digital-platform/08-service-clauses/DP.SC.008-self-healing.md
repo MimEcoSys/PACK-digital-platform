@@ -38,10 +38,10 @@ related:
 
 | Сервис | Роль | Триггер |
 |--------|------|---------|
-| S31 L1 Unstick | R11 Наладчик | ⚡ timeout event |
-| S32 L2 Auto-Fix | R11 Наладчик | ⚡ error pattern |
-| S33 L3 Restart | R11 Наладчик | ⚡ health check fail |
-| S34 L4 Escalate | R11 Наладчик | ⚡ L2 failed 3x |
+| S31 L1 Unstick | R11 Наладчик бота | ⚡ timeout event |
+| S32 L2 Auto-Fix | R11 Наладчик бота | ⚡ error pattern |
+| S33 L3 Restart | R11 Наладчик бота | ⚡ health check fail |
+| S34 L4 Escalate | R11 Наладчик бота | ⚡ L2 failed 3x |
 
 ## Пользовательский путь
 
