@@ -15,7 +15,7 @@ related:
   realized_by:
     - DP.SC.030   # обещание discovery-стратегирования генерируется из этого метода
 created: 2026-06-04
-updated: 2026-07-27
+updated: 2026-11-09
 min_model_tier: opus
 model_floor_status: provisional
 ---
