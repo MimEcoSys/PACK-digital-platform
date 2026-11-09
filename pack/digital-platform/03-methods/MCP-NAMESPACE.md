@@ -60,10 +60,10 @@
 | MCP | Читает | Пишет | Владелец расчёта |
 |-----|--------|-------|-----------------|
 | `knowledge-mcp` | ZP, FPF, SPF, Pack платформы | — | Платформа |
-| `digital-twin-mcp` | Память.Derived (`indicators.calculated_profile`, `indicators.digital_twins`) | `1_declarative`, `2_collected` через bot-side writers | **projection-worker (WP-253)** + R28 Профилировщик = writers Памяти.Derived. Machine name = legacy alias (HD «display ≠ machine»). |
+| `digital-twin-mcp` | Память.Derived (`indicators.calculated_profile`, `indicators.digital_twins`) | `1_declarative`, `2_collected` через bot-side writers | **projection-worker (WP-253)** + Профилировщик (DP.ROLE.116) = writers Памяти.Derived. Machine name = legacy alias (HD «display ≠ machine»). |
 | `personal-knowledge-mcp` | Репо пользователя (выбранные) + Qdrant | GitHub коммит (async) | Пользователь |
 
-> **⚠️ digital-twin-mcp = read-only потребитель Памяти.Derived.** projection-worker (WP-253) + R28 Профилировщик = writers. On-demand recalc → вызов через projection-worker / R28, не внутри digital-twin-mcp.
+> **⚠️ digital-twin-mcp = read-only потребитель Памяти.Derived.** projection-worker (WP-253) + Профилировщик (DP.ROLE.116) = writers. On-demand recalc → вызов через projection-worker / Профилировщика (DP.ROLE.116), не внутри digital-twin-mcp.
 >
 > **Имя сервиса:** `digital-twin-mcp` (machine name) — historical artefact из эпохи когда «digital twin» был основным концептом. После переименования в **Память.Derived** (HD #27, WP-257) machine identity сохранена для обратной совместимости (бот, gateway-mcp upstream registry, OAuth registrations). В Pack документации, tool descriptions, OAuth consent screens — используется **Память.Derived**. Переименование machine identity отложено до Q3+ (по принципу осторожности; см. WP-222 Ф2 АрхГейт).
 

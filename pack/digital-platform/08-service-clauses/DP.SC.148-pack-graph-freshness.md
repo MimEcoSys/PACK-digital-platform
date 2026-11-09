@@ -5,7 +5,7 @@ type: sc
 status: draft
 layer: L2-Platform
 summary: "Pack-граф (concept_graph_nodes + edges) обновляется автоматически при push в Pack-репо и проверяется daily heartbeat + drift detector"
-consumer: R21 Publisher (бот), R27 Навигатор, любой MCP-клиент с knowledge_pack_traverse
+consumer: R21 Publisher (бот), Навигатор (MIM.R.007), любой MCP-клиент с knowledge_pack_traverse
 uses:
   - DP.SC.034    # Gateway MCP (webhook channel)
   - DP.SC.005    # Content publishing (pack update trigger)

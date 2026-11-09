@@ -7,7 +7,7 @@ type: sc
 status: active
 layer: L4-Personal
 summary: "Потребители (Аттестатор, Навигатор, Metabase) получают в digital_twins.data['3_derived']['3_2_mastery'] четыре числа: multiplier_auto, multiplier_manual, multiplier_drift, multiplier_7d_avg. Расхождение — сигнал, не ошибка."
-consumer: Диагност (DP.ROLE.042), R27 Навигатор, R24 Аттестатор, Metabase dashboards
+consumer: Диагност (DP.ROLE.042), Навигатор (MIM.R.007), R24 Аттестатор, Metabase dashboards
 created: 2026-05-17
 updated: 2026-05-17
 related:
@@ -33,7 +33,7 @@ wp: WP-299
 
 **Кому:**
 - **Диагност** (DP.ROLE.042) — использует `multiplier_7d_avg` как proxy AI-leverage пилота для рекомендаций ступени.
-- **R27 Навигатор** (PD.MIM.R.007) — обсуждает с пилотом расхождение `multiplier_drift` (что не видит автомат? что пилот переоценивает?).
+- **Навигатор (MIM.R.007)** — обсуждает с пилотом расхождение `multiplier_drift` (что не видит автомат? что пилот переоценивает?).
 - **R24 Аттестатор** (DP.ROLE.041) — учитывает мультипликатор в оценке прогресса (но не как единственный сигнал).
 - **Metabase** — отображает оба индикатора рядом с подсветкой расхождения.
 

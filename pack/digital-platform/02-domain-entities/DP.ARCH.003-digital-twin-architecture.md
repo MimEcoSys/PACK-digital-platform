@@ -5,7 +5,7 @@ name: Архитектура Digital Twin — единая точка расчё
 type: domain-entity
 status: active
 valid_from: 2026-04-30
-summary: "8 принципов разделения Calculator / Reader. Единственный калькулятор — R28 Profiler. Интерфейсы — stateless витрины. Каждая цифра трассируется к IND-коду метамодели."
+summary: "8 принципов разделения Calculator / Reader. Единственный калькулятор — Профилировщик (DP.ROLE.116). Интерфейсы — stateless витрины. Каждая цифра трассируется к IND-коду метамодели."
 related:
   uses: [DP.ARCH.004, DP.ROLE.028]
   enables: [DP.SC.125]
@@ -22,7 +22,7 @@ related:
 
 ### Принцип 1: Единственный калькулятор
 
-Все расчётные показатели вычисляются в одном месте — **R28 Profiler** (`DS-ai-systems/profiler/scripts/dt_calc.py`). Ни один интерфейс (бот, MCP, CLI) не выполняет расчёт самостоятельно.
+Все расчётные показатели вычисляются в одном месте — **Профилировщик (DP.ROLE.116)** (`DS-ai-systems/profiler/scripts/dt_calc.py`). Ни один интерфейс (бот, MCP, CLI) не выполняет расчёт самостоятельно.
 
 Реализация: `DS-ai-systems/profiler/scripts/recalculate_derived.py` — standalone runtime, подключается к Neon напрямую через psycopg2, итерирует все `digital_twins`, читает `data['2_collected']`, вычисляет и пишет только в `data['3_derived']`.
 
@@ -48,7 +48,7 @@ agency = derived.get("3_10_integral") or {}
 
 ### Принцип 5: Single writer в `3_derived`
 
-Только R28 Profiler пишет в `3_derived`. Все триггеры (cron 04:30 MSK, on-demand) вызывают один и тот же `recalculate_derived.py`. Бот — pure collector: пишет только в `2_collected`.
+Только Профилировщик (DP.ROLE.116) пишет в `3_derived`. Все триггеры (cron 04:30 MSK, on-demand) вызывают один и тот же `recalculate_derived.py`. Бот — pure collector: пишет только в `2_collected`.
 
 ### Принцип 6: Event-driven пересчёт как целевой режим
 
@@ -79,7 +79,7 @@ On-demand пересчёт из MCP интерфейса **не нужен** —
 
 | Артефакт | Роль |
 |----------|------|
-| `DS-ai-systems/profiler/scripts/dt_calc.py` | Canonical calculator (R28 Profiler) |
+| `DS-ai-systems/profiler/scripts/dt_calc.py` | Canonical calculator — Профилировщик, DP.ROLE.116 |
 | `DS-ai-systems/profiler/scripts/recalculate_derived.py` | Standalone runtime для пересчёта |
 | `digital-twin-mcp/metamodel/3_derived/` | Реестр IND-кодов (source of truth) |
 | `aist_bot_newarchitecture/db/queries/dt_sync.py` | Pure collector — пишет только `2_collected` |
