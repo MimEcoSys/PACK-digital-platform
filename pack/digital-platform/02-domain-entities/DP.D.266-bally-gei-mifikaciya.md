@@ -25,7 +25,7 @@ schema_version: 1
 |--|-------|--------|---------|
 | **Что** | earned_total — накопленная сумма начислений | `min(points, Σ(active_days_at_qual_i × daily_cap_i))` | cp-профиль (13 срезов + 7 bh, FORM.089) |
 | **Убывает?** | Никогда | Да (при оплате бонусами) | Нет |
-| **Кто пишет** | DP.ROLE.034 Rewards Projector | DP.ROLE.051 Points Redeemer | R28 Profiler |
+| **Кто пишет** | DP.ROLE.034 Rewards Projector | DP.ROLE.051 Points Redeemer | Профилировщик (DP.ROLE.116) |
 | **Для чего** | Лидерборд, статус, история | Скидка при оплате сервисов | Определяет daily_cap бонусов + функционал IWE |
 | **Ограничение** | — | История × дневной cap квалификации | — |
 

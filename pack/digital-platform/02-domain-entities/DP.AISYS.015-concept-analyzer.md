@@ -108,7 +108,7 @@ s2r_families: [F5]
 |-------------|--------|---------------|
 | ДЗ-чекер (DP.AISYS.008) | HTTP → knowledge-mcp | analyze_verbalization |
 | Портной (SC.020) | Gateway MCP | analyze_verbalization + learner_progress |
-| Навигатор (R27) | Gateway MCP | learner_progress |
+| Навигатор (MIM.R.007) | Gateway MCP | learner_progress |
 | Бот (DP.AISYS.014) | Gateway MCP | analyze_verbalization |
 | Экзокортекс | Gateway MCP | все 3 tools |
 

@@ -59,7 +59,7 @@ created: 2026-05-17
 | Эмитирует event `points_redeemed` в learning.domain_event | Не пишет напрямую в `point_balances` (через projection) |
 | Гарантирует idempotency по `payment_id` | Не приёмщик платежей (это oauth_server + handlers) |
 | Откат по timeout 30 мин | Не отвечает за саму оплату (это YooKassa / TG Stars) |
-| Snapshot квалификации в момент резерва | Не пересчитывает квалификацию (это R28 Profiler) |
+| Snapshot квалификации в момент резерва | Не пересчитывает квалификацию (это Профилировщик, DP.ROLE.116) |
 | Audit-trail каждого статусного перехода | Не делает финансовую отчётность (это Бухгалтер через Metabase) |
 
 ## 5. Исполнители

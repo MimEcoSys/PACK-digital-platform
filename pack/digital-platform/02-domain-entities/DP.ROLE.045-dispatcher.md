@@ -144,7 +144,7 @@ DP.ROLE.045 Dispatcher
 | DP.ROLE.039 Peer Agent | Sibling: peer-агент может писать task для другого peer через тот же канал; lock защищает от race |
 | DP.ROLE.044 Notification Dispatcher | Потребитель Dispatcher'а: при P0-failed → send_telegram_message |
 | DP.ROLE.053 Декомпозитор | Источник task'ов: при появлении новой РП open-loop ≥3h может предложить разбиение через template `task: artifactor-stages` |
-| DP.ROLE.027 Навигатор | Источник task'ов: может ставить «retro по неделе» через template `retro` |
+| Навигатор (MIM.R.007) | Источник task'ов: может ставить «retro по неделе» через template `retro` |
 | DP.ROLE.072 Разработчик-исполнитель | Потребитель задач конвейера — получает из очереди |
 | DP.ROLE.071 Ведущий разработчик | Контроль WIP и приоритетов очереди команды |
 
