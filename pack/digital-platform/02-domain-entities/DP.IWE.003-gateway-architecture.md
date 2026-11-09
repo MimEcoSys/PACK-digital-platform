@@ -170,7 +170,7 @@ Push в Pack-репо (GitHub)
 | Tool | Семантика | Free? |
 |---|---|---|
 | `run_strategist(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Стратега (R1 / DP.ROLE.012). 202 + run_id. | Требует подписку |
-| `run_extractor(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Экстрактора (DP.ROLE.027). 202 + run_id. | Требует подписку |
+| `run_extractor(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Экстрактора (DP.AISYS.013). 202 + run_id. | Требует подписку |
 | `get_run_status(run_id)` | Sync GET статуса run + result_url при completed. | **Free** для authenticated (read-only, не тратит LLM) |
 
 **Auto-onboarding (Ф4):** webhook `installation_repositories.added` → gateway-mcp параллельно создаёт `user_sources` (для индексации) и `agent_scopes_mvp` (для агентов) через `POST /v1/admin/scope-provision` agent-runner. Пилоту не нужен manual SQL.
