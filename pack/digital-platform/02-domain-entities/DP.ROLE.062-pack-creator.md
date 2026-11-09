@@ -4,13 +4,13 @@ name: Создатель паков (R30)
 type: role-description
 status: draft
 valid_from: 2026-05-31
-summary: "Роль LLM-сопровождения автора PACK-X через SPF-цикл наполнения 01-11: вызывает R28 Диагност для определения режима (assembly/hybrid/full SPF), ведёт по фазам, защищает инвариант read-only upstream FPF/SPF. Работает с одним PACK-X за сессию; cross-pack consistency — у R24."
+summary: "Роль LLM-сопровождения автора PACK-X через SPF-цикл наполнения 01-11: вызывает Диагноста (DP.ROLE.042) для определения режима (assembly/hybrid/full SPF), ведёт по фазам, защищает инвариант read-only upstream FPF/SPF. Работает с одним PACK-X за сессию; cross-pack consistency — у R24."
 related:
   specializes: [U.RoleAssignment]
   component_of: [DP.ROLE.001]
   realizes: [DP.SC.048]
   uses:
-    - DP.ROLE.042   # Диагност (R28) — выбор режима
+    - DP.ROLE.042   # Диагност — выбор режима
     - DP.ROLE.023   # Верификатор (R23) — verify готового Pack
     - SPF/process   # форма
   downstream_consumers:
@@ -46,12 +46,12 @@ wp: WP-369
 
 | Обязанность | Метод | Триггер |
 |-------------|-------|---------|
-| Определить режим по cp-профилю | Вызов R28 Диагност (DP.ROLE.042) | Перед фазой 01 |
+| Определить режим по cp-профилю | Вызов Диагноста (DP.ROLE.042) | Перед фазой 01 |
 | Вести по SPF/process 01-11 | Чтение SPF/process/*.md, follow steps | После scaffold |
 | Защищать upstream от write | Explicit deny при любом запросе write в SPF/FPF | При любом запросе на правку SPF/FPF |
 | Фиксировать stopping point | Запись `pack_state` + `spf_checkpoint` в state-файл | По готовности к verify |
 | Маршрутизировать к verify | Вызов R23 Верификатор | Когда Pack готов |
-| Downshift при недоступности R28 | Default: assembly + CTA | Если cp-профиль недоступен |
+| Downshift при недоступности Диагноста | Default: assembly + CTA | Если cp-профиль недоступен |
 
 ---
 
@@ -60,14 +60,14 @@ wp: WP-369
 **Читает:**
 - `SPF/process/*.md`, `SPF/pack-template/`, `FPF-Spec.md` (как референс)
 - Существующие `PACK-*/pack/*/` (как образцы distinction'ов для assembly)
-- `learning.cp_assessments` через R28 (через MCP)
+- `learning.cp_assessments` через Диагноста (через MCP)
 
 **Пишет:**
 - `PACK-X/pack/X/` (новый Pack, в рамках текущей сессии)
 - `PACK-X/pack/X/.spf-state.yaml` (state для resume между сессиями)
 
 **Вызывает:**
-- R28 Диагност (DP.ROLE.042) — Шаг 0
+- Диагност (DP.ROLE.042) — Шаг 0
 - R23 Верификатор (DP.ROLE.023) — при готовности Pack
 - `/pack-new` скилл — Шаг 1 (scaffold)
 

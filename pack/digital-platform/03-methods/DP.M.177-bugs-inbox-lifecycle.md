@@ -1,11 +1,11 @@
 ---
 id: DP.M.177
-name: Управление жизненным циклом bug-report в inbox
+name: Управление состояниями bug-report в inbox
 name_ru: Lifecycle bugs в inbox
 name_en: Bug Inbox Lifecycle Management
 type: method
 status: active
-summary: "Метод управляет жизненным циклом bug-report файлов в inbox/bugs/ через frontmatter-статус (open|resolved|invalid) и триггер Week Close: автоматический review открытых багов старше 14 дней с архивацией разрешённых."
+summary: "Метод управляет состояниями bug-report файлов в inbox/bugs/ через frontmatter-статус (open|resolved|invalid) и триггер Week Close: автоматический review открытых багов старше 14 дней с архивацией разрешённых."
 created: 2026-05-25
 trust:
   F: 4

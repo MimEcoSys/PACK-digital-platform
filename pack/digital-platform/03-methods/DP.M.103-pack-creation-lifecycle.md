@@ -1,6 +1,6 @@
 ---
 id: DP.M.103
-name: Жизненный цикл создания доменного Pack (7 фаз)
+name: Рабочий процесс создания доменного Pack (7 фаз)
 name_ru: Pack Creation Lifecycle от SOTA до навигационной карты
 name_en: Pack Creation Lifecycle (7-phase)
 type: method

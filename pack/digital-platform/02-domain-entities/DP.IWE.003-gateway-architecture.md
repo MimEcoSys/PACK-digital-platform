@@ -170,7 +170,7 @@ Push в Pack-репо (GitHub)
 | Tool | Семантика | Free? |
 |---|---|---|
 | `run_strategist(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Стратега (R1 / DP.ROLE.012). 202 + run_id. | Требует подписку |
-| `run_extractor(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Экстрактора (DP.ROLE.027). 202 + run_id. | Требует подписку |
+| `run_extractor(user_prompt, context_artifacts?, idempotency_key?)` | Async kick-off Экстрактора (DP.AISYS.013). 202 + run_id. | Требует подписку |
 | `get_run_status(run_id)` | Sync GET статуса run + result_url при completed. | **Free** для authenticated (read-only, не тратит LLM) |
 
 **Auto-onboarding (Ф4):** webhook `installation_repositories.added` → gateway-mcp параллельно создаёт `user_sources` (для индексации) и `agent_scopes_mvp` (для агентов) через `POST /v1/admin/scope-provision` agent-runner. Пилоту не нужен manual SQL.
@@ -267,6 +267,7 @@ Blue/green с health-check вместо in-place миграции: gateway v2 п
 
 ## 9. Связанные документы
 
+- **[DP.ARCH.001 Архитектура платформы и IWE](DP.ARCH.001-platform-architecture.md)** — архитектура IWE: функциональные подсистемы (§4.2), модули (§5.2), системы окружения (§5.4), размещение (§6.2); сверка этого документа с прежним описанием архитектуры была в заменённом DP.IWE.013 (§11); в DP.ARCH.001 таблица расхождений не перенесена.
 - [DP.ARCH.001](DP.ARCH.001-platform-architecture.md) — архитектура платформы (принципы ЭМОГССБ)
 - [DP.EXOCORTEX.001](DP.EXOCORTEX.001-modular-exocortex.md) — модульный экзокортекс
 - [DP.IWE.001](DP.IWE.001-intelligent-working-environment.md) — IWE как концепция

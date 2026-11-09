@@ -11,7 +11,7 @@ source: "session-close 2026-06-05 (peer-session 2026-06-05-09 outcome), git diff
 related:
   - DP.METHOD.053
   - DP.D.058
-last_updated: 2026-08-01
+last_updated: 2026-10-27
 ---
 
 # DP.M.277 — Single Pack method → N surfaces by 1:1 contract conformance
@@ -77,6 +77,8 @@ Surface-реализация дрейфует от Pack-метода: этап �
 - (в) будущий серверный multi-turn канал `run_planner` (MCP, гейт DP.SC.162)
 
 R23-верификация требовала построчного 1:1 соответствия этапов 1-7 во всех трёх surfaces.
+
+Ещё один пример: шесть расходящихся описаний этапов процесса (по числу, нумерации и названиям) сведены к одной канонической таблице; остальные поверхности ссылаются на неё.
 
 ## Связи
 

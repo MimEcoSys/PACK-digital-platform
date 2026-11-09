@@ -7,7 +7,7 @@ status: draft
 trust: 0.8
 epistemic_stage: observed
 valid_from: 2026-05-13
-updated: 2026-05-21
+updated: 2026-10-02
 related: [DP.IWE.001, DP.IWE.004, DP.M.037, DP.M.085, DP.ROLE.046]
 ---
 
@@ -19,6 +19,8 @@ related: [DP.IWE.001, DP.IWE.004, DP.M.037, DP.M.085, DP.ROLE.046]
 - **Sovereign-трек** (явный Гит) — пилот владеет репо `personal-guide` на своём GitHub-аккаунте
 - **Managed-трек** (тайный Гит) — платформа хранит руководство в системном репо `pg-{uuid8}` на org-аккаунте, пилот видит дайджест без GitHub-аккаунта
 
+Маршрут по умолчанию для нового пользователя — Managed-трек; Sovereign-трек выбирается явно. Оба трека остаются частью модели.
+
 ## Двухтрековая модель: T3a vs T3b
 
 > ⚠️ **Примечание о дрейфе (22 мая 2026).** В `tier_detector.py` T3b (явный гит + GitHub) детектируется как **T4_CREATION**, не T3. Концептуальная T3b-ячейка существует только в этом документе. Код: T3=ЦД без GitHub (→тайный гит), T4=GitHub OAuth (→явный гит). Таблица ниже описывает конфигурацию хранения — не критерий тира. WP-309 Ф9 (миграция T3a→T3b) на практике = переход T3→T4.
@@ -26,7 +28,7 @@ related: [DP.IWE.001, DP.IWE.004, DP.M.037, DP.M.085, DP.ROLE.046]
 | | **T3a — Тайный Гит (Managed)** | **T3b — Явный Гит (Sovereign)** |
 |---|---|---|
 | **GitHub-аккаунт** | Не нужен | Нужен |
-| **Тир в коде** | T3 (ЦД connected, нет GitHub) | T4 (GitHub OAuth connected) |
+| **Тир в коде** | T3 (ЦД connected, нет GitHub) | T4_CREATION (T4; GitHub OAuth connected) |
 | **Репо** | `aisystant/pg-{uuid8}` (private org) | `username/personal-guide` |
 | **Владелец** | Платформа (org-App) | Пилот |
 | **Что видит пилот** | Дайджест в боте + веб-страница `guide.system-school.ru` | Полное репо на GitHub + дайджест |
@@ -50,7 +52,7 @@ related: [DP.IWE.001, DP.IWE.004, DP.M.037, DP.M.085, DP.ROLE.046]
 | T1 | — | Только бот: `/slot`, `/points`, марафон | Бот |
 | T2 | — | Бот + браузер: Навигатор, Диагност | Бот + Браузер |
 | **T3** (T3a) | Тайный Гит | «Платформа ведёт» — нет GitHub, дайджест в боте | Бот + Managed-ридер |
-| **T4** (T3b) | Явный Гит | «Веду сам» — свой GitHub, полное репо + VS Code + полный IWE | Бот + Браузер + VS Code |
+| **T4_CREATION** (T3b) | Явный Гит | «Веду сам» — свой GitHub, полное репо + VS Code + полный IWE | Бот + Браузер + VS Code |
 
 ## Инварианты
 

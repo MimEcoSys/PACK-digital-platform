@@ -6,7 +6,7 @@ name_en: Skill Maintainer
 type: role-description
 status: draft
 valid_from: 2026-05-21
-summary: "Владеет каталогом скиллов IWE. Принимает решения о promote L3→L1, отвечает за обратную совместимость при обновлении L1-скиллов, управляет жизненным циклом скилла (active→experimental→deprecated)."
+summary: "Владеет каталогом скиллов IWE. Принимает решения о promote L3→L1, отвечает за обратную совместимость при обновлении L1-скиллов, управляет состояниями скилла (active→experimental→deprecated)."
 related:
   specializes: [U.RoleAssignment]
   component_of: [DP.ROLE.001]
@@ -50,7 +50,7 @@ wp: WP-348
 | Актуализировать `skills-catalog.yaml` | `generate-skills-catalog.sh` | При каждом promote |
 | Принять решение о promote L3→L1 | Критерии: SKILL.md v2 + smoke-test + DP.SC | По запросу Автора |
 | Поддерживать обратную совместимость | Версионирование + `depends_on` граф | При обновлении L1-скилла |
-| Управлять жизненным циклом | `status: deprecated` + `sunset:` | При устаревании |
+| Управлять состояниями скилла | `status: deprecated` + `sunset:` | При устаревании |
 | Рецензировать новые скиллы | Чеклист IntegrationGate для скиллов | Перед promote |
 
 ---

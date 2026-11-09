@@ -1,7 +1,7 @@
 ---
 id: DP.M.140
 type: method
-name: "Двухфазный жизненный цикл онтологических терминов: forming → formalized"
+name: "Два состояния онтологических терминов: forming → formalized"
 domain: digital-platform
 status: draft
 trust: medium
@@ -12,7 +12,7 @@ related:
   complements: [DP.M.139, DP.M.103]
 ---
 
-# Двухфазный жизненный цикл онтологических терминов: forming → formalized
+# Два состояния онтологических терминов: forming → formalized
 
 ## Суть
 

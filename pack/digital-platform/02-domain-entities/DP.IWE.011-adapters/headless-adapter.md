@@ -54,7 +54,7 @@ entry_point: headless-runner.sh
 
 ## B. Lifecycle Events — как headless генерирует события
 
-В CC жизненный цикл = хуки (`PostToolUse`, `Stop`, `UserPromptSubmit`).
+В CC этапы работы агента = хуки (`PostToolUse`, `Stop`, `UserPromptSubmit`).
 В headless те же хуки **работают** при `claude -p` — это ключевое свойство Claude CLI.
 
 | Контракт (событие) | Headless-механизм | Хук | Payload |

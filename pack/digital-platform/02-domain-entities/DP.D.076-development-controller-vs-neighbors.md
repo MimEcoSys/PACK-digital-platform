@@ -11,7 +11,7 @@ sources:
   - DP.ROLE.046 v0.3 (переименование «IWE Stage Controller» → «Контролёр развития»)
 related:
   refines: [DP.D.033]  # Role-centric architecture
-  references: [DP.ROLE.046, DP.ROLE.022, DP.ROLE.041, DP.ROLE.042, DP.ROLE.044, DP.ROLE.027, DP.SC.139]
+  references: [DP.ROLE.046, DP.ROLE.022, DP.ROLE.041, DP.ROLE.042, DP.ROLE.044, MIM.R.007, DP.SC.139]
 ---
 
 # DP.D.076 — Контролёр развития и его соседи

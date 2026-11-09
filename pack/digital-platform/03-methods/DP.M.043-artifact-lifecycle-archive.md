@@ -1,13 +1,13 @@
 ---
 id: DP.M.043
-name: "Жизненный цикл генерируемых артефактов: явный archive-шаг с retention-окном"
+name: "Рабочий процесс обращения с генерируемыми артефактами: явный archive-шаг с retention-окном"
 type: method
 status: active
 valid_from: 2026-05-14
 source: "WP-149 Ф-feedback-loop, DS-autonomous-agents commit d34cc88"
 ---
 
-# DP.M.043: Жизненный цикл генерируемых артефактов — явный archive-шаг с retention-окном
+# DP.M.043: Рабочий процесс обращения с генерируемыми артефактами — явный archive-шаг с retention-окном
 
 ## Проблема
 

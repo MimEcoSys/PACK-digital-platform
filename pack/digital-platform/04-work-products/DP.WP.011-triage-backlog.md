@@ -46,7 +46,7 @@ DS-my-strategy/inbox/WP-{N}-bot-techdebt.md
 | Бюджет | Оценка в часах |
 | Статус | pending / in_progress / done |
 
-## 4. Жизненный цикл
+## 4. Рабочий процесс
 
 ```
 Intake (S29 auto / manual) → Triage Session (S30) → Backlog → Sprint (WP-debt) → Done → Удаление из backlog

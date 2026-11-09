@@ -1,6 +1,6 @@
 ---
 id: DP.ROLE.042
-name: Диагност (R28)
+name: Диагност
 type: role-description
 status: draft
 valid_from: 2026-05-16
@@ -10,7 +10,7 @@ related:
   component_of: [DP.ROLE.001]
   realizes: [DP.SC.132]
   uses:
-    - PD.FORM.089   # алгоритм R28: 3 фазы, якорные вопросы, рубрики 1-5, bh-прокси, формула cp_confirmed_stage
+    - PD.FORM.089   # алгоритм Диагноста: 3 фазы, якорные вопросы, рубрики 1-5, bh-прокси, формула cp_confirmed_stage
     - PD.FORM.080   # нарративная дуга ступеней (для контекста рекомендации потока)
     - DP.ROLE.041   # Аттестатор — предоставляет bh-прокси (Фаза 3) и инициирует gate
     - DP.ROLE.038   # MCP Tool Consumer — Диагноcт доступен через MCP в VS Code
@@ -22,17 +22,19 @@ related:
     - get_journey_state MCP (содержательная ось: cp_stage + bottleneck + has_diagnosis → journey_state, WP-349 Ф28)
     - Наставник (MIM.R.001 Режим 2, DP.SC.197, WP-498) — роль-компонент связки always-on чата; единственный контекст, где действует исключение из запрета читать raw-текст (§5, §6)
 created: 2026-05-16
-updated: 2026-07-20
+updated: 2026-11-08
 wp: WP-349
 ---
 
-# Диагност — DP.ROLE.042 (R28)
+# Диагност — DP.ROLE.042
+
+> **Прежний заголовок** — «Диагност (R28)»; номер R28 убран решением пилота 07.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > # see DP.SC.132, DP.ROLE.042
 >
 > **Kind:** Interactive Dialogue Role + Background Monitoring Role (платформенная роль диагностики ученика).
 > **Owner Role:** Платформа (aisystant) — исполнитель ConversationHandler (TG), REST endpoint (браузер), MCP tool (VS Code), Сигнальщик инвалидации профиля (фоновый режим, см. §3.4).
-> **Источник алгоритма:** `role-prefixes.md R28`, `PD.FORM.089 §6.1`.
+> **Источник алгоритма:** `role-prefixes.md R28` (R28 — номер шаблона; в паке R28 — Профилировщик (DP.ROLE.116), DP.ROLE.001 §3.2, соответствие — §3.7), `PD.FORM.089 §6.1`.
 
 ---
 
@@ -109,7 +111,7 @@ else: recommended_stream = "S1"
 ```
 Пилот → /diagnose (TG / браузер / VS Code)
     ↓
-R28 Диагност: 3 фазы, ≤5 вопросов
+Диагност: 3 фазы, ≤5 вопросов
     ↓
 cp-профиль → learning.cp_assessments (Neon)
     ↓
@@ -225,7 +227,7 @@ Fallback: нет cp-данных → B-lite (stage_raw из Аттестатор
 
 | Документ | Где |
 |---|---|
-| Алгоритм R28: 3 фазы, якорные вопросы, рубрики | `PD.FORM.089 §6.1`, `role-prefixes.md R28` |
+| Алгоритм Диагноста: 3 фазы, якорные вопросы, рубрики | `PD.FORM.089 §6.1`, `role-prefixes.md R28` (R28 — номер шаблона; в паке R28 — Профилировщик (DP.ROLE.116), DP.ROLE.001 §3.2, соответствие — §3.7) |
 | Формула двойного gate | `PD.FORM.089 §5.1` |
 | Нарративная дуга ступеней | `PD.FORM.080 §3` (cp.wld → нарратив) |
 | Service Clause | `DP.SC.132` |

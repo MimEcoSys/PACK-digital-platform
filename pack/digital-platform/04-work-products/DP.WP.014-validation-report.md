@@ -38,7 +38,7 @@ related:
 | Summary | Total checks, pass, fail, warnings |
 | Verdict | Pass (все критические ok) / Fail (есть critical fail) |
 
-## 4. Жизненный цикл
+## 4. Рабочий процесс
 
 ```
 Запуск (S24 после S23 / S38 по запросу) → Проверки → Отчёт → Исправление (если fail) → Re-run

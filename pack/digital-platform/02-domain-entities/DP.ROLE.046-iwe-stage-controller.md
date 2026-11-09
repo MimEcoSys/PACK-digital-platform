@@ -18,7 +18,7 @@ related:
     - learning.domain_event  # event log
   downstream_consumers:
     - DP.ROLE.044 Notification Dispatcher — простой шаг → TG-нудж (через DP.SC.134)
-    - DP.ROLE.027 Портной (WP-149) — сложный материал → render через guide_render_queue
+    - DP.ROLE.030 Портной (WP-149) — сложный материал → render через guide_render_queue
     - MIM.R.007 Навигатор — методологический разрыв (3+ дня без активности) → личное сообщение
     - DP.ROLE.001 R13 Проводник — открытие нового функционала (подписка + N дней) → FSM-апдейт
     - DP.ROLE.042 Диагност — давность валидного cp-профиля → напоминание прогнать диагностику
@@ -110,7 +110,7 @@ Lock освобождается автоматически при заверше
 | DP.ROLE.042 Диагност | upstream-data | `learning.cp_assessments` (cp-профиль) |
 | DP.ROLE.022 Оркестратор | parent (specializes) | Контролёр — специализация Оркестратора для одной оси контроля. Оркестратор остаётся координатором между несколькими Контролёрами (если их станет больше) |
 | DP.ROLE.044 Notification Dispatcher | downstream-channel | Простой шаг → TG-нудж через DP.SC.134 |
-| DP.ROLE.027 Портной (WP-149) | downstream-channel | Сложный материал → render-задача через `guide_render_queue` |
+| DP.ROLE.030 Портной (WP-149) | downstream-channel | Сложный материал → render-задача через `guide_render_queue` |
 | MIM.R.007 Навигатор | downstream-channel | Методологический разрыв (3+ дня без активности при наличии истории `/slot`) → запрос на личное сообщение от Навигатора |
 | R13 Проводник | downstream-channel | Условие открытия нового функционала выполнено (подписка + N дней) → запрос на FSM-апдейт (новые кнопки) |
 | DP.ROLE.042 Диагност (повторно как downstream) | downstream-channel | Давность валидного cp-профиля > порога → напоминание прогнать `/diagnose` |
