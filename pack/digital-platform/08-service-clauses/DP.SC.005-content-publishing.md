@@ -5,7 +5,7 @@ type: sc
 status: draft
 layer: L4-Personal
 summary: "Автор пишет лонгрид для клуба (source-of-truth), согласовывает, адаптирует под каналы, публикует автоматически или вручную"
-consumer: R14 Заказчик, R4 Автор, R21 Публикатор (L4 Personal → L1 Ecosystem)
+consumer: R14 Заказчик, R4 Автор, R21 Публикатор постов клуба (L4 Personal → L1 Ecosystem)
 created: 2026-03-16
 updated: 2026-03-18
 related:
@@ -55,12 +55,12 @@ related:
 
 | Сервис | Роль | Триггер | Описание |
 |--------|------|---------|----------|
-| S25 Daily Scan | R21 Публикатор | ⏰ ежедн 03:00 | Сканирует docs/ на status=ready, target=club |
-| S26 Scheduled Publish | R21 Публикатор | ⏰ */30 мин | Публикует в Discourse по расписанию |
-| S27 Manual Publish | R21 Публикатор | 👤 /club publish | Немедленная публикация по команде |
-| S28 Comment Check | R21 Публикатор | ⏰ */15 мин | Уведомляет о новых комментариях |
+| S25 Daily Scan | R21 Публикатор постов клуба | ⏰ ежедн 03:00 | Сканирует docs/ на status=ready, target=club |
+| S26 Scheduled Publish | R21 Публикатор постов клуба | ⏰ */30 мин | Публикует в Discourse по расписанию |
+| S27 Manual Publish | R21 Публикатор постов клуба | 👤 /club publish | Немедленная публикация по команде |
+| S28 Comment Check | R21 Публикатор постов клуба | ⏰ */15 мин | Уведомляет о новых комментариях |
 | S46 Content Adaptation | R4 Автор | 👤 после согласования club-версии | Создаёт адаптации из source-of-truth для выбранных каналов |
-| S47 Multi-Channel Publish | R21 Публикатор | 👤 `/publish {channel}` / ⏰ расписание | Публикует адаптацию в соцсеть по `target` из frontmatter. 6 адаптеров: linkedin, x, tenchat, youtube, telegram, facebook |
+| S47 Multi-Channel Publish | R21 Публикатор постов клуба | 👤 `/publish {channel}` / ⏰ расписание | Публикует адаптацию в соцсеть по `target` из frontmatter. 6 адаптеров: linkedin, x, tenchat, youtube, telegram, facebook |
 
 ## Пользовательский путь
 

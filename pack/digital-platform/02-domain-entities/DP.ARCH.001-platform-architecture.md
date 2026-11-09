@@ -380,7 +380,7 @@ flowchart LR
 | Табло работы | показывает пользователю состояние рабочих продуктов в редакторе | описание метода не выделено | вид состояния рабочих продуктов | по выбору |
 | Учётчик времени | отмечает время работы пользователя в рантайме и редакторе | SKILL.md `setup-wakatime` | отметки времени; сводки времени во внешнем сервисе | по выбору |
 
-«Маршрутизатор знаний» (куда записать) и «Маршрутизатор задач» (кому поручить) — разные подсистемы. В таблице «Средства по потребностям» (§11) встречаются ещё четыре имени — Хранитель, Наладчик, Проводник развития, Публикатор: это кандидаты в подсистемы IWE, в список выше не приняты.
+«Маршрутизатор знаний» (куда записать) и «Маршрутизатор задач» (кому поручить) — разные подсистемы. В таблице «Средства по потребностям» (§11) встречаются ещё четыре имени — Хранитель, Наладчик IWE, Проводник развития, Публикатор: это кандидаты в подсистемы IWE, в список выше не приняты.
 
 Целевое направление «агенты по вызову из общей очереди задач» (§9.4) развивает Фонового дежурного, Координатора агентов и Маршрутизатора задач; отдельной подсистемы не вводит.
 
@@ -1233,7 +1233,7 @@ CREATE TABLE learning.behavior_indicators (
 | --- | --- | --- | --- | --- | --- | --- |
 | [77](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений |
 | [78](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `audit-docs`, `audit-installation` | — | — | Контролёр реестров, Техосмотрщик |
-| [79](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-restore`, `remediate`, `restore-exocortex` | — | — | Наладчик, Хранитель |
+| [79](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-restore`, `remediate`, `restore-exocortex` | — | — | Наладчик IWE, Хранитель |
 | [80](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | `/edit_time`, `/onboarding_time`, `/slot`, `/waka`, `/wakatime` | — | `extend`, `iwe-rules-review`, `local-llm`, `setup-wakatime` | — | Собеседник в мессенджере | Исполнитель работы, Контролёр реестров, Техосмотрщик, Учётчик времени |
 | [81](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | `acquire_file_lock`, `release_file_lock` | `check-secret`, `residency-gate` | — | — | Защитник секретов |
 | [82](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `kimi-peer-writer`, `peer-conversation` | — | — | Координатор агентов |
@@ -1959,7 +1959,7 @@ R24 Аудитор (DP.ROLE.024, VR.R.002) — не роль Техосмотр�
 
 </summary>
 
-- Кандидаты в подсистемы (Хранитель, Наладчик, Проводник развития, Публикатор) — не приняты.
+- Кандидаты в подсистемы (Хранитель, Наладчик IWE, Проводник развития, Публикатор) — не приняты.
 - Общие описания методов не выделены у Защитника секретов, Контролёра реестров и Табло работы, а также у роли IWE «Секретарь».
 - Имя «Учётчик работы» называет роль. Создаём ли ИИ-учётчика как отдельную систему со своими модулями или учёт работы остаётся функцией существующих подсистем (журнал в Git, записи платформы), а роль играет любой агент или сам человек? То же для Учётчика времени.
 - Перенос программ платформы с личного сервера автора tsekh-1 в GKE или VK Cloud (§2, §6.1): пока не сделан, отказ одного сервера затрагивает всех участников.
