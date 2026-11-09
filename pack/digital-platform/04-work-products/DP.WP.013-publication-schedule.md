@@ -20,7 +20,7 @@ related:
 
 ## 1. Определение
 
-**Publication Schedule** — расписание публикаций контента в клубе (systemsworld.club), генерируемое Публикатором (R21). Daily Scan (S25) сканирует посты со статусом `ready` и формирует расписание; Scheduled Publish (S26) и Manual Publish (S27) исполняют его.
+**Publication Schedule** — расписание публикаций контента в клубе (systemsworld.club), генерируемое Публикатором постов клуба (R21). Daily Scan (S25) сканирует посты со статусом `ready` и формирует расписание; Scheduled Publish (S26) и Manual Publish (S27) исполняют его.
 
 ## 2. Назначение
 
