@@ -18,7 +18,7 @@ source_capture: "DS-my-strategy/inbox/captures/2026-10.md:1183"
 extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-10-07-inbox-check.md"
 source_candidate: 1
 related:
-  see_also: [DP.M.304, DP.FM.128, DP.FM.400, DP.FM.029, DP.M.033]
+  see_also: [DP.M.304, DP.FM.128, DP.FM.400, DP.FM.029, DP.M.033, DP.FM.265]
 tags: [python, import, cross-platform, windows, module-load, dispatch, unreachable-branch]
 ---
 
@@ -70,6 +70,10 @@ Windows-ветка диспетчера (`is_windows_shell()` → `main_windows(
 Тест обнаружения: «Если файл новой зависимости удалить или испортить, продолжают ли работать функции хука, существовавшие до неё?» Нужны два сценария — зависимость отсутствует и зависимость сломана. Плюс мутационная проверка: без изоляции тест должен краснеть.
 
 Источник: git commit `021d203` в iwe-local-config (WP-605 Ф6), feed:git-diff 2026-11-02. Захват: `DS-my-strategy/inbox/captures/2026-11.md` («Необязательная зависимость, загружаемая на уровне модуля…»). Отчёт: `DS-my-strategy/inbox/extraction-reports/2026-11-06-inbox-check-4.md`, кандидат 2.
+
+## Граница перехвата при загрузке: Exception, не BaseException
+
+Дополнение 2026-11-10 (РП-170, отчёт 2026-11-09-inbox-check, кандидат 4). Импорт исполняет код модуля верхнего уровня, поэтому загрузчик-диагност (проверка готовности адаптера хоста), который превращал в понятную ошибку только `ImportError` и `SyntaxError`, пропускал `RuntimeError`, `KeyError` при чтении конфигурации и любое другое исключение при загрузке — проверка падала без понятной причины. Исправление (git commit `696f0e930` в DS-my-strategy, WP-561): в точке динамической загрузки перехватывать `Exception` и писать в диагноз тип исключения и имя модуля, а `BaseException` (`KeyboardInterrupt`, `SystemExit`) не перехватывать, чтобы процесс по-прежнему можно было прервать. Это не широкий перехват из DP.FM.265: исключение не прячется, а становится видимым диагнозом, и проверка готовности по-прежнему завершается отказом.
 
 ## Происхождение
 

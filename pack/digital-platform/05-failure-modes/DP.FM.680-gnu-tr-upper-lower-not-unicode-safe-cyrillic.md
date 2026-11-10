@@ -18,7 +18,7 @@ source: "git commit a13ea9c в iwe-local-config"
 source_capture: "DS-my-strategy/inbox/captures/2026-10.md:6684"
 extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-10-25-inbox-check.md"
 source_candidate: 5
-tags: [shell, tr, unicode, cyrillic, cross-platform, hooks]
+tags: [shell, tr, cut, unicode, cyrillic, cross-platform, hooks]
 ---
 
 # DP.FM.680 — GNU `tr` не Unicode-safe для кириллицы на Linux
@@ -40,6 +40,10 @@ tags: [shell, tr, unicode, cyrillic, cross-platform, hooks]
 ## Противодействие
 
 Заменить `tr` на UTF-8-safe построчное приведение регистра (`python3`, `perl`, ICU) для текста, который может содержать не-ASCII алфавит; `tr`-фоллбек оставить только при отсутствии интерпретатора. Решение в этом инциденте — общая библиотека `text-lower.sh` с python3-приведением и tr-фоллбеком. Локальный тест только на macOS не поймает этот дефект — для обнаружения нужен прогон/CI на Linux.
+
+## Смежный случай: GNU `cut -c` режет по байтам
+
+Дополнение 2026-11-10 (РП-170, отчёт 2026-10-31-inbox-check-3, кандидат 3; feed:git-diff 2026-10-31). Тот же класс «текстовая утилита GNU coreutils молча работает с байтами, а не с символами UTF-8» — у `cut -c`: опция обрезает строку по байтам, и двухбайтовый кириллический символ рвётся посередине. В источнике так обрезанные строки попадали в журнал невалидным UTF-8, и строгие читатели журнала падали. Пример: `printf 'привет' | cut -c1-3` выдаёт 3 байта (`d0 bf d1`) — полтора символа, а не «при»; проверено на GNU coreutils 9.7 в локали `en_US.UTF-8` (10.11.2026). Лечение — посимвольная обрезка средствами, понимающими UTF-8: например, `python3` (`s[:3]`) или `awk` с поддержкой многобайтовой локали (`substr($0,1,3)` в GNU awk 5.3 при UTF-8-локали даёт «при»; поведение других реализаций `awk` не проверялось).
 
 ## Связи
 
