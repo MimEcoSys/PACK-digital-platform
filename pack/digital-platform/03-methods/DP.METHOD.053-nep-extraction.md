@@ -15,9 +15,10 @@ related:
   realized_by:
     - DP.SC.030   # обещание discovery-стратегирования генерируется из этого метода
 created: 2026-06-04
-updated: 2026-11-09
+updated: 2026-11-11
 min_model_tier: opus
 model_floor_status: provisional
+model_floor_kind: quality   # в Библиотеке методов; платформенный канал — правило канала §4
 ---
 
 # DP.METHOD.053 — Метод извлечения НЭП
