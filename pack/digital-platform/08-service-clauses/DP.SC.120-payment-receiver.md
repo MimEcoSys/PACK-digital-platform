@@ -7,6 +7,8 @@ layer: L2-Platform
 summary: "Webhook-приёмник: провайдеры (YooKassa, Stripe, Paybox) → verify → normalize → idempotent write → finance_payments (Neon)"
 consumer: Участник (платит), Реестр подписок (subscription_grants), Gateway MCP (доступ), Бухгалтер (Metabase), Администратор (Directus)
 created: 2026-04-16
+updated: 2026-11-14
+wp: WP-246
 related:
   realizes: []
   extends: [DP.SC.112]
@@ -16,6 +18,8 @@ related:
 # [DP.SC.120] Приёмник платежей (Payment Receiver)
 
 ## Обещание
+
+**Держит:** владелец РП-246 (назначено пилотом 14.11.2026).
 
 **Кому:** Платформа (все сервисы, читающие `finance_payments` и `subscription_grants`).
 

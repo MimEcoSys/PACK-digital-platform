@@ -8,6 +8,7 @@ summary: "Public status page (status.system-school.ru) с composite uptime «п�
 consumer: Конечные пользователи платформы (ученики, волонтёры, core-team, потенциальные клиенты, инвесторы) — все, кто может зависеть от доступности платформы.
 created: 2026-04-25
 updated: 2026-11-14
+wp: WP-244
 related:
   realizes: [WP-244]  # требования R1 + R2
   uses: [DP.SC.123]  # internal observability как источник probes
@@ -18,6 +19,8 @@ related:
 # DP.SC.144 — User-Facing Platform Health
 
 ## Обещание
+
+**Держит:** владелец РП-244 (назначено пилотом 14.11.2026).
 
 **Кому:** конечным пользователям платформы — ученикам, волонтёрам, core-team, потенциальным клиентам, инвесторам. Любой, кому важно знать «работает ли платформа Aisystant сейчас».
 
