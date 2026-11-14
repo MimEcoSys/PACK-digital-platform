@@ -4,7 +4,7 @@ name: User-Facing Platform Health (информирование пользова
 type: sc
 status: draft
 layer: L2-Platform
-summary: "Public status page (status.aisystant.ru) с composite uptime «по девяткам» (формат 99.847%), real-time информирование пользователей об инцидентах через email/RSS subscriptions + TG-канал @aisystant_status. Реализуется через Better Stack SaaS."
+summary: "Public status page (status.system-school.ru) с composite uptime «по девяткам» (формат 99.847%), real-time информирование пользователей об инцидентах через email/RSS subscriptions + TG-канал @aisystant_status. Реализуется через Better Stack SaaS."
 consumer: Конечные пользователи платформы (ученики, волонтёры, core-team, потенциальные клиенты, инвесторы) — все, кто может зависеть от доступности платформы.
 created: 2026-04-25
 updated: 2026-04-25
@@ -26,7 +26,7 @@ related:
 Дополнительно: composite SLA «по девяткам» — публичный показатель надёжности платформы. Это **сигнал зрелости** для инвесторов, B2B-партнёров, потенциальных учеников.
 
 **Что получит потребитель:**
-- **Public status page** на `status.aisystant.ru` (custom domain CNAME на Better Stack):
+- **Public status page** на `status.system-school.ru` (custom domain CNAME на Better Stack):
   - Список сервисов с цветовой индикацией (зелёный/жёлтый/красный)
   - История инцидентов за 90 дней
   - Real-time детали активного инцидента (что задето, начало, ETA восстановления, обходные пути)
@@ -47,7 +47,7 @@ related:
 
 ## Критерий приёмки
 
-1. **status.aisystant.ru работает**, отображает ≥5 critical-path сервисов (event-gateway, aist-bot webhook, gateway-mcp, payment-receiver, Neon health), каждый с историей за 30+ дней.
+1. **status.system-school.ru работает**, отображает ≥5 critical-path сервисов (event-gateway, aist-bot webhook, gateway-mcp, payment-receiver, Neon health), каждый с историей за 30+ дней.
 2. **Composite uptime отображается** в формате `99.XYZ%` (3 знака после точки). Метод расчёта зафиксирован (см. §Расчёт). Окна: 24h, 7d, 30d, 90d.
 3. **Email subscription работает:** пользователь подписался → получает email при start/update/resolve каждого инцидента.
 4. **TG-канал @aisystant_status работает:** Better Stack webhook → AIST Bot poster → пост в канал. От инцидента до поста ≤3 мин на тестовом инциденте.
@@ -99,7 +99,7 @@ U_composite = min(U_critical_services)  # worst-of по critical-path
 
 | Канал | Кто настраивает | Что получает | Латентность |
 |-------|------------------|--------------|-------------|
-| **status.aisystant.ru** | автоматически (Better Stack) | визуальный статус всех сервисов, история, composite uptime | ≤2 мин (auto) |
+| **status.system-school.ru** | автоматически (Better Stack) | визуальный статус всех сервисов, история, composite uptime | ≤2 мин (auto) |
 | **Email subscriptions** | пользователь сам (форма на status page) | start/update/resolve email | ≤3 мин |
 | **RSS feed** | пользователь сам (RSS reader) | XML feed инцидентов | ≤2 мин (auto) |
 | **TG-канал @aisystant_status** | команда (создаёт канал, AIST Bot — admin); пользователь подписывается | автопост каждый incident lifecycle event | ≤3 мин |
@@ -114,7 +114,7 @@ U_composite = min(U_critical_services)  # worst-of по critical-path
 | Better Stack down | Status page недоступен. Probes не идут. AIST Bot не получает webhook. | Better Stack имеет свой status.betterstack.com — мы его пингуем (status check на нашей стороне через Cloudflare Workers cron). Альтернативный канал: ручной TG-пост от команды. |
 | TG webhook delivery fail | Сообщения в канал не приходят. Email/RSS работают как fallback. | Better Stack retry до 5 раз. AIST Bot имеет idempotency на duplicate webhook. |
 | Composite uptime неточный | Отображается, но цифра расходится с realtime. Пользователь видит выше/ниже истинного. | SLA reports из Better Stack пересчитываются 1 раз/час; обновление страницы вернёт корректное значение. |
-| Custom domain (CNAME) недоступен | status.aisystant.ru не открывается; пользователь идёт на дефолтный Better Stack URL (status-betterstack-uptime.com/...). | DNS fix; на главной странице aisystant.ru явная ссылка на резервный URL. |
+| Custom domain (CNAME) недоступен | status.system-school.ru не открывается; пользователь идёт на дефолтный Better Stack URL (status-betterstack-uptime.com/...). | DNS fix; на главной странице aisystant.ru явная ссылка на резервный URL. |
 
 ## Конфиденциальность инцидентов
 
@@ -168,12 +168,12 @@ U_composite = min(U_critical_services)  # worst-of по critical-path
 - **Реализуется WP:** [WP-244](../../../DS-my-strategy/inbox/WP-244-platform-observability.md) фазы Ф2 (настройка Better Stack) + Ф4 (alert routing) + Ф7 (TG-канал @aisystant_status).
 - **Внешняя зависимость:** Better Stack SaaS (https://betterstack.com) — пишет, агрегирует, рендерит status page, рассылает email/RSS.
 - **Использует AIST Bot:** для постинга в TG-канал @aisystant_status (webhook receiver).
-- **Связь с UI:** в будущем (web-UI после Ф10.0 Landing) — banner на главной странице aisystant.ru при активном инциденте (lazy fetch status.aisystant.ru API).
+- **Связь с UI:** в будущем (web-UI после Ф10.0 Landing) — banner на главной странице aisystant.ru при активном инциденте (lazy fetch status.system-school.ru API).
 
 ## Маркетинговый аспект
 
 Composite uptime метрика — это **публичный сигнал зрелости платформы**. На лендинге (после WP-188 Ф10.0) можно показывать «99.95% uptime последние 30 дней» как один из proof-points. Это не основной маркетинговый посыл, но рабочий вторичный сигнал для B2B и инвесторов.
 
-> «Aisystant — платформа развития интеллекта с публичной прозрачностью работы. status.aisystant.ru обновляется в реальном времени, инциденты документируются, метрика SLA публикуется ежемесячно.»
+> «Aisystant — платформа развития интеллекта с публичной прозрачностью работы. status.system-school.ru обновляется в реальном времени, инциденты документируются, метрика SLA публикуется ежемесячно.»
 
 Это создаёт ожидание operational excellence, что мотивирует команду поддерживать высокий uptime — побочный эффект публичности.
