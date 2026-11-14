@@ -7,7 +7,7 @@ layer: L2-Platform
 summary: "Минимально достаточный набор сигналов о здоровье 12 БД и ~10 сервисов для команды: реактивные ответы, проактивные алерты, retro-queries. SaaS-first (Better Stack owner external observability) + узкая projection в Neon для JOIN с business-данными."
 consumer: Платформенная команда (R2 Архитектор, R5 CRM+оплата), AIST-бот (TG-алерты), WP-253 Ф9.6 reliability gate verifier
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-11-14
 related:
   realizes: [WP-244]
   uses: [DP.ARCH.004, DP.SC.020, DP.SC.122]
@@ -62,7 +62,7 @@ related:
    │ Better Stack (SaaS — owner of external observability)│
    │                                                      │
    │  ├ Uptime monitoring (probes 5-min из 13 регионов)   │
-   │  ├ Status page (status.aisystant.ru, см. DP.SC.124)  │
+   │  ├ Status page (status.system-school.ru, см. DP.SC.124)  │
    │  ├ Logs aggregation (CF Workers через Logpush)       │
    │  ├ Composite uptime SLA «по девяткам» (см. DP.SC.124)│
    │  ├ Incidents detection (3+ fail подряд)              │

@@ -15,7 +15,7 @@ related:
     - DP.SC.122   # rewards projection как источник latency-метрик
 external_dependency: "Better Stack SaaS — owner external observability data (probes, logs, incidents, composite SLA, status page rendering, public subscriptions). ArchGate β зафиксирован 25 апр 2026."
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-11-14
 ---
 
 # Platform Observer (DP.ROLE.035)
@@ -73,7 +73,7 @@ updated: 2026-04-25
 |---|----------------|------------|--------------|---------------------|
 | **A** | **Better Stack monitors** | HTTP probes 5-min из 13 регионов; детекция 3+ fail подряд = incident; composite SLA расчёт по multiplicative product | Better Stack SaaS | Ф2 WP-244 (W18, ~1h конфигурация) |
 | **B** | **Cloudflare Workers Logpush** | Перехват `console.log` от 4 MCP Workers + event-gateway → Better Stack Logs (R2 fallback при downgrade) | Cloudflare native (config 1 раз) | Ф3 WP-244 (W18-W19, ~1h) |
-| **C** | **Better Stack status page** | Public rendering на status.aisystant.ru (CNAME); composite uptime «по девяткам»; public subscriptions (email, RSS) | Better Stack SaaS | Ф2 WP-244 (вместе с monitors) |
+| **C** | **Better Stack status page** | Public rendering на status.system-school.ru (CNAME); composite uptime «по девяткам»; public subscriptions (email, RSS) | Better Stack SaaS | Ф2 WP-244 (вместе с monitors) |
 | **D** | **Internal metrics writer** (наш код) | event-gateway / projection-worker → INSERT в `health.internal_metrics` (projection lag, custom business metrics, schema reject rate) | event-gateway (CF Worker) + projection-worker (Python Railway) — добавление 5-10 строк в существующий код | Ф3b WP-244 (W19, ~1h, координация с WP-253 Ф9.6) |
 | **E** | **AIST Bot status poster** | Receives Better Stack webhook на incident lifecycle → постит в TG-канал @aisystant_status (для пользователей) + DM команде | aist-bot (Railway), новый handler ~50 LOC | Ф4 WP-244 (W19-W20, ~1.5h) |
 

@@ -7,7 +7,7 @@ layer: L2-Platform
 summary: "Public status page (status.system-school.ru) с composite uptime «по девяткам» (формат 99.847%), real-time информирование пользователей об инцидентах через email/RSS subscriptions + TG-канал @aisystant_status. Реализуется через Better Stack SaaS."
 consumer: Конечные пользователи платформы (ученики, волонтёры, core-team, потенциальные клиенты, инвесторы) — все, кто может зависеть от доступности платформы.
 created: 2026-04-25
-updated: 2026-04-25
+updated: 2026-11-14
 related:
   realizes: [WP-244]  # требования R1 + R2
   uses: [DP.SC.123]  # internal observability как источник probes

@@ -2251,7 +2251,7 @@ generated: true
 | DP.SC.141 | Зачёт баллов в оплату | Канал «Баллы» в Billing Module: участник применяет накопленные баллы как скидку к оплате сервиса (резерв-перед-оплатой, двухфазный коммит) | draft |
 | DP.SC.142 | Текстовый анализ косвенных характеристик (cp.wld / cp.agt / bh.awr) | Портной и Диагност получают актуальные прокси cp.wld, cp.agt, bh.awr из текстового содержания пилота — ТОЛЬКО для рекомендаций. В расчёт stage/certificate не входят. | draft |
 | DP.SC.143 | LMS Subscription Webhook (Bridge-2 контракт с LMS Aisystant) | Контракт endpoint'а на стороне LMS Aisystant для приёма подписок от нашего payment-receiver. Артефакт для передачи Диме. | draft-not-delivered |
-| DP.SC.144 | User-Facing Platform Health (информирование пользователей о здоровье платформы) | Public status page (status.aisystant.ru) с composite uptime «по девяткам» (формат 99.847%), real-time информирование пользователей об инцидентах через email/RSS subscriptions + TG-канал @aisystant_status. Реализуется через Better Stack SaaS. | draft |
+| DP.SC.144 | User-Facing Platform Health (информирование пользователей о здоровье платформы) | Public status page (status.system-school.ru) с composite uptime «по девяткам» (формат 99.847%), real-time информирование пользователей об инцидентах через email/RSS subscriptions + TG-канал @aisystant_status. Реализуется через Better Stack SaaS. | draft |
 | DP.SC.145 | Llm Router | — | active |
 | DP.SC.146 | Secret Drift Detector | — | active |
 | DP.SC.147 | Агрегирующий пайплайн cognitive brief | Навигатор (MIM.R.007) перед ответом читает агрегированный brief из выходов Оркестратора, Портного, activity_log и Cognitive Proxy. Без text_analysis consent — только детерминированные поля. | draft |
