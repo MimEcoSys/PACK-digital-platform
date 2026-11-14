@@ -5,7 +5,7 @@ status: draft
 layer: L4-Personal
 audience: [R1 Стратег, R5 Архитектор, R14 Заказчик]
 created: 2026-04-24
-updated: 2026-10-02
+updated: 2026-11-14
 links: [DP.D.052, DP.ARCH.004, WP-187, WP-227, WP-73, WP-109, WP-117]
 related:
   extends: []
@@ -112,9 +112,9 @@ related:
 
 | Сервис | Роль | Триггер | Путь |
 |--------|------|---------|------|
-| gateway-mcp (`dt_*` tools) | R29 API-слой | MCP request с JWT | DS-MCP/gateway-mcp |
-| /twin MCP endpoint | R29 API-слой | HTTP POST с JWT | /twin (WP-227) |
-| projection-worker | R6 Кодировщик | LISTEN/NOTIFY от event-gateway | WP-253 P2 |
+| gateway-mcp (`dt_*` tools) | Роль исполнителя не назначена; архитектор отвечает за целостность модели чтения | MCP request с JWT | DS-MCP/gateway-mcp |
+| /twin MCP endpoint | Роль исполнителя не назначена; архитектор отвечает за целостность модели чтения | HTTP POST с JWT | /twin (WP-227) |
+| multi-domain-projection-worker | DP.ROLE.034 Проектор баллов | Опрос событий от курсора | WP-307 W3 |
 
 ## Связь с другими обещаниями
 

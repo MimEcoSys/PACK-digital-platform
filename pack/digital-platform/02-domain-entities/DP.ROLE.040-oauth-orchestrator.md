@@ -12,7 +12,7 @@ related:
     - DP.SC.025   # capture-bus (failure logging)
     - DP.SC.130   # OAuth Gateway SC
 created: 2026-05-12
-updated: 2026-05-12
+updated: 2026-11-14
 wp: WP-305 Ф1
 ---
 
@@ -20,7 +20,7 @@ wp: WP-305 Ф1
 
 <!-- see DP.SC.130, WP-305 Ф1 -->
 
-> **Kind:** Service role (роль сервиса в L2 платформенном слое, реализуется как CF Worker).
+> **Kind:** Service role (роль сервиса в L2 платформенном слое, реализуется модулем в CF Worker `gateway-mcp`).
 > **Owner Role:** Platform Architect (Дмитрий Церенцеренов) — на этапе bootstrap; в будущем — DP.ROLE.012 Стратег + DevOps.
 
 ## 1. Миссия
@@ -31,7 +31,7 @@ wp: WP-305 Ф1
 - НЕ хранит бизнес-логику конкретного провайдера (например, не разбирает GitHub Issues — это другой сервис).
 - НЕ обрабатывает webhook от провайдеров (это `gateway-mcp` или `aist_bot.oauth_server.py:/webhook/github/workbook`).
 - НЕ создаёт identity (это Ory Hydra) — только разрешает её.
-- НЕ зависит от bot process (standalone CF Worker, deploy/test независимо).
+- НЕ зависит от процесса бота; модуль развёртывается вместе с CF Worker `gateway-mcp`.
 
 ## 2. Обязанности
 
@@ -125,14 +125,14 @@ wp: WP-305 Ф1
 - **Использует:** [DP.SC.025](../08-service-clauses/DP.SC.025-capture-bus.md) (capture-bus)
 - **Координируется с:** DP.ROLE.038 MCP Tool Consumer (через VS Code skill `/connect-guide`)
 - **Координируется с:** R21 Publisher (бот) — proxy-flow для legacy Telegram пилотов
-- **Не подчиняется:** ни одной роли (L2 standalone сервис)
+- **Не подчиняется:** ни одной роли (L2 сервисная роль; её исполняет модуль `gateway-mcp`)
 - **WP:** WP-305 Ф1
 
 ## 9. Различение vs другие роли
 
 | Роль | Отличие от OAuth Orchestrator |
 |------|--------------------------------|
-| **gateway-mcp** (DS-MCP) | gateway-mcp — это MCP-router и knowledge access control. OAuth flows там есть (Ory + GitHub App), но в ArchGate W20 решено вынести OAuth в отдельный сервис для DDD separation. После Ф5 gateway-mcp вызывает oauth-gateway для token resolution, не сам обслуживает OAuth. |
+| **gateway-mcp** (DS-MCP) | Общий CF Worker предоставляет MCP-маршрутизацию и контроль доступа к знаниям. Модуль `gateway-mcp/src/oauth/` исполняет роль OAuth Orchestrator в том же Worker; отдельный Worker возможен лишь при триггерах выделения из §6. |
 | **DP.ROLE.038 MCP Tool Consumer** | MCP Tool Consumer работает с tools на стороне LLM-клиента. OAuth Orchestrator — сервис, к которому обращается клиент за идентичностью. |
 | **R21 Publisher (бот)** | Publisher отправляет user-facing сообщения через TG. OAuth Orchestrator работает на уровне HTTP redirects, не TG-каналом. После Ф4 бот вызывает gateway, не наоборот. |
 | **Ory Hydra (внешний)** | Hydra = Authorization Server (issues identity + session). Orchestrator = Resource Coordinator (consumes identity для bridging внешних OAuth-провайдеров). |
@@ -144,4 +144,4 @@ wp: WP-305 Ф1
 3. **Bot's state-token HMAC secret:** общий с gateway (shared CF env) ИЛИ separate signing key с verify-by-gateway? Рекомендация: shared (KISS), при компрометации — rotate обе стороны.
 4. **Migration strategy для 5 остальных OAuth (Ф5):** все сразу или по одному провайдеру? Рекомендация: GitHub App в Ф2-Ф4, остальные — по мере того как бот сужается до Marathon-only (отдельный РП).
 5. **Identity-collision handling (Сценарий 4 SC.130):** UPDATE/INSERT logic — где live? В сервисе (атомарно через WHERE clause) или в DB constraint? Constraint лучше.
-6. **Bot proxy degradation:** если oauth-gateway недоступен → бот возвращает «service temporarily unavailable» (текущее) или fallback на legacy oauth_server.py (если ещё не удалён)? Рекомендация: fallback в течение migration window (Ф4-Ф5), потом удалить.
+6. **Bot proxy degradation:** если OAuth-модуль `gateway-mcp` недоступен → бот возвращает «service temporarily unavailable» (текущее) или fallback на legacy oauth_server.py (если ещё не удалён)? Рекомендация: fallback в течение migration window (Ф4-Ф5), потом удалить.
