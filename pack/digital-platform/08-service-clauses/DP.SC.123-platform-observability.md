@@ -11,7 +11,7 @@ updated: 2026-11-14
 related:
   realizes: [WP-244]
   uses: [DP.ARCH.004, DP.SC.020, DP.SC.122]
-  realized_by_user_facing: [DP.SC.124]  # Public status page для пользователей — отдельное обещание
+  realized_by_user_facing: [DP.SC.144]  # Public status page для пользователей — отдельное обещание
   complementary: [WP-217]  # AI-observability (поведение агента) — другой слой
   source: "WP-244 Ф0 IntegrationGate (drift-ревизия 25 апр 2026 после DP.ARCH.004 v2.3) + ArchGate (вариант β: Better Stack owner external + узкая internal_metrics в Neon)"
 ---
@@ -20,7 +20,7 @@ related:
 
 ## Обещание
 
-> **Изменение 25 апр (после ArchGate):** scope этого SC сужен до **internal observability** (для команды). Public status page для пользователей вынесен в **[DP.SC.124 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md)**. ArchGate выбрал вариант β: SaaS-first (Better Stack owner external), узкая `health.internal_metrics` в Neon только для projection lag и custom business metrics, JOIN которых с business-таблицами невозможен в Better Stack.
+> **Изменение 25 апр (после ArchGate):** scope этого SC сужен до **internal observability** (для команды). Public status page для пользователей вынесен в **[DP.SC.144 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md)**. ArchGate выбрал вариант β: SaaS-first (Better Stack owner external), узкая `health.internal_metrics` в Neon только для projection lag и custom business metrics, JOIN которых с business-таблицами невозможен в Better Stack.
 
 **Кому:** платформенной команде (R2 Архитектор, R5 CRM+оплата), AIST-боту (как потребителю TG-алертов команде), WP-253 Ф9.6 reliability gate verifier (читает projection lag/custom metrics из `health.internal_metrics`).
 
@@ -62,9 +62,9 @@ related:
    │ Better Stack (SaaS — owner of external observability)│
    │                                                      │
    │  ├ Uptime monitoring (probes 5-min из 13 регионов)   │
-   │  ├ Status page (status.system-school.ru, см. DP.SC.124)  │
+   │  ├ Status page (status.system-school.ru, см. DP.SC.144)  │
    │  ├ Logs aggregation (CF Workers через Logpush)       │
-   │  ├ Composite uptime SLA «по девяткам» (см. DP.SC.124)│
+   │  ├ Composite uptime SLA «по девяткам» (см. DP.SC.144)│
    │  ├ Incidents detection (3+ fail подряд)              │
    │  └ Alert routing (webhook → AIST Bot)                │
    └─────────────────────┬────────────────────────────────┘
@@ -140,7 +140,7 @@ related:
 ## Out of scope
 
 **Не обещаем (этим SC):**
-- **Public status page для пользователей + composite uptime «по девяткам» + информирование пользователей (subscriptions, TG-канал)** — вынесено в **[DP.SC.124 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md)**. Реализуется тем же Better Stack instance, но обещание адресовано другому потребителю (пользователю, не команде).
+- **Public status page для пользователей + composite uptime «по девяткам» + информирование пользователей (subscriptions, TG-канал)** — вынесено в **[DP.SC.144 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md)**. Реализуется тем же Better Stack instance, но обещание адресовано другому потребителю (пользователю, не команде).
 - **AI-observability** (поведение агента, паттерны, P1-P11) — отдельный слой WP-217 (capture-bus + детекторы). Граница: WP-217 = семантические сигналы LLM-поведения; этот SC = синтаксические сигналы инфраструктуры.
 - **APM / distributed tracing на уровне строк кода** — child WP-236 (OTel trace_id CHAR(32) в RAW→USER→LEARNING). Активация после первого production-инцидента, требующего кросс-слоевой трассировки.
 - **Бизнес-метрики** (DAU, retention, conversion) — это journal/Metabase, не health.
@@ -156,7 +156,7 @@ related:
 
 - **Реализуется ролью:** [DP.ROLE.035 Platform Observer](../02-domain-entities/DP.ROLE.035-platform-observer.md)
 - **Реализуется WP:** [WP-244](../../../DS-my-strategy/inbox/WP-244-platform-observability.md)
-- **Парный SC (для пользователей):** [DP.SC.124 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md) — composite SLA, public status page, информирование пользователей.
+- **Парный SC (для пользователей):** [DP.SC.144 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md) — composite SLA, public status page, информирование пользователей.
 - **Использует данные от:** DP.SC.020 Event Ingest (event-gateway пишет structured logs), DP.SC.122 Rewards Projection (projection-worker latency для Ф9.6 reliability gate).
 - **Карта БД:** DP.ARCH.004 v2.3 §3.8 (схема `health` минимизируется до `internal_metrics` + опц. `mcp_request_logs_projection` при триггере JOIN; перенос в отдельную DB #8 — после P0/P1).
 - **Внешняя зависимость:** Better Stack SaaS (https://betterstack.com) — owner external observability data. ArchGate β зафиксирован 25 апр.
