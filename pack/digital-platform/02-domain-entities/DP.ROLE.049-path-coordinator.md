@@ -30,7 +30,7 @@ wp: WP-295
 > # see DP.SC.039, DP.ROLE.049
 >
 > **Kind:** Coordinator Role — управляет N исполнителями, не выполняет содержательную работу.
-> **Owner Role:** IWE Platform — исполнитель: skill `/multi-path` + spawner через Task tool + selector helper.
+> **Owner Role:** IWE Platform. Текущий прототип — CLI `~/IWE/scripts/iwe-multipath.py`; skill `/multi-path`, запись всех путей и жёсткий предел затрат ниже описаны как целевой способ работы, не как проверенная поставка.
 
 ---
 
@@ -48,7 +48,7 @@ wp: WP-295
 
 | Обязанность | Как выполняется |
 |-------------|----------------|
-| Принимать `/multi-path` запрос | skill в Claude Code с параметрами `--n`, `--selector`, `--budget`, `--models` |
+| Принимать запрос параллельных путей | Сейчас CLI `iwe-multipath.py run` с `--n`, `--selector`, `--budget`, `--models`; skill `/multi-path` запланирован |
 | Проверять verification_class | отказ на trivial/closed-loop с явным сообщением |
 | Выбирать гетерогенные модели | default: Opus + Sonnet + Sonnet/другой-seed |
 | Spawn'ить N субагентов | через Task tool с разными prompt seeds и моделями параллельно |

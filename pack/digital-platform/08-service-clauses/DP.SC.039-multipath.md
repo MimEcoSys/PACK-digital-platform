@@ -25,7 +25,9 @@ related:
 
 **Что получит потребитель:**
 
-- **Skill `/multi-path "<задача>" --n 3 --selector archgate --budget 5000tokens`** — запуск N кандидатов параллельно с budget guard.
+Ниже описан целевой результат. Выпущенный прототип Ф3-core покрывает его не полностью; фактические границы указаны после таблицы исполнителей.
+
+- **Команда `/multi-path "<задача>" --n 3 --selector archgate --budget 5000tokens`** — координатор параллельно запускает N кандидатов и ограничивает затраты.
 - **N trace-веток** в `agent_trace.fork_session` — каждый путь имеет собственный trace; даже отброшенные сохраняются для pattern miner.
 - **Аргумент выбора** — судья выдаёт structured output: pairwise-сравнения каждой пары + итоговый ranking + обоснование по принципам.
 - **Лучший результат** — артефакт топ-1 после Reflexion-loop (один цикл self-critique + revision).
@@ -34,7 +36,7 @@ related:
 
 **Критерий приёмки:**
 
-1. Skill `/multi-path` запускается на open-loop задаче с N=3, возвращает 3 кандидата + ranking от судьи + выбор.
+1. Команда `/multi-path` на open-loop задаче с N=3 вызывает координатор, который возвращает 3 кандидата, порядок выбора судьи и лучший результат.
 2. Гетерогенность моделей: возможен запуск Opus + Sonnet + Sonnet/другой-seed. Селектор — отдельная модель (Haiku или Sonnet с принципами).
 3. Budget guard срабатывает до N×compute (token-cap per кандидат + global limit).
 4. Selector использует pairwise-сравнения, не batch-ranking. Order randomization обязателен.
@@ -43,7 +45,7 @@ related:
 
 ## Инварианты
 
-1. **Только open-loop / problem-framing.** Скилл отказывает на trivial / closed-loop. Проверка по WP-context `verification_class`. Этот инвариант снимает 75% риска не окупиться N×compute.
+1. **Только open-loop / problem-framing.** Координатор отказывает на trivial / closed-loop после проверки класса в карточке РП. Этот инвариант снимает 75% риска не окупиться N×compute.
 2. **N=3 база, не N=10.** Default = 3. Расширение до N=5 — explicit flag `--n 5`. N>5 — требует подтверждения пользователя. Источник: Inference Scaling Laws (ICLR 2025) — выполаживание после 3-5 на open-задачах без verifier.
 3. **Гетерогенность кандидатов > клоны.** Default policy: первый кандидат — основная модель сессии (Opus), второй — Sonnet, третий — Sonnet с другим seed/темпом. Override через `--models opus,sonnet,sonnet`. Источник: A-HMAD 2025 (+4-6 п.п. над клонами).
 4. **Селектор pairwise + permutation randomization.** Запрещён batch-ranking. Каждая пара сравнивается дважды с randomized order (мититация position bias ≥10% accuracy shift из survey LLM-as-Judge 2024).
@@ -132,14 +134,14 @@ related:
 
 **Ожидаемый результат:** Структура поста принята до написания основного текста — экономит итерации.
 
-## Реализующие сервисы (план Ф3 WP-295)
+## Текущий исполнитель и план Ф3 WP-295
 
-| Сервис | Роль | Триггер | Путь |
+| Исполнитель | Роль | Состояние | Путь |
 |--------|------|---------|------|
-| S-TBD-multipath-coordinator | DP.ROLE.049 R32 Координатор путей | skill `/multi-path` | `~/IWE/.claude/skills/multi-path/SKILL.md` + helpers |
-| S-TBD-spawner | TBD R32 | inner-loop | Task tool API (parallel sub-agents) |
-| S-TBD-selector | R23 Аудитор / R25 Рецензент | inner-loop | LLM-as-Judge pairwise + randomization |
-| S-TBD-budget-guard | TBD R32 | inner-loop | Token counter + circuit breaker |
+| CLI параллельных путей | DP.ROLE.049 R32 Координатор путей | Прототип Ф3-core: запускает N вызовов `claude -p`, выбирает по эвристике или упрощённым сравнением судьи | `~/IWE/scripts/iwe-multipath.py` |
+| Сохранение путей и решений | DP.ROLE.049, DP.ROLE.047 | Целевое: записи всех путей и решения селектора; текущий CLI их не пишет | План, файл исполнителя не назначен |
+| Полный селектор | R23 Аудитор / R25 Рецензент | Целевое: сравнение всех пар со случайным порядком; текущий `archgate` сравнивает не все пары и может пропустить судью по эвристике | План, файл исполнителя не назначен |
+| Жёсткий предел затрат | DP.ROLE.049 | Целевое: остановить превышение; текущий `--budget` только добавляет подсказку в запрос агенту | План, файл исполнителя не назначен |
 
 ## Связь с другими обещаниями
 
@@ -150,11 +152,11 @@ related:
 
 ---
 
-**Статус:** active, реализован 2026-06-19 (WP-295 Ф3-core peer-session 2026-06-19-24).
+**Статус:** `active` относится к выпущенному прототипу Ф3-core от 2026-06-19 (WP-295, peer-session 2026-06-19-24); критерий приёмки полного обещания выше не закрыт. Сверка с текущим кодом — 14.11.2026.
 
 **Ф3-core (реализовано):**
 - `~/IWE/scripts/iwe-multipath.py` — CLI `run`/`score`, asyncio.Semaphore(max=3), heuristic selector
 - `MULTIPATH_PARENT_ID` env var поддержан в `agent-trace-recorder.sh` (source=multipath_parent в session start)
-- Selector: `heuristic` (structural score без embeddings). `archgate` (LLM-as-Judge) — Ф3-full.
+- Selector: `heuristic` (structural score без embeddings); доступен упрощённый `archgate`, который сравнивает два или три верхних результата и может пропустить вызов судьи при большом разрыве эвристических оценок. Отдельная команда `reflect` улучшает готовый текст, но `run` её не вызывает.
 
-**Ф3-full (отложено):** LLM-as-Judge pairwise selector, Reflexion-loop поверх top-1, cluster-then-pick.
+**Ф3-full (отложено):** обязательная проверка класса задачи (сейчас отказ есть только при явном `--verification-class`), сравнение всех пар со случайным порядком, Reflexion-loop в `run` поверх top-1, cluster-then-pick, жёсткий предел затрат и запись всех путей. Само наличие CLI не служит приёмкой этих критериев.
