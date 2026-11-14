@@ -14,7 +14,7 @@ related:
     - DP.SC.020
     - DP.ECON.001
 created: 2026-04-24
-updated: 2026-05-17
+updated: 2026-11-14
 ---
 
 # Rewards Projector (DP.ROLE.034)
@@ -33,8 +33,8 @@ updated: 2026-05-17
 
 | Обязанность | Метод | Триггер |
 |-------------|-------|---------|
-| LISTEN domain_event_added | asyncpg.add_listener на БД learning | При каждом INSERT в learning.domain_event |
-| Матчинг события ↔ правила | `match_condition` subset-match на payload | При каждом NOTIFY |
+| Опрос событий от курсора | Чтение новых `learning.domain_event` по курсору проекции в `learning.processed_events` | В цикле текущего исполнителя |
+| Матчинг события ↔ правила | `match_condition` subset-match на payload | Для каждого прочитанного события |
 | Атомарное применение | INSERT .. ON CONFLICT UPDATE balance + UPDATE cursor в одной tx | После match'а ≥1 правила |
 | Startup replay от cursor | fetch_events_since(last_event_id) | При старте worker'а |
 | Refresh rules cache | SELECT reward_rules WHERE active каждые 60s | Периодически в main loop |
@@ -43,8 +43,8 @@ updated: 2026-05-17
 
 ## 3. Полномочия
 
-- **Пишет** в `rewards.point_balances` и `rewards.processed_events` — единственный writer этих таблиц (OwnerIntegrity).
-- **Читает** `learning.domain_event` (через LISTEN + SELECT by id) и `reference.reward_rules` (через cached SELECT).
+- **Пишет** в `rewards.point_balances` как единственный исполнитель проекции баллов и ведёт её курсор в `learning.processed_events` (OwnerIntegrity).
+- **Читает** новые `learning.domain_event` от курсора и `reference.reward_rules` (через cached SELECT).
 - **Не интерпретирует** payload в домене — только матчит по правилам (decoupling «что случилось» от «как награждать»).
 - **Не изменяет** правила или события — только проецирует.
 
@@ -79,7 +79,7 @@ Legacy LISTEN/NOTIFY → polling-cursor. Причины:
 ## 6. Связи
 
 **Вход (потребитель обещаний других ролей):**
-- **Event Ingester** (DP.ROLE.032) — пишет `learning.domain_event`, стреляет NOTIFY.
+- **Event Ingester** (DP.ROLE.032) — пишет `learning.domain_event`; проектор периодически читает новые события от своего курсора.
 - **Admin через Directus** — пишет `reference.reward_rules` (read-only для Projector).
 
 **Выход (поставщик обещаний другим ролям):**
@@ -90,8 +90,8 @@ Legacy LISTEN/NOTIFY → polling-cursor. Причины:
 
 ## 7. Measurable health
 
-- **Processing latency p95** (NOTIFY → UPDATE committed) — SLO ≤1s
-- **Cursor lag** (`MAX(learning.domain_event.id) - processed_events.last_event_id`) — алерт при >10 за >5 мин
+- **Processing latency p95** (`INSERT learning.domain_event` → завершение `UPDATE rewards.point_balances`) — целевой SLO ≤1s; для текущего исполнителя с опросом требуется отдельный замер
+- **Cursor lag** (`MAX(learning.domain_event.id) - learning.processed_events.last_event_id` для проекции баллов) — алерт при >10 за >5 мин
 - **Rule refresh age** (время с последнего SELECT reward_rules) — алерт при >120s (2× refresh period)
 - **Replay rate** (events/s при startup catch-up) — SLO ≥100 events/s
 - **Balance invariant violations** (rollbacks из-за CHECK points>=0) — алерт при >0 за 1h (rule design error)
