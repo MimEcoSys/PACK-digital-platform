@@ -16,7 +16,7 @@ related:
 tags: [enforcement, rules, ci, ladder, ar-rules, governance, agent-rules]
 source: "WP-419 enforcement-ladder-coding-classification, AR.234 promotion 2026-06-14, peer-session 2026-06-13-39, commits 90c68c4 + 907e0a7"
 schema_version: 1
-last_updated: 2026-08-16
+last_updated: 2026-11-17
 ---
 
 # DP.M.313 — Enforcement ladder: уровни и критерии promotion правил
