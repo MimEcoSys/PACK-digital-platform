@@ -14,7 +14,7 @@
 
 - [TserenTserenov/SPF](https://github.com/TserenTserenov/SPF) — Second Principles Framework
 - [ailev/FPF](https://github.com/ailev/FPF) — First Principles Framework
-- [aisystant/PACK-personal](https://github.com/aisystant/PACK-personal) — контракт индикаторов созидателя
+- [MimEcoSys/PACK-personal](https://github.com/MimEcoSys/PACK-personal) — контракт индикаторов созидателя
 
 ## Downstream outputs
 

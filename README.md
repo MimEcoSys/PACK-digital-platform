@@ -138,7 +138,7 @@ PACK-digital-platform/
 
 - [SPF](https://github.com/TserenTserenov/SPF) — Second Principles Framework (форма и процесс)
 - [FPF](https://github.com/ailev/FPF) — First Principles Framework (содержание мышления)
-- [PACK-personal](https://github.com/aisystant/PACK-personal) — знания о созидателе (характеристики, состояния)
+- [PACK-personal](https://github.com/MimEcoSys/PACK-personal) — знания о созидателе (характеристики, состояния)
 
 ## Действующие исполнители экзокортекса
 
