@@ -14,7 +14,7 @@ domain: digital-platform / pack-registry-resolution
 schema_version: 1
 trust: medium
 epistemic_stage: forming
-source: "git commit 97a65121 в FMT-exocortex-template (scripts/artifactor.py); WP-7 Ф230, issue #1231"
+source: "git commit 97a65121 в FMT-exocortex-template (scripts/artifactor.py); WP-7 Ф230, issue #1231; второй триггер — git commit 6b91a31 в iwe-local-config (artifactor --check-registry), WP-529 Ф248, captures/2026-11.md:3686, extraction-reports/2026-11-15-inbox-check-3.md #5"
 source_capture: "DS-my-strategy/inbox/captures/2026-10.md:3927"
 extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-10-16-inbox-check-2.md"
 source_candidate: 2
@@ -40,6 +40,19 @@ tags: [fail-closed, fail-open, optional-component, registry-corruption, config-e
 ## Противодействие
 
 Разделить ветки обработки явно: компонент отсутствует целиком → тихий `unresolved`/degraded-результат без ошибки; компонент присутствует, но его данные не читаются/не парсятся → fail-closed с диагностируемым кодом ошибки, как раньше.
+
+## Дополнение 2026-11-18 (РП-170): второй триггер — проверка реестра видов понятий (2026-11-09)
+
+Та же ошибка повторилась в другой проверке того же инструмента. `artifactor --check-registry`, которую вызывают `create-wp.sh` и навык (SKILL.md, шаг 2.2), при отсутствующем Pack возвращала код 4, как при повреждённом реестре. Из-за этого блокировались все пользователи без Pack. Исправление разводит случаи так же, как #1231:
+
+- Pack не установлен → проверка пропускается с кодом 0, а источник записывается **явно**: `create-wp` пишет `registry_check: "no-pack"`. Пропуск виден в результате, а не молчалив.
+- Pack установлен, но `concept-kind.py` или реестр нечитаемы → код 4 (ошибка конфигурации), как раньше.
+
+Уточнение к противодействию: «тихий» в смысле «без ошибки», но **не молчаливый**. Причина пропуска остаётся в результате, иначе отсутствие проверки неотличимо от пройденной проверки.
+
+Вывод для класса: после второго триггера стоит пройти по остальным потребителям реестров опциональных Pack и проверить в каждом это различение. Противоположная сторона того же различения — отсутствующий реестр правил, который читается как пустой список, так что все проверки молча отвечают «нет совпадений» (DP.FM.412, «Смежный вариант 5»).
+
+*Источник: git commit `6b91a31` в iwe-local-config (artifactor `--check-registry`, create-wp.sh, SKILL.md Step 2.2); WP-529 Ф248.*
 
 ## Связи
 
