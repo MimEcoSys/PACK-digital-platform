@@ -1,6 +1,6 @@
 ---
 id: DP.M.617
-name: Cloudflare: один Worker на N custom domains (alias) и Worker как прозрачный proxy — критерии разделения
+name: "Cloudflare: один Worker на N custom domains (alias) и Worker как прозрачный proxy — критерии разделения"
 type: method
 trust: empirical
 epistemic_stage: pattern

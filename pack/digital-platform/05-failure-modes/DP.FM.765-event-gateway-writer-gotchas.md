@@ -1,6 +1,6 @@
 ---
 id: DP.FM.765
-name: Четыре грабли writer-pipeline event-gateway → projection: jq // falsy на false, tformat vs format, cursor advance после schema_invalid (out-of-order), PII bypass для strict-schema sources
+name: "Четыре грабли writer-pipeline event-gateway → projection: jq // falsy на false, tformat vs format, cursor advance после schema_invalid (out-of-order), PII bypass для strict-schema sources"
 type: failure-mode
 trust: empirical
 epistemic_stage: pattern

@@ -1,6 +1,6 @@
 ---
 id: DP.FM.759
-name: Три паттерна, тихо превращающие bash-гейт в пустышку: awk \\x00 на macOS не эмитит NUL; голое присваивание из grep под set -e обрывает блок; (cmd)&wait;cat теряет exit-код
+name: "Три паттерна, тихо превращающие bash-гейт в пустышку: awk \\x00 на macOS не эмитит NUL; голое присваивание из grep под set -e обрывает блок; (cmd)&wait;cat теряет exit-код"
 type: failure-mode
 trust: empirical
 epistemic_stage: pattern
