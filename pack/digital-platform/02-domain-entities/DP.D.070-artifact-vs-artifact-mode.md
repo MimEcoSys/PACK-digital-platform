@@ -16,7 +16,7 @@ relates: DP.D.064 (same-vs-different-promise-wp-branch — общий дискр
 
 ## Различение
 
-- **Артефакт** — то, что РП производит как результат (Оркестратор, Notification Dispatcher, Agent Inbox). Уникален по обещанию.
+- **Артефакт** — то, что РП производит как результат (Оркестратор, доставка выпуска в канал DP.SC.134, Agent Inbox). Уникален по обещанию.
 - **Режим артефакта** — канал доставки, latency budget, контекст исполнения (batch ночью / real-time через MCP, sync API / async очередь, foreground / background). Один артефакт может работать в N режимах.
 
 ## Тест
@@ -47,7 +47,7 @@ DP.D.069 ⊂ DP.D.064 (специализация).
 
 ## Применимость
 
-- Notification Dispatcher (real-time vs scheduled) — один артефакт, два канала.
+- Доставка выпуска в канал (DP.SC.134; real-time vs scheduled) — один артефакт, два канала.
 - Agent Inbox (CCR-execution vs human-execution) — один артефакт, два исполнителя.
 - Любые системы с multiple consumers одного артефакта.
 - Скрипты IWE с поддержкой `--dry-run` и `--apply` — один скрипт, два режима, не два скрипта.

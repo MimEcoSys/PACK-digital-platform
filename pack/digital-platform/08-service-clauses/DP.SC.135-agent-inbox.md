@@ -13,7 +13,7 @@ related:
   realizes: []
   uses:
     - DP.ROLE.045   # Dispatcher
-    - DP.ROLE.044   # Notification Dispatcher (для уведомлений о failed P0)
+    - DP.ROLE.044   # Почтальон (для уведомлений о failed P0)
     - DP.ROLE.039   # Peer Agent (sibling-постановщик task'ов)
   extends: []
 ---
@@ -45,7 +45,7 @@ related:
 **Время отклика:** ≤1 час после `due`.
 
 **Режим отказа:**
-- Dispatcher CCR недоступна → задачи накапливаются в `pending`, следующий запуск подхватит. Через 24h без запуска dispatcher → уведомление пилоту через DP.ROLE.044 (Notification Dispatcher).
+- Dispatcher CCR недоступна → задачи накапливаются в `pending`, следующий запуск подхватит. Через 24h без запуска dispatcher → уведомление пилоту через DP.ROLE.044 (Почтальон).
 - `result_location` недоступен → `status: failed` с причиной; артефакт встроен в result-файл как fallback (не теряется).
 - RemoteTrigger create вернул ошибку → retry 3× через час; после 3 неудач → `status: failed` с причиной.
 - Task >5 одновременно pending → запускаются top-N по `priority` (P0 → P1 → P2 → P3), остальные ждут следующего цикла.
@@ -110,6 +110,6 @@ related:
 
 ## Связь с другими обещаниями
 
-- Потребляет: **DP.SC.134** (Notification Dispatcher — для уведомлений о P0-failed)
+- Потребляет: **DP.SC.134** (Доставка выпуска в канал — для уведомлений о P0-failed)
 - Используется в: **DP.SC.020** (Онбординг через бот — будущая интеграция: бот может ставить task для пользователя), **DP.SC.116** (Уведомления и nudges — overlap по транспорту)
 - Sibling: **DP.SC.131** (Бэкап-процесс — другой паттерн scheduled-агента, переиспользует systemd, не Agent Inbox)

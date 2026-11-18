@@ -11,7 +11,7 @@ related:
   realizes: [DP.SC.135]
   uses:
     - DP.ROLE.039        # Peer Agent — sibling (peer может писать task для другого peer)
-    - DP.ROLE.044        # Notification Dispatcher — уведомление пилота о P0-failed
+    - DP.ROLE.044        # Почтальон — уведомление пилота о P0-failed
     - DP.ROLE.072        # Разработчик-исполнитель — потребитель задач конвейера
     - DP.ROLE.071        # Ведущий разработчик — контроль WIP и приоритетов очереди
     - RemoteTrigger API  # claude.ai CCR-канал
@@ -119,7 +119,7 @@ DP.ROLE.045 Dispatcher
 └── local-launchd (1 plist)
 
 Уведомления
-└── DP.ROLE.044 Notification Dispatcher → Telegram (только P0-failed)
+└── DP.ROLE.044 Почтальон → Telegram (только P0-failed)
 ```
 
 ---
@@ -142,7 +142,7 @@ DP.ROLE.045 Dispatcher
 |------|-----------|
 | DP.ROLE.001 IWE Creator | Главный постановщик task'ов |
 | DP.ROLE.039 Peer Agent | Sibling: peer-агент может писать task для другого peer через тот же канал; lock защищает от race |
-| DP.ROLE.044 Notification Dispatcher | Потребитель Dispatcher'а: при P0-failed → send_telegram_message |
+| DP.ROLE.044 Почтальон | Потребитель Dispatcher'а: при P0-failed → send_telegram_message |
 | DP.ROLE.053 Декомпозитор | Источник task'ов: при появлении новой РП open-loop ≥3h может предложить разбиение через template `task: artifactor-stages` |
 | Навигатор (MIM.R.007) | Источник task'ов: может ставить «retro по неделе» через template `retro` |
 | DP.ROLE.072 Разработчик-исполнитель | Потребитель задач конвейера — получает из очереди |

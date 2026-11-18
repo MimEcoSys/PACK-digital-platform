@@ -58,7 +58,7 @@ wp: [WP-346, WP-349]
 **Режим отказа:**
 - systemd timer fail → grafana alert в tsekh-1 dashboards. Пилот не получает нудж в этот тик; следующий тик через 6-7h.
 - Neon недоступен → retry 3×, потом fail → лог в journal, нет нуджа в этот тик.
-- Notification Dispatcher недоступен → TG-нудж не доставлен; `onboarding_state` не обновляется → следующий тик повторит решение (idempotent).
+- Почтальон (DP.ROLE.044) недоступен → TG-нудж не доставлен; `onboarding_state` не обновляется → следующий тик повторит решение (idempotent).
 
 ## Что НЕ делает контролёр (профиль Onboarding)
 
