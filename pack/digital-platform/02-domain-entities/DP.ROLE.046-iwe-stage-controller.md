@@ -17,7 +17,7 @@ related:
     - learning.guide_render_queue  # enqueue для Портного
     - learning.domain_event  # event log
   downstream_consumers:
-    - DP.ROLE.044 Notification Dispatcher — простой шаг → TG-нудж (через DP.SC.134)
+    - DP.ROLE.044 Почтальон — простой шаг → TG-нудж (через DP.SC.134)
     - DP.ROLE.030 Портной (WP-149) — сложный материал → render через guide_render_queue
     - MIM.R.007 Навигатор — методологический разрыв (3+ дня без активности) → личное сообщение
     - DP.ROLE.001 R13 Проводник — открытие нового функционала (подписка + N дней) → FSM-апдейт
@@ -65,7 +65,7 @@ wp: WP-349
 | 3.4 | Применение детерминированной gap-логики по маркеру FORM.089 §6.3 | в памяти процесса |
 | 3.5 | Проверка cool-down (3 дня по `content_hash` в `nudge_journal`) | Чтение `nudge_journal` |
 | 3.6 | Решение канала: TG (простой шаг) vs render (сложный материал) | Бранч в коде по таблице DP.SC.139 |
-| 3.7 | Отправка TG-нуджа через DP.ROLE.044 (Notification Dispatcher) | INSERT в `notification_log`, далее delivery via DP.SC.134 |
+| 3.7 | Отправка TG-нуджа через DP.ROLE.044 (Почтальон) | INSERT в `notification_log`, далее delivery via DP.SC.134 |
 | 3.8 | Enqueue render-задачи в `learning.guide_render_queue` (для Портного) | INSERT в очередь |
 | 3.9 | Запись решения в `learning.nudge_journal` (cool-down + аудит) | INSERT |
 | 3.10 | Запись `iwe_stage_nudge_sent` / `iwe_stage_render_enqueued` в `domain_event` | INSERT в event log |
@@ -82,7 +82,7 @@ wp: WP-349
 | Писать в `learning.nudge_journal` (новые записи) | Neon learning |
 | Писать в `learning.domain_event` (event log) | Neon learning |
 | Писать в `learning.guide_render_queue` (enqueue для Портного) | Neon learning |
-| Вызывать `mcp__send_telegram_message` (через DP.ROLE.044) | Notification Dispatcher API |
+| Вызывать `mcp__send_telegram_message` (через DP.ROLE.044) | API доставки (Почтальон, DP.ROLE.044) |
 
 ## 5. Что роль НЕ делает
 
@@ -109,7 +109,7 @@ Lock освобождается автоматически при заверше
 | DP.ROLE.041 Аттестатор | upstream-data | `learning.stage_transitions` (текущая ступень) |
 | DP.ROLE.042 Диагност | upstream-data | `learning.cp_assessments` (cp-профиль) |
 | DP.ROLE.022 Оркестратор | parent (specializes) | Контролёр — специализация Оркестратора для одной оси контроля. Оркестратор остаётся координатором между несколькими Контролёрами (если их станет больше) |
-| DP.ROLE.044 Notification Dispatcher | downstream-channel | Простой шаг → TG-нудж через DP.SC.134 |
+| DP.ROLE.044 Почтальон | downstream-channel | Простой шаг → TG-нудж через DP.SC.134 |
 | DP.ROLE.030 Портной (WP-149) | downstream-channel | Сложный материал → render-задача через `guide_render_queue` |
 | MIM.R.007 Навигатор | downstream-channel | Методологический разрыв (3+ дня без активности при наличии истории `/slot`) → запрос на личное сообщение от Навигатора |
 | R13 Проводник | downstream-channel | Условие открытия нового функционала выполнено (подписка + N дней) → запрос на FSM-апдейт (новые кнопки) |

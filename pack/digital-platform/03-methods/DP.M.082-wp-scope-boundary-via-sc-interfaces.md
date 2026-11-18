@@ -72,7 +72,7 @@ _Куда систематически съезжает внимание пра�
 5 соседних работ:
 - Trace store (WP-295) — `extends: DP.SC.NNN-agent-trace`
 - Session Memory Injector (WP-316) — separate WP, no interface (разные scope)
-- Notification Dispatcher (WP-320) — `uses: DP.SC.MMM-notification-dispatch` для P0-уведомлений
+- Почтальон (DP.ROLE.044, WP-320) — `uses: DP.SC.MMM-notification-dispatch` для P0-уведомлений
 - Real-time channel — `extends: DP.SC.NNN` (WP-203 Ф6, не отдельный РП — см. DP.D.069)
 - Системные правила (CCR ↔ inbox protocol) — `uses: DP.SC.KKK-ccr-runtime`
 

@@ -77,7 +77,7 @@ wp: WP-295
 
 **Выходы:**
 - **Weekly:** `DS-my-strategy/current/inbox/pattern-miner-W{N}.md` (extraction-report-совместимый, `status: pending-review`).
-- **Triggerный:** `DS-my-strategy/current/inbox/pattern-miner-RAPID-YYYY-MM-DD.md` + TG-алерт через DP.ROLE.044 Notification Dispatcher.
+- **Triggerный:** `DS-my-strategy/current/inbox/pattern-miner-RAPID-YYYY-MM-DD.md` + TG-алерт через DP.ROLE.044 Почтальон.
 - **Monthly audit:** `DS-my-strategy/current/inbox/pattern-miner-audit-YYYY-MM.md` (актив/мёртвые AR).
 - **Audit-loop:** `DS-my-strategy/inbox/pattern-miner-calibration.md` (P/R метрики).
 
@@ -136,7 +136,7 @@ DP.ROLE.050 Pattern Miner
 | DP.ROLE.001 IWE Creator | Consumer: R1 на Week Close читает weekly отчёт + reagent на rapid-cluster алерты. |
 | DP.ROLE.005 Architect | Consumer: R5 на monthly iwe-rules-review использует audit-отчёт для cleanup правил. |
 | R47 Детектор (DP.SC.025) | Ортогональный: SC.025 real-time детекторы; SC.040 batch майнинг. Дополняют, не дублируют. |
-| DP.ROLE.044 Notification Dispatcher | Sibling: TG-алерты на rapid-cluster через NotDisp. |
+| DP.ROLE.044 Почтальон | Sibling: TG-алерты на rapid-cluster через Почтальона. |
 | WP-272 PACK-agent-rules | Target формат №1 (адаптер A): draft AR.NNN frontmatter совместим с реестром. |
 | `executor-catalog.yaml reflexes:` (адаптер B) | Target формат №2 (WP-423): reflex-кандидат (исполняемый код) vs №1 = `AR.NNN` (поведенческое правило). Approve — пилот; `enabled:true` требует replay на истории (DP.SC.040 §Выходные адаптеры). |
 

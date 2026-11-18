@@ -24,7 +24,7 @@ wp: WP-326
   Разделение зон ответственности с соседними SC:
   - DP.SC.116 (Notifications & Nudges) — общий контракт платформенных нуджей.
     DP.SC.139 — частный случай: нуджи по двумерной стадии мастерства IWE.
-  - DP.SC.134 (Notification Dispatcher) — транспорт TG.
+  - DP.SC.134 (Доставка выпуска в канал; Почтальон, DP.ROLE.044) — транспорт TG.
     DP.SC.139 uses DP.SC.134 для доставки.
   - DP.SC.106 (Personal Guide render) — Портной собирает руководство.
     DP.SC.139 uses DP.SC.106 для сложного материала через enqueue в guide_render_queue.
@@ -62,7 +62,7 @@ wp: WP-326
 **Режим отказа:**
 - systemd timer fail → grafana alert + утреннее уведомление в TG канал tsekh-1 dashboards. Пилоты не получают нудж в этот день; следующий запуск подхватит.
 - Neon недоступен → retry 3×, потом fail → лог в systemd journal, нет нуджа в этот день.
-- Notification Dispatcher (DP.SC.134) недоступен → TG-нудж не доставлен; запись `pending` в nudge_journal; следующий день: попытка повторно (idempotency по `content_hash` не дублирует).
+- Почтальон (DP.ROLE.044, DP.SC.134) недоступен → TG-нудж не доставлен; запись `pending` в nudge_journal; следующий день: попытка повторно (idempotency по `content_hash` не дублирует).
 
 ## Что НЕ делает контролёр
 
@@ -97,7 +97,7 @@ wp: WP-326
 | Роль | Что подтверждает |
 |------|-----------------|
 | DP.ROLE.046 Контролёр развития | Факт принятия решения (нудж/render/skip) и записи в nudge_journal |
-| DP.ROLE.044 Notification Dispatcher | Факт доставки TG-нуджа |
+| DP.ROLE.044 Почтальон | Факт доставки TG-нуджа |
 | DP.ROLE.041 Аттестатор | Источник `learning.stage_transitions` (ступень) |
 | DP.ROLE.042 Диагност | Источник `learning.cp_assessments` (cp-профиль) |
 
@@ -124,7 +124,7 @@ wp: WP-326
 | 2 | Читает opt-in список | DP.ROLE.046 | `SELECT account_id FROM tracking_consent WHERE opt_in = TRUE` |
 | 3 | Для пилота X: cp_assessment отсутствует | DP.ROLE.046 | Проверка `cp_assessments` (valid) |
 | 4 | Проверка cool-down (нудж «диагностика» за 7 дней) | DP.ROLE.046 | `SELECT FROM nudge_journal WHERE state = 'no_cp_assessment'` |
-| 5 | Нудж: «Пройди диагностику /diagnose-iwe (5 мин) — узнай свою стадию мастерства IWE» | DP.ROLE.046 → DP.SC.134 | TG via Notification Dispatcher |
+| 5 | Нудж: «Пройди диагностику /diagnose-iwe (5 мин) — узнай свою стадию мастерства IWE» | DP.ROLE.046 → DP.SC.134 | TG via Почтальон (DP.ROLE.044) |
 | 6 | Запись в `nudge_journal` | DP.ROLE.046 | INSERT с content_hash |
 
 ## Сценарий B: gap по простой оси (cp.iwe ниже маркера)
