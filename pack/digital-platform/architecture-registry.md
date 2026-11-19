@@ -31,6 +31,10 @@ generator: .github/scripts/architecture-registry.py
 | translator | Переводчик |  | платформа | существует | переводит для всех тексты шаблона IWE и карточки Библиотеки методов на английский по утверждённому словарю понятий; отдаёт словарь для инструкции ИИ клиента Open (решение пилота 10.11.2026, вариант «обе системы») |
 | health-watchman | Сторож исправности |  | платформа | существует | замечает сбои и сообщает о них |
 | backup-keeper | Хранитель копий |  | платформа | существует | держит резервные копии и подтверждение целостности |
+| conversation-window | Окно разговора |  | платформа | проектируется | принимает сообщения человека в мессенджере и показывает ответы; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
+| interlocutor | Собеседник |  | платформа | проектируется | ведёт разговор с человеком о его личном IWE в обе стороны: отвечает, предлагает, пишет первым; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
+| write-controller | Контролёр записи |  | платформа | проектируется | выдаёт одноразовые разрешения на запись в шлюзе: запись только после явного подтверждения человека; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
+| interlocutor-executor-choice | Выбор исполнителя Собеседника |  | платформа | проектируется | по настройке человека выбирает исполнителя Собеседника: агент платформы или собственный агент владельца; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
 
 ## Модули
 
@@ -125,6 +129,7 @@ generator: .github/scripts/architecture-registry.py
 | db:railway-fsm | база fsm в Railway Postgres |  | база данных | платформа | существует | база в Railway Postgres (§5.1) |
 | db:railway-directus | база directus в Railway Postgres |  | база данных | платформа | существует | база в Railway Postgres (§5.1) |
 | db:railway-railway | база railway в Railway Postgres |  | база данных | платформа | существует | база в Railway Postgres (§5.1) |
+| iwe-interlocutor | агент-собеседник платформы |  | программа | платформа | проектируется | прототип РП-262 (хранилище aisystant/iwe-interlocutor); проверяет пропуск человека, обращается к шлюзу MCP его пропуском и к раздатчику моделей; постоянный владелец — команда ИТ (имя выбрал пилот 19.11, заявка И-61) |
 
 ## Системы окружения
 
@@ -181,6 +186,7 @@ generator: .github/scripts/architecture-registry.py
 | Сторож исправности | observability-webhook | на вебхук инцидента и раз в минуту |
 | Сторож исправности | status-proxy | когда открывают status.aisystant.com |
 | Вестник | aist_bot_newarchitecture | не установлено |
+| Собеседник | iwe-interlocutor | по сообщению человека в окне разговора и по собственной инициативе (проектируется) |
 | Рабочее место наставника | Neon: проект mentorship | не установлено |
 | Рабочее место наставника | chat-analyst-service | не установлено |
 | Рабочее место наставника | mentorship-service | не установлено |
@@ -240,7 +246,7 @@ generator: .github/scripts/architecture-registry.py
 | tsekh-1 | PostgreSQL 16 с pgvector на tsekh-1, bitcoind-ots-verify, iwe-onboarding-controller, iwe-profiler, iwe-render-pilot-guides, iwe-stage-controller, iwe-stage-evaluator, payment-registry, restic |
 | браузер пользователя | iwe-browser-extension |
 | машина пользователя | agent-trace-recorder, agent-trace-uploader, google-drive-mcp, local-gateway |
-| не установлено | aisystant-com, bridge-scope-service, chat-analyst-service, iwe-translation-engine, kimi-adapter, learning-context-service, open.aisystant.com |
+| не установлено | aisystant-com, bridge-scope-service, chat-analyst-service, iwe-interlocutor, iwe-translation-engine, kimi-adapter, learning-context-service, open.aisystant.com |
 
 ## Обращается к (DP.ARCH.001 §5.1 «Обращается к» (снято 01.11.2026), §10 и проба пути оплаты; «обращается» — направление не уточнено)
 
@@ -331,32 +337,35 @@ generator: .github/scripts/architecture-registry.py
 | payment-receiver | пишет | Neon: проект aisystant |
 | gateway-mcp | читает | db:subscription |
 | ЮKassa | вызывает | payment-receiver |
+| aist_bot_newarchitecture | вызывает | iwe-interlocutor |
+| iwe-interlocutor | вызывает | gateway-mcp |
+| iwe-interlocutor | вызывает | iwe-llm-proxy |
 
 ## Что затронет отключение модуля
 
 > По записанным связям; «затронет» значит «есть связь», а не «точно сломается». Через базу влияние идёт только по связям с явным «пишет»; связи «обращается» без направления к базе считаются чтением. Ссылки из раздела «Уточнить у владельцев модулей» в расчёт не входят.
 
-- **gateway-mcp**: kimi-adapter (вызывает gateway-mcp)
+- **gateway-mcp**: aist_bot_newarchitecture (вызывает iwe-interlocutor); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); kimi-adapter (вызывает gateway-mcp); user-profile-service (вызывает aist_bot_newarchitecture)
 - **TokenRefreshCoalescer**: по записанным связям ничего
 - **kimi-adapter**: по записанным связям ничего
-- **knowledge-mcp**: gateway-mcp (вызывает knowledge-mcp); github-integration-service (вызывает knowledge-mcp); kimi-adapter (вызывает gateway-mcp)
+- **knowledge-mcp**: aist_bot_newarchitecture (вызывает iwe-interlocutor); gateway-mcp (вызывает knowledge-mcp); github-integration-service (вызывает knowledge-mcp); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); kimi-adapter (вызывает gateway-mcp); user-profile-service (вызывает aist_bot_newarchitecture)
 - **guides-mcp**: по записанным связям ничего
 - **open-tserenov-com**: по записанным связям ничего
 - **open.system-school.ru**: по записанным связям ничего
 - **open.aisystant.com**: по записанным связям ничего
 - **plus.system-school.ru**: по записанным связям ничего
-- **personal-knowledge-mcp**: gateway-mcp (вызывает personal-knowledge-mcp); github-integration-service (вызывает personal-knowledge-mcp); kimi-adapter (вызывает gateway-mcp)
+- **personal-knowledge-mcp**: aist_bot_newarchitecture (вызывает iwe-interlocutor); gateway-mcp (вызывает personal-knowledge-mcp); github-integration-service (вызывает personal-knowledge-mcp); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); kimi-adapter (вызывает gateway-mcp); user-profile-service (вызывает aist_bot_newarchitecture)
 - **github-integration-service**: по записанным связям ничего
-- **digital-twin-mcp**: gateway-mcp (вызывает digital-twin-mcp); kimi-adapter (вызывает gateway-mcp)
+- **digital-twin-mcp**: aist_bot_newarchitecture (вызывает iwe-interlocutor); gateway-mcp (вызывает digital-twin-mcp); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); kimi-adapter (вызывает gateway-mcp); user-profile-service (вызывает aist_bot_newarchitecture)
 - **learning-context-service**: по записанным связям ничего
 - **iwe-profiler**: по записанным связям ничего
 - **iwe-stage-evaluator**: по записанным связям ничего
 - **iwe-stage-controller**: по записанным связям ничего
-- **event-gateway**: activity-hub (вызывает event-gateway); agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:learning, куда пишет event-gateway); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (читает db:learning, куда пишет event-gateway); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (читает db:learning, куда пишет event-gateway); iwe-stage-evaluator (читает db:learning, куда пишет event-gateway); kimi-adapter (вызывает gateway-mcp); learning-context-service (вызывает event-gateway); multi-domain-projection-worker (читает db:learning, куда пишет event-gateway); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет event-gateway); user-profile-service (вызывает aist_bot_newarchitecture); ЮKassa (вызывает payment-receiver)
+- **event-gateway**: activity-hub (вызывает event-gateway); agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:learning, куда пишет event-gateway); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (читает db:learning, куда пишет event-gateway); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (читает db:learning, куда пишет event-gateway); iwe-stage-evaluator (читает db:learning, куда пишет event-gateway); kimi-adapter (вызывает gateway-mcp); learning-context-service (вызывает event-gateway); multi-domain-projection-worker (читает db:learning, куда пишет event-gateway); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет event-gateway); user-profile-service (вызывает aist_bot_newarchitecture); ЮKassa (вызывает payment-receiver)
 - **trace-accountant**: по записанным связям ничего
-- **activity-hub**: agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:learning, куда пишет activity-hub); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); event-gateway (читает db:persona, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (читает db:learning, куда пишет activity-hub); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (вызывает activity-hub); iwe-stage-evaluator (вызывает activity-hub); kimi-adapter (вызывает gateway-mcp); learning-context-service (читает db:learning, куда пишет activity-hub); multi-domain-projection-worker (читает db:learning, куда пишет activity-hub); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет activity-hub); user-profile-service (вызывает aist_bot_newarchitecture); ЮKassa (вызывает payment-receiver)
+- **activity-hub**: agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:learning, куда пишет activity-hub); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); event-gateway (читает db:persona, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (читает db:learning, куда пишет activity-hub); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (вызывает activity-hub); iwe-stage-evaluator (вызывает activity-hub); kimi-adapter (вызывает gateway-mcp); learning-context-service (читает db:learning, куда пишет activity-hub); multi-domain-projection-worker (читает db:learning, куда пишет activity-hub); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет activity-hub); user-profile-service (вызывает aist_bot_newarchitecture); ЮKassa (вызывает payment-receiver)
 - **bridge-2-events-poller**: по записанным связям ничего
-- **multi-domain-projection-worker**: activity-hub (вызывает event-gateway); agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:indicators, куда пишет multi-domain-projection-worker); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); event-gateway (читает db:persona, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (вызывает personal-knowledge-mcp); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (читает db:learning, куда пишет event-gateway); iwe-stage-evaluator (читает db:learning, куда пишет event-gateway); kimi-adapter (вызывает gateway-mcp); learning-context-service (вызывает event-gateway); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет event-gateway); user-profile-service (читает db:subscription, куда пишет multi-domain-projection-worker); ЮKassa (вызывает payment-receiver)
+- **multi-domain-projection-worker**: activity-hub (вызывает event-gateway); agent-runner (читает db:indicators, куда пишет multi-domain-projection-worker); agent-status-service (читает db:indicators, куда пишет multi-domain-projection-worker); agent-trace-uploader (вызывает event-gateway); aist_bot_newarchitecture (читает db:indicators, куда пишет multi-domain-projection-worker); bridge-2-events-poller (вызывает event-gateway); bridge-scope-service (читает db:indicators, куда пишет multi-domain-projection-worker); event-gateway (читает db:persona, куда пишет multi-domain-projection-worker); gateway-mcp (читает db:subscription, куда пишет multi-domain-projection-worker); github-integration-service (вызывает personal-knowledge-mcp); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); iwe-profiler (читает db:indicators, куда пишет multi-domain-projection-worker); iwe-stage-controller (читает db:learning, куда пишет event-gateway); iwe-stage-evaluator (читает db:learning, куда пишет event-gateway); kimi-adapter (вызывает gateway-mcp); learning-context-service (вызывает event-gateway); payment-receiver (вызывает event-gateway); personal-knowledge-mcp (читает db:indicators, куда пишет multi-domain-projection-worker); trace-accountant (читает db:learning, куда пишет event-gateway); user-profile-service (читает db:subscription, куда пишет multi-domain-projection-worker); ЮKassa (вызывает payment-receiver)
 - **fsm-mcp**: по записанным связям ничего
 - **simulator-proxy**: по записанным связям ничего
 - **checklist-mcp**: по записанным связям ничего
@@ -367,7 +376,7 @@ generator: .github/scripts/architecture-registry.py
 - **observability-webhook**: по записанным связям ничего
 - **status-proxy**: по записанным связям ничего
 - **payment-receiver**: ЮKassa (вызывает payment-receiver)
-- **payment-registry**: aist_bot_newarchitecture (читает db:subscription, куда пишет payment-registry); gateway-mcp (читает db:subscription, куда пишет payment-registry); iwe-browser-extension (вызывает aist_bot_newarchitecture); kimi-adapter (вызывает gateway-mcp); user-profile-service (читает db:subscription, куда пишет payment-registry)
+- **payment-registry**: aist_bot_newarchitecture (читает db:subscription, куда пишет payment-registry); gateway-mcp (читает db:subscription, куда пишет payment-registry); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает gateway-mcp); kimi-adapter (вызывает gateway-mcp); user-profile-service (читает db:subscription, куда пишет payment-registry)
 - **agent-runner**: по записанным связям ничего
 - **agent-status-service**: по записанным связям ничего
 - **hermes-agent**: по записанным связям ничего
@@ -376,8 +385,8 @@ generator: .github/scripts/architecture-registry.py
 - **Ory**: TokenRefreshCoalescer (вызывает Ory); agent-status-service (вызывает Ory); fsm-mcp (вызывает Ory); kimi-adapter (вызывает Ory); trace-accountant (вызывает Ory); user-profile-service (вызывает Ory)
 - **mentorship-service**: по записанным связям ничего
 - **chat-analyst-service**: по записанным связям ничего
-- **iwe-llm-proxy**: agent-runner (вызывает iwe-llm-proxy)
-- **litellm**: agent-runner (вызывает iwe-llm-proxy); iwe-llm-proxy (вызывает litellm)
+- **iwe-llm-proxy**: agent-runner (вызывает iwe-llm-proxy); aist_bot_newarchitecture (вызывает iwe-interlocutor); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает iwe-llm-proxy); user-profile-service (вызывает aist_bot_newarchitecture)
+- **litellm**: agent-runner (вызывает iwe-llm-proxy); aist_bot_newarchitecture (вызывает iwe-interlocutor); iwe-browser-extension (вызывает aist_bot_newarchitecture); iwe-interlocutor (вызывает iwe-llm-proxy); iwe-llm-proxy (вызывает litellm); user-profile-service (вызывает aist_bot_newarchitecture)
 - **aist_bot_newarchitecture**: iwe-browser-extension (вызывает aist_bot_newarchitecture); user-profile-service (вызывает aist_bot_newarchitecture)
 - **SystemsSchool_bot**: по записанным связям ничего
 - **system-school.ru**: по записанным связям ничего
@@ -396,6 +405,7 @@ generator: .github/scripts/architecture-registry.py
 - **agent-trace-uploader**: по записанным связям ничего
 - **translate-sync**: по записанным связям ничего
 - **iwe-translation-engine**: по записанным связям ничего
+- **iwe-interlocutor**: aist_bot_newarchitecture (вызывает iwe-interlocutor); iwe-browser-extension (вызывает aist_bot_newarchitecture); user-profile-service (вызывает aist_bot_newarchitecture)
 
 ## Путь 10: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)
 
@@ -505,6 +515,10 @@ flowchart LR
 - §4.1 «Хранитель копий»: «бакет в Backblaze B2» нет в справочниках
 - §4.1 «Хранитель копий»: не указан Backblaze B2 бакет
 - §4.1 «Хранитель копий»: не указан bitcoind-ots-verify
+- §4.1: нет строки «Окно разговора»
+- §4.1: нет строки «Собеседник»
+- §4.1: нет строки «Контролёр записи»
+- §4.1: нет строки «Выбор исполнителя Собеседника»
 - §11.1а «Привратник»: «часть gateway-mcp» нет в справочниках
 - §11.1а «Привратник»: не указан gateway-mcp
 - §11.1а «Поставщик общих знаний»: «очередь full-ingest-batches» нет в справочниках
@@ -525,3 +539,7 @@ flowchart LR
 - §11.1а «Переводчик»: «программа `translate-sync`» нет в справочниках
 - §11.1а «Переводчик»: «которую запускает GitHub Actions в репозитории шаблона» нет в справочниках
 - §11.1а «Переводчик»: не указан translate-sync
+- §11.1а: нет строки «Окно разговора»
+- §11.1а: нет строки «Собеседник»
+- §11.1а: нет строки «Контролёр записи»
+- §11.1а: нет строки «Выбор исполнителя Собеседника»

@@ -186,6 +186,9 @@ performs:
 - module: Directus
   subsystem: cashier
   when: при ручных правках платежей и выдаче подписки (DP.ARCH.001 §5.3)
+- module: iwe-interlocutor
+  subsystem: interlocutor
+  when: по сообщению человека в окне разговора и по собственной инициативе (проектируется)
 located_in:
 - module: db:persona
   in: 'Neon: проект aisystant'
@@ -483,6 +486,15 @@ calls:
   - from: ЮKassa
     to: payment-receiver
     verb: вызывает
+  - from: aist_bot_newarchitecture
+    to: iwe-interlocutor
+    verb: вызывает
+  - from: iwe-interlocutor
+    to: gateway-mcp
+    verb: вызывает
+  - from: iwe-interlocutor
+    to: iwe-llm-proxy
+    verb: вызывает
 deployed:
   snapshot: DP.ARCH.001 §5.1 «Где работает» — снято 01.11.2026
   items:
@@ -664,6 +676,8 @@ deployed:
     site: Railway
   - module: db:railway-railway
     site: Railway
+  - module: iwe-interlocutor
+    site: не установлено
 paths:
 - id: '10'
   need: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)
