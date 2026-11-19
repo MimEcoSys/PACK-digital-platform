@@ -174,18 +174,6 @@ performs:
 - module: Backblaze B2 бакет
   subsystem: backup-keeper
   when: не установлено
-- module: Metabase
-  subsystem: shared-data
-  when: не установлено
-- module: Directus
-  subsystem: shared-data
-  when: не установлено
-- module: 'Neon: проект aisystant'
-  subsystem: shared-data
-  when: не установлено
-- module: Railway Postgres
-  subsystem: shared-data
-  when: не установлено
 - module: translate-sync
   subsystem: translator
   when: при обновлении основной ветки шаблона
@@ -195,6 +183,9 @@ performs:
 - module: gateway-mcp
   subsystem: gatekeeper
   when: не установлено
+- module: Directus
+  subsystem: cashier
+  when: при ручных правках платежей и выдаче подписки (DP.ARCH.001 §5.3)
 located_in:
 - module: db:persona
   in: 'Neon: проект aisystant'
