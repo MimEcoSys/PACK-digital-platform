@@ -113,8 +113,12 @@ def check_links(reg: Registry, errors):
                     errors.append(f"путь {path['id']}: неизвестное имя {ref}")
     performing = {link["module"] for link in links["performs"]}
     for m in reg.modules:
-        if m.get("kind") in RUNNABLE and m.get("system") == "платформа" and m.get("id") not in performing:
-            errors.append(f"{m['kind']} {m['id']} не работает ни на одну подсистему")
+        if m.get("no_subsystem") and m.get("id") in performing:
+            errors.append(f"{m['id']}: указано «подсистемы нет», но связь «работает на» есть")
+        elif (m.get("kind") in RUNNABLE and m.get("system") == "платформа"
+              and m.get("id") not in performing and not m.get("no_subsystem")):
+            errors.append(f"{m['kind']} {m['id']} не работает ни на одну подсистему "
+                          "(или укажи no_subsystem с причиной)")
 
 
 def validate(reg: Registry):
@@ -283,6 +287,8 @@ def render(reg: Registry, findings):
             "Ссылки из графы «Обращается к» DP.ARCH.001 §5.1, которые нельзя однозначно привязать "
             "(обрезаны в документе или не названа база):", ""]
     out += [f"- **{module_id}**: {'; '.join(tokens)}" for module_id, tokens in unresolved]
+    out += ["", "Программы без подсистемы (с причиной):", ""]
+    out += [f"- **{m['id']}**: {m['no_subsystem']}" for m in reg.modules if m.get("no_subsystem")]
     out += ["", "Не перенесено как модуль:", ""] + [f"- {reason}" for reason in reg.excluded]
     out += ["", "## Расхождения с ручными таблицами DP.ARCH.001", ""]
     out += [f"- {f}" for f in findings] or ["- нет"]

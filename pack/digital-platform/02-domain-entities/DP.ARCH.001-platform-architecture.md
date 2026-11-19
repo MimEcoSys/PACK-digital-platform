@@ -602,10 +602,10 @@ flowchart LR
 | restic (программа резервного копирования баз Neon и локальных файлов) | Хранитель копий | Дампит базы Neon через pg_dump и шифрованно копирует в Backblaze B2; чистит старые копии. | tsekh-1, временно; переносится в GKE или VK Cloud | Neon (строки подключения в /etc/restic/neon-connections), Backblaze B2, Better S |
 | bitcoind-ots-verify и программа якорения OpenTimestamps (wp455) | Хранитель копий | Независимо проверяет якоря цепочки хешей в OpenTimestamps; делает новые якоря, наблюдает за ними. | tsekh-1, временно; переносится в GKE или VK Cloud | Neon (таблицы hash-chain, ots_anchors) |
 | Backblaze B2 (бакет резервных копий) | Хранитель копий | Внешнее хранилище шифрованных копий Neon и файлов. | Backblaze B2 | - |
-| Metabase | Общие базы и управление данными | BI по шестнадцати источникам Neon. | Railway | Neon |
-| Directus | Общие базы и управление данными | Админка и CMS для справочников, платежей и ручных операций. | Railway | Railway Postgres (БД directus), Neon |
-| Neon: проект aisystant (кластер баз данных) | Общие базы и управление данными | Миграции создают БД persona, journal, payment, subscription, indicators, learning, knowledge, reference, rewards, publication, community, lead, health, secrets и схемы audit, agent_trace, concept_graph. | Neon | - |
-| Railway Postgres (bot_data, fsm, directus, railway) | Общие базы и управление данными | Хранит состояние бота, FSM и метаданные Directus. | Railway | - |
+| Metabase | — (отчёты для команды; подсистемы нет) | BI по шестнадцати источникам Neon. | Railway | Neon |
+| Directus | Кассир (ручные правки платежей и выдача подписки) | Админка и CMS для справочников, платежей и ручных операций. | Railway | Railway Postgres (БД directus), Neon |
+| Neon: проект aisystant (кластер баз данных) | — (общие базы: работают на подсистемы, чьи модули к ним обращаются) | Миграции создают БД persona, journal, payment, subscription, indicators, learning, knowledge, reference, rewards, publication, community, lead, health, secrets и схемы audit, agent_trace, concept_graph. | Neon | - |
+| Railway Postgres (bot_data, fsm, directus, railway) | — (общие базы: работают на подсистемы, чьи модули к ним обращаются) | Хранит состояние бота, FSM и метаданные Directus. | Railway | - |
 | PostgreSQL 16 с pgvector на tsekh-1 (времянка для проверок переноса баз) | не определено: служит работе по переносу баз из Neon, не функции платформы | Docker-compose: PostgreSQL 16 с pgvector и Caddy; проверки переноса баз. Описание сервера tsekh-1 целиком (PostgreSQL, restic, таймеры) хранит репозиторий hetzner-backstage — документ, по которому сервер пересобирают, а не модуль. | tsekh-1 (Hetzner, Финляндия), временно | pgvector |
 | iwe-browser-extension | Модуль IWE, не платформы | Расширение Chrome считает набор текста на claude.ai и отправляет боту. | браузер пользователя | бот |
 | DS-iwe-session-trigger (расширение VS Code) | Модуль IWE, не платформы | Наблюдает за файлами сессий и запускает Claude Code автоматически. | VS Code пользователя | Claude Code |
@@ -1172,7 +1172,7 @@ CREATE TABLE learning.behavior_indicators (
 | Сторож исправности | observability-webhook; OBSERVABILITY_STATE; status-proxy | observability-webhook — на вебхук инцидента и раз в минуту; status-proxy — когда открывают status.aisystant.com |
 | Хранитель копий | restic; bitcoind-ots-verify и программа якорения OpenTimestamps; Backblaze B2 | не установлено |
 
-Строки §5.1 с подсистемой «Общие базы и управление данными» (Metabase, Directus, базы Neon и Railway) в таблицу не входят: среди подсистем §4.1 такой нет; базы работают на те подсистемы, чьи модули к ним обращаются (колонка «Обращается к» §5.1).
+«Общие базы и управление данными» — подпись группы, а не подсистема (решение 19.11.2026): проекты баз Neon и Railway работают на те подсистемы, чьи модули к ним обращаются (колонка «Обращается к» §5.1); Directus отнесён к Кассиру; Metabase — отчёты для команды, подсистемы нет.
 
 </details><!-- /fold -->
 
