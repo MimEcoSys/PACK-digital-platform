@@ -1,0 +1,804 @@
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+excluded:
+- knowledge-mcp-template — документ (заготовка воркера), не модуль
+- Aisystant LMS PostgreSQL — чужая система (§5.3); строка §5.1 — расхождение (Р8)
+modules:
+- id: gateway-mcp
+  name: gateway-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - gateway-mcp (воркер gateway-mcp-v2)
+  purpose: 'Единая точка входа MCP: проверяет вход через Ory, подписку и права, собирает инструменты из программ-источников и перенаправляет вызовы; держит OAuth-шлюз.'
+  calls_unresolved:
+  - chec
+- id: TokenRefreshCoalescer
+  name: TokenRefreshCoalescer
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - TokenRefreshCoalescer (Durable Object шлюза)
+  purpose: Объединяет одновременные обновления токена, чтобы не гонять Ory лишними запросами.
+- id: REFRESH_TOKEN_KV
+  name: REFRESH_TOKEN_KV
+  kind: хранилище
+  system: платформа
+  status: существует
+  aliases:
+  - REFRESH_TOKEN_KV (хранилище ключ-значение шлюза)
+  purpose: Кеш токенов обновления для входа через OAuth.
+- id: kimi-adapter
+  name: kimi-adapter
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - kimi-adapter (mim-iwe)
+  purpose: 'Демо-стенд и HTTP-адаптер: держит MCP-клиент к gateway-mcp для браузерного доступа.'
+- id: knowledge-mcp
+  name: knowledge-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - knowledge-mcp (общий воркер знаний платформы)
+  purpose: Поиск, чтение и обход платформенных знаний (Паки, руководства, понятия) в режиме public; индексирует репозитории по расписанию.
+  calls_unresolved:
+  - 'Neon: схемы public и concept_graph, pgvector'
+- id: full-ingest-batches
+  name: full-ingest-batches
+  kind: очередь
+  system: платформа
+  status: существует
+  aliases:
+  - full-ingest-batches (очередь и очередь отказов)
+  purpose: Очередь пакетов полной индексации знаний; отказавшие пакеты уходят в full-ingest-batches-dlq.
+- id: guides-mcp
+  name: guides-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - guides-mcp (руководства)
+  purpose: Список, разделы, текст и смысловой поиск по платформенным руководствам из таблицы knowledge_chunk.
+  calls_unresolved:
+  - 'Neon: knowledge_chunk с source=docs-courses'
+  - Neon (knowledge_chunk с source=docs-courses)
+- id: open-tserenov-com
+  name: open-tserenov-com
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - open-tserenov-com (открытый личный MCP Церена)
+  purpose: Публичный MCP search/fetch по открытому авторскому корпусу из встроенного бандла; ограничивает частоту обращений.
+  calls_unresolved:
+  - D1
+  - бандл корпуса
+- id: db:open-tserenov-com
+  name: D1 open-tserenov-com
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - D1 open-tserenov-com
+  purpose: База D1 открытого личного MCP (назначение таблиц в этой проверке не снято).
+- id: open.system-school.ru
+  name: open.system-school.ru
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - open.system-school.ru (гостевой MCP FPF)
+  purpose: Анонимный MCP search/fetch по гиду FPF на MiniSearch и встроенном бандле.
+  calls_unresolved:
+  - бандл корпуса FPF
+- id: open.aisystant.com
+  name: open.aisystant.com
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - open.aisystant.com (Open Aisystant, гостевой MCP мира)
+  purpose: 'Прокси к `mcp.fpf.tools`: те же инструменты поиска и чтения опубликованных FPF и DPF без аккаунта; собственный поисковый корпус не подтверждён (DP.MAP.004). Отвечает как сервер MCP (проверено
+    11.11.2026). Выпускающий — Андрей (§2).'
+- id: plus.system-school.ru
+  name: plus.system-school.ru
+  kind: программа
+  system: платформа
+  status: проектируется
+  aliases:
+  - plus.system-school.ru (MIM MCP, российский MCP по аккаунту и подписке; целевой)
+  purpose: 'Развёртывание кода Plus Андрея с российскими настройками (§7.1). Прежнее имя `mcp.system-school.ru`: по DP.MAP.004 — российский вход в gateway-mcp, по содержимому репозитория — копия гостевого
+    сервера open.system-school.ru.'
+- id: personal-knowledge-mcp
+  name: personal-knowledge-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - personal-knowledge-mcp (воркер личных знаний)
+  purpose: 'Личные источники пользователя: поиск, запись, переиндексация личных репозиториев; применяет защиту записи по правам.'
+  calls_unresolved:
+  - bridge-scope-serv
+- id: reindex
+  name: reindex
+  kind: очередь
+  system: платформа
+  status: существует
+  aliases:
+  - reindex (очередь и очередь отказов)
+  - очередь reindex
+  purpose: Очередь переиндексации личных источников; отказавшие сообщения — в reindex-dlq.
+- id: github-integration-service
+  name: github-integration-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Принимает вебхуки GitHub App и OAuth установки, создаёт репозитории, ведёт статус подключения пользователя.
+- id: digital-twin-mcp
+  name: digital-twin-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - digital-twin-mcp (цифровой двойник)
+  purpose: Читает и пишет поля, профиль и показатели цифрового двойника ученика по метамодели.
+  calls_unresolved:
+  - 'Neon: DATABASE_URL'
+  - Neon (DATABASE_URL)
+  - проверка токенов Ory и подписи шлюза (GATEWAY_JWKS_URL)
+- id: learning-context-service
+  name: learning-context-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Согласия, когнитивная справка, состояние онбординга и персональный гид.
+  calls_unresolved:
+  - 'Neon: DATABASE_URL'
+- id: iwe-profiler
+  name: iwe-profiler
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - iwe-profiler (Профилировщик)
+  - профилировщик
+  purpose: Пересчитывает производные профили в Neon раз в сутки (04:30 по Москве).
+- id: iwe-stage-evaluator
+  name: iwe-stage-evaluator и iwe-stage-controller
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - оценщик ступени
+  purpose: Оценивают ступень по данным и вычисляют контроллер ступеней.
+- id: iwe-stage-controller
+  name: iwe-stage-evaluator и iwe-stage-controller
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - контроллер ступеней
+  purpose: Оценивают ступень по данным и вычисляют контроллер ступеней.
+- id: event-gateway
+  name: event-gateway
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - event-gateway (приёмник событий)
+  purpose: 'Единственный писатель событий в learning.domain_event: проверяет источник, подпись и запрет персональных полей.'
+  calls_unresolved:
+  - 'Neon: переменные DATABASE_URL_LEARNING, DATABASE_URL_PERS'
+- id: trace-accountant
+  name: trace-accountant
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Принимает следы работы агентов, пишет в domain_event или в заглушки при отсутствии согласия, сверяет записи.
+  calls_unresolved:
+  - 'Neon: public.domain_event'
+- id: activity-hub
+  name: activity-hub
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Собирает события активности (GitHub, WakaTime, LMS), считает стадии и когнитивные справки, хранит счёт в Neon.
+  calls_unresolved:
+  - 'Neon: др.'
+- id: bridge-2-events-poller
+  name: bridge-2-events-poller
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Опрашивает legacy LMS (PostgreSQL, чтение) и отправляет события в event-gateway.
+- id: multi-domain-projection-worker
+  name: multi-domain-projection-worker
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Переносит события из learning.domain_event в БД persona, subscription, indicators, rewards по правилам projection_rules.
+- id: fsm-mcp
+  name: fsm-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - fsm-mcp (Ассистент Ученика)
+  purpose: Выдаёт инструкции по состоянию ученика через конечный автомат; содержит неподключённый модуль проверки результата опроса.
+  calls_unresolved:
+  - проверка подписи шлюза (GATEWAY_JWKS_URL)
+- id: simulator-proxy
+  name: simulator-proxy
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Передаёт запросы с simulator.aisystant.com в программу simulator-lab.
+- id: checklist-mcp
+  name: checklist-mcp
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: 'Выдаёт чек-лист участника: факты, этап и прогресс.'
+  calls_unresolved:
+  - 'Neon: NEON_DATABASE_URL, PANEL_DATABASE_URL'
+  - Neon (NEON_DATABASE_URL, PANEL_DATABASE_URL)
+  - проверка подписи шлюза
+- id: iwe-guide-web
+  name: iwe-guide-web
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - iwe-guide-web (читалка руководств, guide.system-school.ru)
+  purpose: Показывает персональные и универсальные руководства пилотов IWE.
+  calls_unresolved:
+  - 'Neon: PostgreSQL'
+  - Neon (PostgreSQL)
+- id: simulator-lab
+  name: simulator-lab
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Программа-тренажёр, за которой стоит simulator-proxy.
+  calls_unresolved:
+  - 'Neon: политика simulator_ro в migrations 217'
+  - Neon (политика simulator_ro в migrations 217)
+- id: iwe-onboarding-controller
+  name: iwe-onboarding-controller
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - контроллер онбординга
+  purpose: Контроллер онбординга пользователя (DP.ROLE.046) по таймеру.
+  calls_unresolved:
+  - 'Neon: onboarding_state'
+  - Neon (onboarding_state)
+- id: iwe-render-pilot-guides
+  name: iwe-render-pilot-guides
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - iwe-render-pilot-guides (сборщик персональных руководств)
+  - сборщик персональных руководств
+  - сборщик руководств
+  purpose: Собирает персональные руководства пилотов (день, неделя, очередь).
+  calls_unresolved:
+  - git-репозитории пилотов
+  - Claude/LLM-прокси
+- id: observability-webhook
+  name: observability-webhook
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Принимает вебхук инцидентов Better Stack и пишет уведомления в Telegram-канал статуса; раз в минуту опрашивает состояние.
+  calls_unresolved:
+  - KV
+- id: OBSERVABILITY_STATE
+  name: OBSERVABILITY_STATE
+  kind: хранилище
+  system: платформа
+  status: существует
+  aliases:
+  - OBSERVABILITY_STATE (KV наблюдателя)
+  purpose: Хранит состояние уже отправленных уведомлений.
+- id: status-proxy
+  name: status-proxy
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Перенаправляет status.aisystant.com (302) на страницу статуса Better Stack.
+- id: payment-receiver
+  name: payment-receiver
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Принимает уведомления ЮKassa о платежах, проверяет адрес и подпись, пересылает событие в event-gateway и дальше.
+  calls_unresolved:
+  - 'Neon: схема finance, FINTECH_DB_SCHEMA'
+  - Neon (схема finance, FINTECH_DB_SCHEMA)
+  - пересылка на FORWARD_URL
+- id: payment-registry
+  name: программы синхронизации payment-registry
+  kind: набор программ
+  system: платформа
+  status: существует
+  aliases:
+  - программы синхронизации payment-registry
+  - программы синхронизации payment-registry (платежи, контракты, подписки)
+  - синхронизатор реестра платежей
+  purpose: Переносит платежи и подписки из LMS-базы в Neon (platform.finance_payments, subscription.contract).
+- id: db:platform
+  name: 'Neon: БД platform'
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - 'Neon: БД platform'
+  - 'Neon: БД platform (finance_payments)'
+  purpose: Единый журнал платежей экосистемы.
+- id: agent-runner
+  name: agent-runner
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - agent-runner (iwe-agent-runner)
+  purpose: 'Выполняет серверных агентов run_strategist и run_extractor от имени пользователя: вызывает модель и коммитит файлы в его репозиторий.'
+  calls_unresolved:
+  - 'Neon: личная БД знаний'
+- id: agent-status-service
+  name: agent-status-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: 'Доска статусов агентов: кто работает, над чем и с какими файлами.'
+- id: hermes-agent
+  name: hermes-agent
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - hermes-agent (рантайм Hermes)
+  purpose: 'Исполняет hermes_chat: вызывает модель через OpenRouter и хранит память диалога.'
+- id: user-profile-service
+  name: user-profile-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Профиль, тариф, статус GitHub и ключи моделей пользователя (BYOK); уведомляет бота.
+- id: bridge-scope-service
+  name: bridge-scope-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Проверяет права агента на запись в репозиторий пользователя перед операцией; применяет защиту строк (RLS).
+  calls_unresolved:
+  - 'Neon: DATABASE_URL'
+- id: Ory
+  name: Ory
+  kind: набор программ
+  system: платформа
+  status: существует
+  aliases:
+  - Ory (Hydra, Kratos)
+  - Ory Hydra
+  - Ory Kratos
+  purpose: 'Единая учётная запись и OAuth-сервер платформы: вход, токены, идентичности.'
+- id: mentorship-service
+  name: mentorship-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Собирает карточку участника для наставника и хранит заметки наставника.
+  calls_unresolved:
+  - chec
+- id: chat-analyst-service
+  name: chat-analyst-service
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - chat-analyst-service (аналитик чата)
+  purpose: Собирает сообщения закрытых Telegram-чатов, формирует дайджест и статистику для администратора чата.
+  calls_unresolved:
+  - собственная БД архива
+  - LiteLLM/OpenRouter (в коде найдены упоминания)
+- id: 'Neon: проект mentorship'
+  name: 'Neon: проект mentorship'
+  kind: проект баз данных
+  system: платформа
+  status: существует
+  aliases:
+  - Neon-проект mentorship
+  purpose: Архив переписки наставник–участник и заметки.
+- id: iwe-llm-proxy
+  name: iwe-llm-proxy
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - LLM-прокси
+  - iwe-llm-proxy (auth-gateway)
+  purpose: Проверяет подписку и дневной лимит перед вызовами модели, переводит форматы Anthropic и OpenAI, ведёт журнал вызовов; отдаёт данные сессий для дашборда.
+  calls_unresolved:
+  - 'Neon: proxy_calls, usage_cache'
+  - Neon (proxy_calls, usage_cache)
+- id: litellm
+  name: litellm
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - LiteLLM
+  - litellm (прокси к моделям)
+  purpose: Маршрутизирует вызовы моделей (Claude, Kimi, GPT-4o-mini) через OpenRouter.
+- id: aist_bot_newarchitecture
+  name: aist_bot_newarchitecture
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - Telegram-бот
+  - aist_bot_newarchitecture (бот @aist_me_bot, пилотный @aist_pilot_bot)
+  - бот
+  - бот @aist_me_bot
+  purpose: 'Telegram-бот обучения: ленты, марафоны, оплата, обращения к платформе; тонкий клиент платформы.'
+  calls_unresolved:
+  - 'Neon: consent'
+- id: SystemsSchool_bot
+  name: SystemsSchool_bot
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - SystemsSchool_bot (прежний Telegram-бот Школы)
+  - прежний бот Школы
+  purpose: Telegram-бот Школы системного менеджмента.
+- id: system-school.ru
+  name: system-school.ru
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - system-school.ru (сайт МИМ)
+  purpose: Статический сайт на VitePress; публикуется через werf.
+- id: ssm2025
+  name: ssm2025
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - ssm2025 (сайт ШСМ 2025)
+  purpose: VitePress-сайт с публикацией образа и деплоем в Nomad.
+- id: aisystant-com
+  name: aisystant-com
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - aisystant-com (сайт)
+  purpose: Сайт aisystant.com, образ публикуется workflow.
+- id: restic
+  name: restic
+  kind: программа
+  system: платформа
+  status: существует
+  aliases:
+  - restic (программа резервного копирования баз Neon и локальных файлов)
+  purpose: Дампит базы Neon через pg_dump и шифрованно копирует в Backblaze B2; чистит старые копии.
+  calls_unresolved:
+  - 'Neon: строки подключения в /etc/restic/neon-connections'
+  - Neon (строки подключения в /etc/restic/neon-connections)
+  - Better S
+- id: bitcoind-ots-verify
+  name: bitcoind-ots-verify и программа якорения OpenTimestamps
+  kind: набор программ
+  system: платформа
+  status: существует
+  aliases:
+  - bitcoind-ots-verify и программа якорения OpenTimestamps
+  - bitcoind-ots-verify и программа якорения OpenTimestamps (wp455)
+  - программа якорения OpenTimestamps
+  purpose: Независимо проверяет якоря цепочки хешей в OpenTimestamps; делает новые якоря, наблюдает за ними.
+  calls_unresolved:
+  - 'Neon: таблицы hash-chain, ots_anchors'
+  - Neon (таблицы hash-chain, ots_anchors)
+- id: Backblaze B2 бакет
+  name: Backblaze B2
+  kind: хранилище
+  system: платформа
+  status: существует
+  aliases:
+  - Backblaze B2 (бакет резервных копий)
+  purpose: Внешнее хранилище шифрованных копий Neon и файлов.
+- id: Metabase
+  name: Metabase
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: BI по шестнадцати источникам Neon.
+  calls_unresolved:
+  - Neon
+- id: Directus
+  name: Directus
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: Админка и CMS для справочников, платежей и ручных операций.
+  calls_unresolved:
+  - Neon
+- id: 'Neon: проект aisystant'
+  name: 'Neon: проект aisystant'
+  kind: проект баз данных
+  system: платформа
+  status: существует
+  aliases:
+  - 'Neon: проект aisystant (кластер баз данных)'
+  purpose: Миграции создают БД persona, journal, payment, subscription, indicators, learning, knowledge, reference, rewards, publication, community, lead, health, secrets и схемы audit, agent_trace, concept_graph.
+- id: Railway Postgres
+  name: Railway Postgres
+  kind: проект баз данных
+  system: платформа
+  status: существует
+  aliases:
+  - Railway Postgres (bot_data, fsm, directus, railway)
+  purpose: Хранит состояние бота, FSM и метаданные Directus.
+- id: PostgreSQL 16 с pgvector на tsekh-1
+  name: PostgreSQL 16 с pgvector на tsekh-1
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - PostgreSQL 16 с pgvector на tsekh-1 (времянка для проверок переноса баз)
+  purpose: 'Docker-compose: PostgreSQL 16 с pgvector и Caddy; проверки переноса баз. Описание сервера tsekh-1 целиком (PostgreSQL, restic, таймеры) хранит репозиторий hetzner-backstage — документ, по которому
+    сервер пересобирают, а не модуль.'
+  calls_unresolved:
+  - pgvector
+- id: iwe-browser-extension
+  name: iwe-browser-extension
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: Расширение Chrome считает набор текста на claude.ai и отправляет боту.
+- id: DS-iwe-session-trigger
+  name: DS-iwe-session-trigger
+  kind: программа
+  system: IWE
+  status: существует
+  aliases:
+  - DS-iwe-session-trigger (расширение VS Code)
+  purpose: Наблюдает за файлами сессий и запускает Claude Code автоматически.
+- id: DS-iwe-wp-panel
+  name: DS-iwe-wp-panel
+  kind: программа
+  system: IWE
+  status: существует
+  aliases:
+  - DS-iwe-wp-panel (панель РП)
+  purpose: 'Расширение VS Code: панель проектов и сессий агентов.'
+  calls_unresolved:
+  - карточки и реестр РП
+- id: local-gateway
+  name: local-gateway
+  kind: программа
+  system: IWE
+  status: существует
+  aliases:
+  - local-gateway (iwe-local-gateway)
+  purpose: Локальный MCP для блокировок файлов и статусов параллельных агентов.
+- id: google-drive-mcp
+  name: google-drive-mcp
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: Локальный MCP-коннектор к Google Drive владельца.
+- id: agent-trace-recorder
+  name: agent-trace-recorder и agent-trace-uploader
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: Хуки записи трассы работы агентов и отправки её в event-gateway.
+- id: agent-trace-uploader
+  name: agent-trace-recorder и agent-trace-uploader
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: Хуки записи трассы работы агентов и отправки её в event-gateway.
+- id: translate-sync
+  name: перевод шаблона при обновлении
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions)
+  source: §11.1а (в §5.1 нет)
+- id: iwe-translation-engine
+  name: движок перевода
+  kind: программа
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: перевод по утверждённому словарю понятий
+  source: §11.1а (в §5.1 нет)
+- id: db:persona
+  name: база persona
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база persona
+  - БД persona
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:journal
+  name: база journal
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база journal
+  - БД journal
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:payment
+  name: база payment
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база payment
+  - БД payment
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:subscription
+  name: база subscription
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база subscription
+  - БД subscription
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:indicators
+  name: база indicators
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база indicators
+  - БД indicators
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:learning
+  name: база learning
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база learning
+  - БД learning
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:knowledge
+  name: база knowledge
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база knowledge
+  - БД knowledge
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:reference
+  name: база reference
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база reference
+  - БД reference
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:rewards
+  name: база rewards
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база rewards
+  - БД rewards
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:publication
+  name: база publication
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база publication
+  - БД publication
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:community
+  name: база community
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база community
+  - БД community
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:lead
+  name: база lead
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база lead
+  - БД lead
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:health
+  name: база health
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база health
+  - БД health
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:secrets
+  name: база secrets
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases:
+  - база secrets
+  - БД secrets
+  purpose: база в проекте Neon aisystant (§5.1, строка проекта)
+- id: db:railway-bot_data
+  name: база bot_data в Railway Postgres
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: база в Railway Postgres (§5.1)
+- id: db:railway-fsm
+  name: база fsm в Railway Postgres
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: база в Railway Postgres (§5.1)
+- id: db:railway-directus
+  name: база directus в Railway Postgres
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: база в Railway Postgres (§5.1)
+- id: db:railway-railway
+  name: база railway в Railway Postgres
+  kind: база данных
+  system: платформа
+  status: существует
+  aliases: []
+  purpose: база в Railway Postgres (§5.1)
