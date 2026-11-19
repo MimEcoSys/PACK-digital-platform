@@ -1,0 +1,118 @@
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+subsystems:
+- id: gatekeeper
+  name: Привратник
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: устанавливает личность, тариф и права
+- id: tool-dispatcher
+  name: Диспетчер инструментов
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: принимает вызовы MCP и передаёт их нужному бэкенду
+- id: shared-knowledge-provider
+  name: Поставщик общих знаний
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: ищет и выдаёт паки, руководства, понятия
+- id: librarian
+  name: Библиотекарь
+  aliases: []
+  system: платформа
+  status: проектируется
+  purpose: хранит указатели на методы авторов из собрания «Библиотека методов» и их проверку (имя подсистемы — по роли, решение пилота 11.11.2026); определение — [ECO.ARCH.001 §3.1 «Библиотека методов»](https://github.com/MimEcoSys/PACK-ecosystem/blob/main/pack/ecosystem/02-domain-entities/ECO.ARCH.001-ecosystem-architecture.md)
+- id: personal-knowledge-keeper
+  name: Хранитель личных знаний
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: индексирует и отдаёт личные и командные источники
+- id: portrait-keeper
+  name: Держатель портрета
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: хранит характеристики и ступень человека
+- id: path-guide
+  name: Проводник по пути
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: 'ведёт человека: онбординг, чек-лист, руководство, тренажёр'
+- id: event-accountant
+  name: Учётчик событий
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: принимает события и раскладывает их по базам, начисляет баллы
+- id: cashier
+  name: Кассир
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: принимает платежи и ведёт подписки
+- id: mentor-workplace
+  name: Рабочее место наставника
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: даёт наставнику карточку участника и разбор чата
+- id: server-agent-runner
+  name: Исполнитель серверных агентов
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: выполняет работу агентов по поручению и расписанию
+- id: model-dispenser
+  name: Раздатчик моделей
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: проверяет лимит и передаёт вызовы моделям
+- id: messenger
+  name: Собеседник в мессенджере
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: ведёт диалог с человеком в Telegram
+- id: herald
+  name: Вестник
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: 'доставляет уведомления всем пользователям по правилам платформы и по своим правилам человека: хранит правила и настройки, принимает выпуски, решает, когда и в какой канал доставить, ведёт ленту
+    и учёт доставки (решение пилота 18.11.2026)'
+- id: showcase
+  name: Витрина
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: рассказывает о программах и ведёт к подключению
+- id: translator
+  name: Переводчик
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: переводит для всех тексты шаблона IWE и карточки Библиотеки методов на английский по утверждённому словарю понятий; отдаёт словарь для инструкции ИИ клиента Open (решение пилота 10.11.2026, вариант
+    «обе системы»)
+- id: health-watchman
+  name: Сторож исправности
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: замечает сбои и сообщает о них
+- id: backup-keeper
+  name: Хранитель копий
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: держит резервные копии и подтверждение целостности
+- id: shared-data
+  name: Общие базы и управление данными
+  aliases: []
+  system: платформа
+  status: существует
+  purpose: в §4.1 не описана; подсистема указана у модулей §5.1 — расхождение документа

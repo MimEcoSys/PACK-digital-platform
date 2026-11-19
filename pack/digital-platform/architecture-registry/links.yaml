@@ -1,0 +1,707 @@
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+performs:
+- module: gateway-mcp
+  subsystem: tool-dispatcher
+  when: на каждый вызов MCP
+- module: TokenRefreshCoalescer
+  subsystem: tool-dispatcher
+  when: при одновременных обновлениях токена
+- module: REFRESH_TOKEN_KV
+  subsystem: tool-dispatcher
+  when: не установлено
+- module: kimi-adapter
+  subsystem: tool-dispatcher
+  when: не установлено
+- module: knowledge-mcp
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента; кроме того, индексирует репозитории по расписанию
+- module: full-ingest-batches
+  subsystem: shared-knowledge-provider
+  when: не установлено
+- module: guides-mcp
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента
+- module: open-tserenov-com
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента
+- module: db:open-tserenov-com
+  subsystem: shared-knowledge-provider
+  when: не установлено
+- module: open.system-school.ru
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента
+- module: open.aisystant.com
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента
+- module: plus.system-school.ru
+  subsystem: shared-knowledge-provider
+  when: по вызову инструмента
+- module: personal-knowledge-mcp
+  subsystem: personal-knowledge-keeper
+  when: по вызову инструмента
+- module: reindex
+  subsystem: personal-knowledge-keeper
+  when: не установлено
+- module: github-integration-service
+  subsystem: personal-knowledge-keeper
+  when: когда принимает вебхук GitHub App или установку через OAuth
+- module: digital-twin-mcp
+  subsystem: portrait-keeper
+  when: по вызову инструмента
+- module: learning-context-service
+  subsystem: portrait-keeper
+  when: не установлено
+- module: iwe-profiler
+  subsystem: portrait-keeper
+  when: раз в сутки в 04:30 по Москве
+- module: iwe-stage-evaluator
+  subsystem: portrait-keeper
+  when: не установлено
+- module: iwe-stage-controller
+  subsystem: portrait-keeper
+  when: не установлено
+- module: event-gateway
+  subsystem: event-accountant
+  when: не установлено
+- module: trace-accountant
+  subsystem: event-accountant
+  when: когда принимает след работы агента
+- module: activity-hub
+  subsystem: event-accountant
+  when: не установлено
+- module: bridge-2-events-poller
+  subsystem: event-accountant
+  when: при опросе LMS (частота не установлена)
+- module: multi-domain-projection-worker
+  subsystem: event-accountant
+  when: не установлено
+- module: fsm-mcp
+  subsystem: path-guide
+  when: по вызову инструмента
+- module: simulator-proxy
+  subsystem: path-guide
+  when: на запросы с simulator.aisystant.com
+- module: checklist-mcp
+  subsystem: path-guide
+  when: по вызову инструмента
+- module: iwe-guide-web
+  subsystem: path-guide
+  when: не установлено
+- module: simulator-lab
+  subsystem: path-guide
+  when: не установлено
+- module: iwe-onboarding-controller
+  subsystem: path-guide
+  when: по таймеру
+- module: iwe-render-pilot-guides
+  subsystem: path-guide
+  when: не установлено
+- module: observability-webhook
+  subsystem: health-watchman
+  when: на вебхук инцидента и раз в минуту
+- module: OBSERVABILITY_STATE
+  subsystem: health-watchman
+  when: не установлено
+- module: status-proxy
+  subsystem: health-watchman
+  when: когда открывают status.aisystant.com
+- module: payment-receiver
+  subsystem: cashier
+  when: на уведомление ЮKassa о платеже
+- module: payment-registry
+  subsystem: cashier
+  when: не установлено
+- module: db:platform
+  subsystem: cashier
+  when: не установлено
+- module: agent-runner
+  subsystem: server-agent-runner
+  when: по вызову run_strategist и run_extractor
+- module: agent-status-service
+  subsystem: server-agent-runner
+  when: не установлено
+- module: hermes-agent
+  subsystem: server-agent-runner
+  when: по вызову hermes_chat
+- module: user-profile-service
+  subsystem: gatekeeper
+  when: не установлено
+- module: bridge-scope-service
+  subsystem: gatekeeper
+  when: перед операцией записи агента в репозиторий пользователя
+- module: Ory
+  subsystem: gatekeeper
+  when: при входе и выдаче токенов
+- module: mentorship-service
+  subsystem: mentor-workplace
+  when: не установлено
+- module: chat-analyst-service
+  subsystem: mentor-workplace
+  when: не установлено
+- module: 'Neon: проект mentorship'
+  subsystem: mentor-workplace
+  when: не установлено
+- module: iwe-llm-proxy
+  subsystem: model-dispenser
+  when: перед каждым вызовом модели и при его передаче
+- module: litellm
+  subsystem: model-dispenser
+  when: перед каждым вызовом модели и при его передаче
+- module: aist_bot_newarchitecture
+  subsystem: messenger
+  when: не установлено
+- module: aist_bot_newarchitecture
+  subsystem: herald
+  when: не установлено
+- module: SystemsSchool_bot
+  subsystem: messenger
+  when: не установлено
+- module: system-school.ru
+  subsystem: showcase
+  when: не установлено
+- module: ssm2025
+  subsystem: showcase
+  when: не установлено
+- module: aisystant-com
+  subsystem: showcase
+  when: не установлено
+- module: restic
+  subsystem: backup-keeper
+  when: не установлено
+- module: bitcoind-ots-verify
+  subsystem: backup-keeper
+  when: не установлено
+- module: Backblaze B2 бакет
+  subsystem: backup-keeper
+  when: не установлено
+- module: Metabase
+  subsystem: shared-data
+  when: не установлено
+- module: Directus
+  subsystem: shared-data
+  when: не установлено
+- module: 'Neon: проект aisystant'
+  subsystem: shared-data
+  when: не установлено
+- module: Railway Postgres
+  subsystem: shared-data
+  when: не установлено
+- module: translate-sync
+  subsystem: translator
+  when: при обновлении основной ветки шаблона
+- module: iwe-translation-engine
+  subsystem: translator
+  when: не установлено
+- module: gateway-mcp
+  subsystem: gatekeeper
+  when: не установлено
+located_in:
+- module: db:persona
+  in: 'Neon: проект aisystant'
+- module: db:journal
+  in: 'Neon: проект aisystant'
+- module: db:payment
+  in: 'Neon: проект aisystant'
+- module: db:subscription
+  in: 'Neon: проект aisystant'
+- module: db:indicators
+  in: 'Neon: проект aisystant'
+- module: db:learning
+  in: 'Neon: проект aisystant'
+- module: db:knowledge
+  in: 'Neon: проект aisystant'
+- module: db:reference
+  in: 'Neon: проект aisystant'
+- module: db:rewards
+  in: 'Neon: проект aisystant'
+- module: db:publication
+  in: 'Neon: проект aisystant'
+- module: db:community
+  in: 'Neon: проект aisystant'
+- module: db:lead
+  in: 'Neon: проект aisystant'
+- module: db:health
+  in: 'Neon: проект aisystant'
+- module: db:secrets
+  in: 'Neon: проект aisystant'
+- module: db:railway-bot_data
+  in: Railway Postgres
+- module: db:railway-fsm
+  in: Railway Postgres
+- module: db:railway-directus
+  in: Railway Postgres
+- module: db:railway-railway
+  in: Railway Postgres
+- module: db:platform
+  in: 'Neon: проект aisystant'
+calls:
+  snapshot: DP.ARCH.001 §5.1 «Обращается к» (снято 01.11.2026), §10 и проба пути оплаты; «обращается» — направление не уточнено
+  items:
+  - from: gateway-mcp
+    to: knowledge-mcp
+    verb: обращается
+  - from: gateway-mcp
+    to: digital-twin-mcp
+    verb: обращается
+  - from: gateway-mcp
+    to: personal-knowledge-mcp
+    verb: обращается
+  - from: TokenRefreshCoalescer
+    to: Ory
+    verb: обращается
+  - from: kimi-adapter
+    to: gateway-mcp
+    verb: обращается
+  - from: kimi-adapter
+    to: Ory
+    verb: обращается
+  - from: knowledge-mcp
+    to: db:knowledge
+    verb: обращается
+  - from: knowledge-mcp
+    to: OpenRouter
+    verb: обращается
+  - from: knowledge-mcp
+    to: OpenAI
+    verb: обращается
+  - from: guides-mcp
+    to: OpenRouter
+    verb: обращается
+  - from: open.aisystant.com
+    to: FPF Library
+    verb: обращается
+  - from: personal-knowledge-mcp
+    to: db:indicators
+    verb: обращается
+  - from: personal-knowledge-mcp
+    to: db:knowledge
+    verb: обращается
+  - from: personal-knowledge-mcp
+    to: OpenRouter
+    verb: обращается
+  - from: personal-knowledge-mcp
+    to: GitHub
+    verb: обращается
+  - from: github-integration-service
+    to: GitHub
+    verb: обращается
+  - from: github-integration-service
+    to: db:learning
+    verb: обращается
+  - from: github-integration-service
+    to: knowledge-mcp
+    verb: обращается
+  - from: github-integration-service
+    to: personal-knowledge-mcp
+    verb: обращается
+  - from: learning-context-service
+    to: db:learning
+    verb: обращается
+  - from: learning-context-service
+    to: Aisystant LMS
+    verb: читает
+  - from: learning-context-service
+    to: event-gateway
+    verb: вызывает
+  - from: iwe-profiler
+    to: db:indicators
+    verb: обращается
+  - from: iwe-stage-evaluator
+    to: db:learning
+    verb: обращается
+  - from: iwe-stage-evaluator
+    to: activity-hub
+    verb: обращается
+  - from: iwe-stage-controller
+    to: db:learning
+    verb: обращается
+  - from: iwe-stage-controller
+    to: activity-hub
+    verb: обращается
+  - from: event-gateway
+    to: db:learning
+    verb: пишет
+  - from: event-gateway
+    to: db:persona
+    verb: обращается
+  - from: trace-accountant
+    to: db:learning
+    verb: обращается
+  - from: trace-accountant
+    to: Ory
+    verb: вызывает
+  - from: activity-hub
+    to: db:learning
+    verb: пишет
+  - from: activity-hub
+    to: Aisystant LMS
+    verb: обращается
+  - from: activity-hub
+    to: GitHub
+    verb: обращается
+  - from: activity-hub
+    to: WakaTime
+    verb: обращается
+  - from: activity-hub
+    to: event-gateway
+    verb: вызывает
+  - from: activity-hub
+    to: Langfuse
+    verb: обращается
+  - from: bridge-2-events-poller
+    to: Aisystant LMS
+    verb: читает
+  - from: bridge-2-events-poller
+    to: event-gateway
+    verb: вызывает
+  - from: multi-domain-projection-worker
+    to: db:indicators
+    verb: пишет
+  - from: multi-domain-projection-worker
+    to: db:learning
+    verb: читает
+  - from: multi-domain-projection-worker
+    to: db:persona
+    verb: пишет
+  - from: multi-domain-projection-worker
+    to: db:reference
+    verb: обращается
+  - from: multi-domain-projection-worker
+    to: db:rewards
+    verb: пишет
+  - from: multi-domain-projection-worker
+    to: db:subscription
+    verb: пишет
+  - from: fsm-mcp
+    to: Ory
+    verb: обращается
+  - from: simulator-proxy
+    to: simulator-lab
+    verb: обращается
+  - from: iwe-guide-web
+    to: GitHub
+    verb: обращается
+  - from: observability-webhook
+    to: Better Stack
+    verb: обращается
+  - from: observability-webhook
+    to: Telegram Bot API
+    verb: обращается
+  - from: status-proxy
+    to: Better Stack
+    verb: обращается
+  - from: payment-receiver
+    to: event-gateway
+    verb: вызывает
+  - from: payment-registry
+    to: Aisystant LMS
+    verb: читает
+  - from: payment-registry
+    to: db:platform
+    verb: пишет
+  - from: payment-registry
+    to: db:subscription
+    verb: пишет
+  - from: agent-runner
+    to: db:indicators
+    verb: обращается
+  - from: agent-runner
+    to: iwe-llm-proxy
+    verb: обращается
+  - from: agent-status-service
+    to: db:indicators
+    verb: обращается
+  - from: agent-status-service
+    to: Ory
+    verb: обращается
+  - from: hermes-agent
+    to: OpenRouter
+    verb: обращается
+  - from: user-profile-service
+    to: db:subscription
+    verb: читает
+  - from: user-profile-service
+    to: Ory
+    verb: вызывает
+  - from: user-profile-service
+    to: aist_bot_newarchitecture
+    verb: обращается
+  - from: bridge-scope-service
+    to: db:indicators
+    verb: обращается
+  - from: mentorship-service
+    to: 'Neon: проект mentorship'
+    verb: обращается
+  - from: mentorship-service
+    to: Aisystant LMS
+    verb: читает
+  - from: iwe-llm-proxy
+    to: litellm
+    verb: обращается
+  - from: litellm
+    to: OpenRouter
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:indicators
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:journal
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:learning
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:persona
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:rewards
+    verb: обращается
+  - from: aist_bot_newarchitecture
+    to: db:subscription
+    verb: обращается
+  - from: system-school.ru
+    to: VK Cloud
+    verb: обращается
+  - from: ssm2025
+    to: ghcr.io
+    verb: обращается
+  - from: restic
+    to: Backblaze B2
+    verb: обращается
+  - from: Directus
+    to: Railway Postgres
+    verb: обращается
+  - from: iwe-browser-extension
+    to: aist_bot_newarchitecture
+    verb: обращается
+  - from: DS-iwe-session-trigger
+    to: рантаймы агентов
+    verb: обращается
+  - from: google-drive-mcp
+    to: Google Drive
+    verb: обращается
+  - from: agent-trace-uploader
+    to: event-gateway
+    verb: обращается
+  - from: payment-receiver
+    to: 'Neon: проект aisystant'
+    verb: пишет
+  - from: gateway-mcp
+    to: db:subscription
+    verb: читает
+  - from: ЮKassa
+    to: payment-receiver
+    verb: вызывает
+deployed:
+  snapshot: DP.ARCH.001 §5.1 «Где работает» — снято 01.11.2026
+  items:
+  - module: gateway-mcp
+    site: Cloudflare Workers
+  - module: TokenRefreshCoalescer
+    site: Cloudflare Workers
+  - module: REFRESH_TOKEN_KV
+    site: Cloudflare Workers
+  - module: kimi-adapter
+    site: не установлено
+  - module: knowledge-mcp
+    site: Cloudflare Workers
+  - module: full-ingest-batches
+    site: Cloudflare Workers
+  - module: guides-mcp
+    site: Cloudflare Workers
+  - module: open-tserenov-com
+    site: Cloudflare Workers
+  - module: db:open-tserenov-com
+    site: Cloudflare Workers
+  - module: open.system-school.ru
+    site: VK Cloud
+  - module: open.aisystant.com
+    site: не установлено
+  - module: plus.system-school.ru
+    site: VK Cloud
+  - module: personal-knowledge-mcp
+    site: Cloudflare Workers
+  - module: reindex
+    site: Cloudflare Workers
+  - module: github-integration-service
+    site: Railway
+  - module: digital-twin-mcp
+    site: Cloudflare Workers
+  - module: learning-context-service
+    site: не установлено
+  - module: iwe-profiler
+    site: tsekh-1
+  - module: iwe-stage-evaluator
+    site: tsekh-1
+  - module: iwe-stage-controller
+    site: tsekh-1
+  - module: event-gateway
+    site: Cloudflare Workers
+  - module: trace-accountant
+    site: Railway
+  - module: activity-hub
+    site: Railway
+  - module: bridge-2-events-poller
+    site: Railway
+  - module: multi-domain-projection-worker
+    site: Railway
+  - module: fsm-mcp
+    site: Cloudflare Workers
+  - module: simulator-proxy
+    site: Cloudflare Workers
+  - module: checklist-mcp
+    site: Railway
+  - module: iwe-guide-web
+    site: Railway
+  - module: simulator-lab
+    site: Railway
+  - module: iwe-onboarding-controller
+    site: tsekh-1
+  - module: iwe-render-pilot-guides
+    site: tsekh-1
+  - module: observability-webhook
+    site: Cloudflare Workers
+  - module: OBSERVABILITY_STATE
+    site: Cloudflare Workers
+  - module: status-proxy
+    site: Cloudflare Workers
+  - module: payment-receiver
+    site: Cloudflare Workers
+  - module: payment-registry
+    site: tsekh-1
+  - module: db:platform
+    site: Neon
+  - module: agent-runner
+    site: Railway
+  - module: agent-status-service
+    site: Railway
+  - module: hermes-agent
+    site: Railway
+  - module: user-profile-service
+    site: Railway
+  - module: bridge-scope-service
+    site: не установлено
+  - module: Ory
+    site: VK Cloud
+  - module: mentorship-service
+    site: Railway
+  - module: chat-analyst-service
+    site: не установлено
+  - module: 'Neon: проект mentorship'
+    site: Neon
+  - module: iwe-llm-proxy
+    site: Railway
+  - module: litellm
+    site: Railway
+  - module: aist_bot_newarchitecture
+    site: Railway
+  - module: SystemsSchool_bot
+    site: Kubernetes через werf
+  - module: system-school.ru
+    site: VK Cloud
+  - module: ssm2025
+    site: Nomad
+  - module: aisystant-com
+    site: не установлено
+  - module: restic
+    site: tsekh-1
+  - module: bitcoind-ots-verify
+    site: tsekh-1
+  - module: Backblaze B2 бакет
+    site: Backblaze B2
+  - module: Metabase
+    site: Railway
+  - module: Directus
+    site: Railway
+  - module: 'Neon: проект aisystant'
+    site: Neon
+  - module: Railway Postgres
+    site: Railway
+  - module: PostgreSQL 16 с pgvector на tsekh-1
+    site: tsekh-1
+  - module: iwe-browser-extension
+    site: браузер пользователя
+  - module: DS-iwe-session-trigger
+    site: VS Code пользователя
+  - module: DS-iwe-wp-panel
+    site: VS Code пользователя
+  - module: local-gateway
+    site: машина пользователя
+  - module: google-drive-mcp
+    site: машина пользователя
+  - module: agent-trace-recorder
+    site: машина пользователя
+  - module: agent-trace-uploader
+    site: машина пользователя
+  - module: translate-sync
+    site: GitHub Actions
+  - module: iwe-translation-engine
+    site: не установлено
+  - module: db:persona
+    site: Neon
+  - module: db:journal
+    site: Neon
+  - module: db:payment
+    site: Neon
+  - module: db:subscription
+    site: Neon
+  - module: db:indicators
+    site: Neon
+  - module: db:learning
+    site: Neon
+  - module: db:knowledge
+    site: Neon
+  - module: db:reference
+    site: Neon
+  - module: db:rewards
+    site: Neon
+  - module: db:publication
+    site: Neon
+  - module: db:community
+    site: Neon
+  - module: db:lead
+    site: Neon
+  - module: db:health
+    site: Neon
+  - module: db:secrets
+    site: Neon
+  - module: db:railway-bot_data
+    site: Railway
+  - module: db:railway-fsm
+    site: Railway
+  - module: db:railway-directus
+    site: Railway
+  - module: db:railway-railway
+    site: Railway
+paths:
+- id: '10'
+  need: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)
+  steps:
+  - from: ЮKassa
+    action: присылает уведомление о платеже
+    to: payment-receiver
+  - from: payment-receiver
+    action: пересылает событие
+    to: event-gateway
+  - from: event-gateway
+    action: пишет в learning.domain_event
+    to: db:learning
+  - from: multi-domain-projection-worker
+    action: читает событие
+    to: db:learning
+  - from: multi-domain-projection-worker
+    action: записывает подписку
+    to: db:subscription
+  - from: gateway-mcp
+    action: читает право при вызове
+    to: db:subscription
+- id: 10-вход
+  need: Участник оплачивает подписку (входы, DP.ARCH.001 §11.2 Б строка 10)
+  steps:
+  - from: aist_bot_newarchitecture
+    action: команды /buy, /subscribe_stars, /subscription
+    to: Telegram Stars
+  - from: system-school.ru
+    action: страница /quick-purchase (модуль страницы не установлен)
+    to: ЮKassa
+  note: как оплата через Telegram Stars доходит до базы subscription — в DP.ARCH.001 не установлено; §11.2 не называет Кассира для этой потребности

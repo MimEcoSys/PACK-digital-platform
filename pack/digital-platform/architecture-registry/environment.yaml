@@ -1,0 +1,116 @@
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+environment:
+- id: Cloudflare
+  aliases:
+  - Cloudflare (Workers, KV, Durable Objects, Queues, D1, Rate Limiting, DNS aisystant.com)
+  purpose: исполнение воркеров, очереди и кеши, домены mcp/oauth/twin/simulator/status.aisystant.com и open.tserenov.com
+- id: Railway
+  aliases: []
+  purpose: 'запуск программ из Dockerfile или nixpacks: бот, activity-hub, agent-runner, user-profile-service, github-integration-service, checklist-mcp, trace-accountant, agent-status-service, mentorship-service,
+    iwe-guide-web, bridge-2-events-poller, multi-domain-projection-worker, iwe-llm-proxy, litellm, hermes-agent, simulator-lab; Postgres (bot_data, fsm, directus)'
+- id: GitHub
+  aliases:
+  - GitHub (репозитории, GitHub App, Actions, ghcr.io)
+  - GitHub Actions
+  - GitHub App
+  purpose: хранение кода, Паков и репозиториев пользователей; сборка и выпуск воркеров; вебхуки установки приложения
+- id: Telegram Bot API
+  aliases:
+  - Telegram
+  - Telegram (Bot API)
+  purpose: интерфейс ботов и уведомления
+- id: Anthropic
+  aliases: []
+  purpose: 'генерация ответов и эмбеддингов: Anthropic напрямую (ключ в боте), OpenRouter через litellm и hermes-agent, эмбеддинги text-embedding-3-small через OpenRouter и OpenAI'
+- id: OpenRouter
+  aliases: []
+  purpose: 'генерация ответов и эмбеддингов: Anthropic напрямую (ключ в боте), OpenRouter через litellm и hermes-agent, эмбеддинги text-embedding-3-small через OpenRouter и OpenAI'
+- id: OpenAI
+  aliases: []
+  purpose: 'генерация ответов и эмбеддингов: Anthropic напрямую (ключ в боте), OpenRouter через litellm и hermes-agent, эмбеддинги text-embedding-3-small через OpenRouter и OpenAI'
+- id: рантаймы агентов
+  aliases:
+  - Claude Code
+  - Claude Code, Codex, Kimi и другие рантаймы агентов
+  - Codex
+  - Kimi
+  purpose: клиенты MCP на стороне пользователя
+- id: Aisystant LMS
+  aliases:
+  - Aisystant LMS (legacy, PostgreSQL и API)
+  - Aisystant LMS PG
+  - Aisystant LMS PostgreSQL
+  - Aisystant LMS PostgreSQL (legacy)
+  - LMS API
+  purpose: исходный источник платежей, подписок и учебного прогресса ШСМ
+- id: ЮKassa
+  aliases: []
+  purpose: приём платежей
+- id: Telegram Stars
+  aliases: []
+  purpose: приём платежей
+- id: Discourse
+  aliases:
+  - Discourse (systemsworld.club)
+  - systemsworld.club
+  purpose: 'клуб: публикации и комментарии'
+- id: Better Stack
+  aliases: []
+  purpose: мониторинг, страница статуса, heartbeat
+- id: Backblaze B2
+  aliases: []
+  purpose: хранение зашифрованных резервных копий
+- id: Hetzner
+  aliases: []
+  purpose: аренда личного сервера автора tsekh-1 (Финляндия); платформа пользуется им временно, до переноса в GKE или VK Cloud
+- id: VK Cloud
+  aliases:
+  - VK Cloud (Kubernetes, registry)
+  - VK registry docker-registry.system-school.ru
+  purpose: 'российская площадка: system-school.ru, Ory, open.system-school.ru и plus.system-school.ru (целевой MIM MCP; прежнее имя mcp.system-school.ru); werf-деплой'
+- id: Nomad
+  aliases: []
+  purpose: запуск ssm2025
+- id: Langfuse
+  aliases: []
+  purpose: трассировка вызовов моделей
+- id: WakaTime
+  aliases: []
+  purpose: 'интеграции пользователя: учёт времени, задачи, календарь, файлы'
+- id: Linear
+  aliases: []
+  purpose: 'интеграции пользователя: учёт времени, задачи, календарь, файлы'
+- id: Google Calendar
+  aliases: []
+  purpose: 'интеграции пользователя: учёт времени, задачи, календарь, файлы'
+- id: Google Drive
+  aliases: []
+  purpose: 'интеграции пользователя: учёт времени, задачи, календарь, файлы'
+- id: FPF Library
+  aliases:
+  - FPF Library (mcp.fpf.tools)
+  - mcp.fpf.tools
+  purpose: внешний публичный MCP по FPF, исходный код не установлен
+- id: npm
+  aliases: []
+  purpose: поставка зависимостей и образов
+- id: PyPI
+  aliases: []
+  purpose: поставка зависимостей и образов
+- id: ghcr.io
+  aliases: []
+  purpose: поставка зависимостей и образов
+sites:
+- id: Backblaze B2
+- id: Cloudflare Workers
+- id: GitHub Actions
+- id: Kubernetes через werf
+- id: Neon
+- id: Nomad
+- id: Railway
+- id: VK Cloud
+- id: VS Code пользователя
+- id: tsekh-1
+- id: браузер пользователя
+- id: машина пользователя
+- id: не установлено
