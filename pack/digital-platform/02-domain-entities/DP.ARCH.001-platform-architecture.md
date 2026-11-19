@@ -8,7 +8,7 @@ type: domain-entity
 status: active
 summary: "Устройство платформы и IWE одним описанием: границы систем; функциональные подсистемы платформы и IWE; модули, системы окружения и размещение; MCP; данные; сквозные пути; средства по потребностям (потребность → подсистема → модуль); слои как вид по потоку запроса; архитектурные характеристики ЭМОГССБ и доменные, 34 принципа; роли по уровням; правила поведения ИИ"
 created: 2026-02-07
-updated: 2026-11-18
+updated: 2026-11-19
 trust:
   F: 4
   G: domain
@@ -185,10 +185,10 @@ flowchart LR
       IK["Загрузчик знаний"]:::sys
       IU["Доставщик обновлений"]:::sys
       IR["Остальные функции IWE: координация агентов, защита секретов, техосмотр и др."]:::sys
-      IN["Предложение изменений среды: замечает ограничение, человек решает"]:::sys
-      IP["Перенос без потерь при смене модели, вендора, состояния"]:::sys
-      IS2["Поиск по своим материалам у человека"]:::sys
-      IRS["Приём результатов сервиса"]:::sys
+      IN["Сборщик ИИ-среды: предлагает изменения среды, человек решает"]:::sys
+      IP["Переносчик: перенос без потерь при смене модели, вендора, состояния"]:::sys
+      IS2["Хранитель личных знаний в IWE: поиск по своим материалам"]:::sys
+      IRS["Приём результатов сервиса: принимает человек, подсистемы нет"]:::sys
     end
   end
   subgraph P["Платформа: функции"]
@@ -386,6 +386,8 @@ flowchart LR
 
 Для каждой: что делает, по какому описанию метода работает и какие рабочие продукты создаёт. Подсистема IWE — та, чей экземпляр запущен у человека для его работы (§2, таблица границ). В колонке «Метод» — только описания методов: ID пака или файл SKILL.md шаблона; где общего описания метода нет, так и сказано, а частные приёмы названы отдельно. «Ядро» — подсистема есть в любой установке по шаблону; «по выбору» — подключается пользователем.
 
+**Имя подсистемы** (решение пилота 11.11.2026). Функциональная подсистема носит имя роли, которую исполняет, поэтому роль и подсистема могут называться одинаково; о чём речь, видно по месту: в этой таблице — подсистема, в реестре ролей DP.ROLE.001 — роль. Одна роль — одно имя в любой системе, место указывается уточнением («экземпляр в IWE», «экземпляр платформы»). Чья подсистема — решает тест экземпляра (§2).
+
 | Функциональная подсистема | Что делает | Метод (описание) | Рабочие продукты | Где есть |
 |---|---|---|---|---|
 | Исполнитель работы | выполняет задачи пользователя действиями агента | культура работы IWE (DP.M.008); протоколы ОРЗ шаблона (`memory/protocol-*.md`) | рабочие продукты по задачам: тексты, код, планы, правки паков | ядро |
@@ -406,10 +408,15 @@ flowchart LR
 | Детектор | на событиях рантайма запускает зарегистрированные детекторы и записывает найденные ими события (инциденты, кандидаты в знания) | общее описание метода не выделено; механизм — шина захвата (обещание DP.SC.025), каталог типовых ошибок агента (DP.FM.010) | события захвата и инцидентов в журналах | ядро |
 | Учёт рассуждений агента | записывает следы действий и рассуждений агента по сессиям, выдаёт их для просмотра, поиска и разбора | общее описание метода не выделено; механизм — обещание хранения следов агента (DP.SC.037) | журнал следов агента; выдача следов по сессии, РП или дате | по выбору (запись по умолчанию выключена, включает пользователь) |
 | Переводчик | переводит на английский тексты пользователя по утверждённому словарю понятий и показывает неутверждённые имена отдельным списком | общее описание метода не выделено; обещание Переводчика утверждено в РП-620 Ф2, его опоры — DP.SC.188, DP.SC.203 (черновики) | английские редакции текстов; список неутверждённых имён | по выбору (тот же Переводчик работает и как подсистема платформы, §4.1) |
+| Хранитель версий | хранит файлы пользователя с историей версий и возвращает прежние версии | общего описания метода нет; правила коммитов и публикации — в инструкциях шаблона | история версий в репозиториях пользователя | ядро (модули — git и файловая система компьютера, git требует любая установка по шаблону; GitHub — система окружения, §5.4) |
+| Наладчик IWE | восстанавливает память и инструкции агента из резервной копии на новом компьютере или после порчи | SKILL.md `iwe-restore`, `restore-exocortex` | восстановленные память и инструкции | ядро; починка типовых сбоев по каталогу (обещание DP.SC.008) пока работает только в установке автора |
+| Верификатор | проверяет результат по эталону отдельным запуском агента, который не видел работы | SKILL.md `verify`; одноимённая роль — DP.ROLE.023 | заключение проверки со списком несоответствий | ядро |
 
-«Маршрутизатор знаний» (куда записать) и «Маршрутизатор задач» (кому поручить) — разные подсистемы. В таблице «Средства по потребностям» (§11) встречаются ещё четыре имени — Хранитель, Наладчик IWE, Проводник развития, Выпускающий шаблона (прежнее имя «Публикатор релизов», решение 11.11.2026): это кандидаты в подсистемы IWE, в список выше не приняты.
+**Имя принято, программы в шаблоне нет** (решение пилота 11.11.2026). Эти имена в таблицу выше не внесены, пока в шаблоне нет программ, которые исполняют функцию: **Хранитель личных знаний** — экземпляр в IWE, ищет по своим материалам человека (навык `find-method` ищет только методы; на платформе та же подсистема работает, §4.1); **Проводник по пути** — экземпляр в IWE, сопровождает развитие человека (прежнее имя «Проводник развития»; на платформе работает, §4.1); **Сборщик ИИ-среды** — предлагает изменения среды (одноимённая роль конвейера экосистемы, ECO.ARCH.001 §2, играется на уровне «человек + IWE»); **Переносчик** — переносит данные человека без потерь при смене модели, вендора или состояния, имя общее для платформы и IWE. Приём результатов сервиса подсистемой не стал: результат принимает человек.
 
-**Решения пилота 10.11.2026 по кандидатам из ролей** (проверка по шаблону: принимается подсистема, у которой в шаблоне есть программа). Приняты: Детектор, Учёт рассуждений агента. Не приняты: Сторож допуска и Контролёр стиля кода — их программы проверки есть только в установке автора (в шаблоне у стиля кода — только подача правил агенту); Публикатор материалов практикума — роль вне IWE; Верификатор — в шаблоне есть только описание скилла `/verify` (SKILL.md), то есть инструкция агенту; инструкция системой не является, система — агент, который её исполняет, поэтому Верификатор — роль, которую играет агент. Переводчик — подсистема и платформы, и IWE по выбору (решение пилота 10.11.2026): два экземпляра одной программы, по тесту §2.
+«Маршрутизатор знаний» (куда записать) и «Маршрутизатор задач» (кому поручить) — разные подсистемы. Прежние имена в таблице §11 заменены (решение пилота 11.11.2026): «Хранитель» — Хранитель версий; «Проводник развития» — Проводник по пути; «Выпускающий шаблона» (прежнее имя «Публикатор релизов») — не подсистема IWE: выпуск шаблона ведёт роль Выпускающий (DP.ROLE.120) вне установки пользователя.
+
+**Решения пилота 10.11.2026 по кандидатам из ролей** (проверка по шаблону: принимается подсистема, у которой в шаблоне есть программа). Приняты: Детектор, Учёт рассуждений агента. Не приняты: Сторож допуска и Контролёр стиля кода — их программы проверки есть только в установке автора (в шаблоне у стиля кода — только подача правил агенту); Публикатор материалов практикума — роль вне IWE. Верификатор 10.11 не принят в таблицу: в шаблоне есть только инструкция `/verify` (SKILL.md), а инструкция системой не является. Решением 11.11.2026 (уточнено пилотом 19.11.2026) принят: подсистема — отдельно запущенный агент с чистым контекстом, который проверяет по этой инструкции; одноимённая роль — DP.ROLE.023. Переводчик — подсистема и платформы, и IWE по выбору (решение пилота 10.11.2026): два экземпляра одной программы, по тесту §2.
 
 Целевое направление «агенты по вызову из общей очереди задач» (§9.4) развивает Фонового дежурного, Координатора агентов и Маршрутизатора задач; отдельной подсистемы не вводит.
 
@@ -1122,6 +1129,9 @@ CREATE TABLE learning.behavior_indicators (
 | Детектор | `capture-bus.sh` и подключённые им детекторы (`config/capture-detectors.sh`) | на вызовах инструментов и при остановке; тот же `capture-bus.sh` работает и на Маршрутизатор знаний |
 | Учёт рассуждений агента | `agent-trace-recorder.sh`, `agent-trace-uploader.sh`, `iwe-trace.py` | хук — на вызовах инструментов и при остановке, если пользователь включил запись; `iwe-trace.py` — по вызову |
 | Переводчик | `translate.py` | по вызову пользователя |
+| Хранитель версий | git и файловая система ОС | при каждой записи и публикации; Наладчик IWE берёт копию памяти из последней резервной копии закрытия дня, а если её нет — из папки `exocortex/` репозитория, который хранит Хранитель версий |
+| Наладчик IWE | `restore-from-exocortex.sh`; Claude Code | по вызову скиллов `iwe-restore`, `restore-exocortex` |
+| Верификатор | Claude Code (отдельно запущенный агент); `roles/verifier/` | по вызову скилла `verify` |
 
 Программы Секретаря (§5.2) в таблице не стоят: они реализуют не функциональную подсистему, а роль IWE целиком «Секретарь» (§17) вместе с Фоновым дежурным.
 
@@ -1172,7 +1182,7 @@ CREATE TABLE learning.behavior_indicators (
 
 </summary>
 
-Команды бота, инструменты MCP, скиллы и страницы названы поимённо. Строка — номер потребности; формулировка потребности — в [DP.MAP.005 «Потребности»](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md), здесь она не повторяется. Таблица разбита на 12 блоков, как в DP.MAP.005; номер потребности ведёт к её блоку там. Курсивом названы функции, которых пока нет (схема 1; список «Функции, которых не хватает» в DP.MAP.005): подсистемы и модуля у них нет.
+Команды бота, инструменты MCP, скиллы и страницы названы поимённо. Строка — номер потребности; формулировка потребности — в [DP.MAP.005 «Потребности»](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md), здесь она не повторяется. Таблица разбита на 12 блоков, как в DP.MAP.005; номер потребности ведёт к её блоку там. Курсивом названы функции, у которых в IWE по шаблону нет программы (схема 1; список «Функции, которых не хватает» в DP.MAP.005): имя подсистемы может быть принято (§4.2, «Имя принято, программы в шаблоне нет»), модуля нет.
 
 #### А. Знакомство без регистрации
 
@@ -1203,7 +1213,7 @@ CREATE TABLE learning.behavior_indicators (
 | [17](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/mydata_delete`, `/mydata` | `personal_delete`, `personal_purge_source` | — | — | Поставщик общих знаний, Собеседник в мессенджере | — |
 | [18](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | `routes/guide_onboarding`, `routes/guide_personal` | Проводник по пути | — |
 | [19](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/invite`, `/invites`, `/points`, `/rules` | — | — | — | Собеседник в мессенджере | — |
-| [20](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | — | — | Загрузчик контекста; *Перенос без потерь* |
+| [20](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | — | — | — | — | — | Загрузчик контекста; *Переносчик* |
 | [21](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/calendar` | — | — | — | Собеседник в мессенджере | — |
 | [22](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#б-аккаунт-и-подписка) | `/byok` | `user_profile_grant_llm_key`, `user_profile_list_llm_keys`, `user_profile_revoke_llm_key` | — | — | Привратник, Собеседник в мессенджере | Загрузчик знаний |
 
@@ -1217,7 +1227,7 @@ CREATE TABLE learning.behavior_indicators (
 | [26](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | `personal_new_post` | — | — | Поставщик общих знаний | — |
 | [27](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/remind` | `send_telegram_message` | — | — | Диспетчер инструментов, Собеседник в мессенджере | Фоновый дежурный |
 | [28](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | — |
-| [29](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | *Перенос без потерь* |
+| [29](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | *Переносчик* |
 | [30](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | `/me`, `/twin` | `dt_read_digital_twin`, `dt_write_digital_twin` | — | — | Держатель портрета, Собеседник в мессенджере | Фоновый дежурный |
 | [31](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | — | — | — | — | — |
 | [32](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#в-своё-пространство-и-записи) | — | `gdrive_add_mapping`, `gdrive_list_mappings`, `gdrive_sync`, `gdrive_upload` | — | — | — | — |
@@ -1239,7 +1249,7 @@ CREATE TABLE learning.behavior_indicators (
 | [43](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `agent_status_list`, `agent_status_update`, `list_peer_statuses`, `update_peer_status` | — | `iweWpPanel.openDashboard`, `iweWpPanel.refresh`, `iweWpPanel.setDashboardAccessToken` | Диспетчер инструментов, Исполнитель серверных агентов | Координатор агентов, Табло работы |
 | [44](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | — | — | — | Контролёр ясности |
 | [45](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | — | — | — | — | — |
-| [46](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `hermes_chat` | — | — | Диспетчер инструментов, Исполнитель серверных агентов | *Перенос без потерь* |
+| [46](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | — | `hermes_chat` | — | — | Диспетчер инструментов, Исполнитель серверных агентов | *Переносчик* |
 | [47](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#г-личная-работа-по-методам) | `/agent`, `/cancel`, `/claude`, `/close`, `/finalize` | — | — | — | Собеседник в мессенджере | — |
 
 #### Д. Общие знания и роли ИИ
@@ -1256,9 +1266,9 @@ CREATE TABLE learning.behavior_indicators (
 
 | № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
 | --- | --- | --- | --- | --- | --- | --- |
-| [52](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/assessment`, `/diagnose`, `/test` | `checklist_get_checklist_status`, `dt_get_cp_profile`, `dt_update_profile_rcs`, `get_journey_state`, `learning_ctx_get_my_cp_assessment`, `learning_ctx_get_onboarding_state`, `learning_ctx_record_cp_assessment` | `diagnose`, `w-reflection` | — | Держатель портрета, Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | Проводник развития |
-| [53](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/guide` | `get_personal_guide_state`, `learning_ctx_get_personal_guide_state`, `learning_ctx_mark_personal_guide_bootstrap_completed`, `learning_ctx_mark_personal_guide_recommended`, `mark_personal_guide_bootstrap_completed`, `mark_personal_guide_recommended`, `render_personal_guide` | `connect-guide`, `lesson-close`, `lesson`, `personal-guide-render`, `personal-guide-start` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | Проводник развития |
-| [54](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `knowledge_analyze_verbalization`, `knowledge_concept_status`, `personal_analyze_verbalization`, `personal_concept_status` | `project-analysis` | — | Поставщик общих знаний | Проводник развития |
+| [52](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/assessment`, `/diagnose`, `/test` | `checklist_get_checklist_status`, `dt_get_cp_profile`, `dt_update_profile_rcs`, `get_journey_state`, `learning_ctx_get_my_cp_assessment`, `learning_ctx_get_onboarding_state`, `learning_ctx_record_cp_assessment` | `diagnose`, `w-reflection` | — | Держатель портрета, Диспетчер инструментов, Проводник по пути, Собеседник в мессенджере | *Проводник по пути* |
+| [53](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/guide` | `get_personal_guide_state`, `learning_ctx_get_personal_guide_state`, `learning_ctx_mark_personal_guide_bootstrap_completed`, `learning_ctx_mark_personal_guide_recommended`, `mark_personal_guide_bootstrap_completed`, `mark_personal_guide_recommended`, `render_personal_guide` | `connect-guide`, `lesson-close`, `lesson`, `personal-guide-render`, `personal-guide-start` | — | Держатель портрета, Диспетчер инструментов, Собеседник в мессенджере | *Проводник по пути* |
+| [54](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `knowledge_analyze_verbalization`, `knowledge_concept_status`, `personal_analyze_verbalization`, `personal_concept_status` | `project-analysis` | — | Поставщик общих знаний | *Проводник по пути* |
 | [55](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/progress` | `get_instruction`, `knowledge_learner_progress`, `learning_ctx_get_my_platform_work`, `personal_learner_progress` | — | — | Держатель портрета, Поставщик общих знаний, Проводник по пути, Собеседник в мессенджере | — |
 | [56](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | `/club`, `/contacts`, `/features`, `/help`, `/language`, `/mode`, `/settings`, `/support` | — | — | — | Собеседник в мессенджере | — |
 | [57](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#е-развитие) | — | `get_cognitive_brief`, `get_next_onboarding_step`, `learning_ctx_get_cognitive_brief` | — | — | Держатель портрета, Диспетчер инструментов | — |
@@ -1275,7 +1285,7 @@ CREATE TABLE learning.behavior_indicators (
 
 | № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
 | --- | --- | --- | --- | --- | --- | --- |
-| [64](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/mentor_card`, `/mentor_invite`, `/mentor_note` | `mentorship_get_participant_card`, `mentorship_read_consultation_case`, `mentorship_resolve_participant_names` | `mentor-participant-brief` | — | Рабочее место наставника, Собеседник в мессенджере | Проводник развития |
+| [64](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/mentor_card`, `/mentor_invite`, `/mentor_note` | `mentorship_get_participant_card`, `mentorship_read_consultation_case`, `mentorship_resolve_participant_names` | `mentor-participant-brief` | — | Рабочее место наставника, Собеседник в мессенджере | *Проводник по пути* |
 | [65](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | — | `mentorship_get_stream_overview` | — | — | Рабочее место наставника | — |
 | [66](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | `/mentor_stream` | `mentorship_grant_consultation_case_access`, `mentorship_grant_survey_mentor_access`, `mentorship_revoke_consultation_case_access`, `mentorship_revoke_survey_mentor_access`, `mentorship_sync_stream_readers` | — | — | Рабочее место наставника, Собеседник в мессенджере | — |
 | [103](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#ж-наставничество) | средства не разнесены | — | — | — | — | — |
@@ -1301,22 +1311,22 @@ CREATE TABLE learning.behavior_indicators (
 | --- | --- | --- | --- | --- | --- | --- |
 | [77](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений |
 | [78](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `audit-docs`, `audit-installation` | — | — | Контролёр реестров, Техосмотрщик |
-| [79](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-restore`, `remediate`, `restore-exocortex` | — | — | Наладчик IWE, Хранитель |
+| [79](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-restore`, `restore-exocortex`; `remediate` — только в установке автора | — | — | Наладчик IWE, Хранитель версий |
 | [80](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | `/edit_time`, `/onboarding_time`, `/slot`, `/waka`, `/wakatime` | — | `extend`, `iwe-rules-review`, `local-llm`, `setup-wakatime` | — | Собеседник в мессенджере | Исполнитель работы, Контролёр реестров, Техосмотрщик, Учётчик времени |
 | [81](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | `acquire_file_lock`, `release_file_lock` | `check-secret`, `residency-gate` | — | — | Защитник секретов |
 | [82](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `kimi-peer-writer`, `peer-conversation` | — | — | Координатор агентов |
 | [83](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | Контролёр реестров |
 | [93](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
-| [94](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | Хранитель личных знаний; *Выход участника* | *Поиск по своим материалам у человека*; *Перенос без потерь* |
-| [95](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | Диспетчер инструментов, Привратник, Учётчик событий | *Поиск по своим материалам у человека* |
+| [94](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | Хранитель личных знаний; *Выход участника* | *Хранитель личных знаний*; *Переносчик* |
+| [95](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | Диспетчер инструментов, Привратник, Учётчик событий | *Хранитель личных знаний* |
 | [96](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | — | — | — | — |
-| [98](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений, Выпускающий шаблона |
+| [98](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#и-своя-iwe) | — | — | `iwe-update` | — | — | Доставщик обновлений |
 
 #### К. Выпуск шаблона
 
 | № | Команды Telegram-бота | Инструменты MCP | Скиллы | Страницы и расширения | Подсистемы платформы | Подсистемы IWE |
 | --- | --- | --- | --- | --- | --- | --- |
-| [84](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#к-выпуск-шаблона) | — | — | `_template`, `author-mode`, `iwe-platform-redteam`, `skill-creator` | — | — | Выпускающий шаблона |
+| [84](https://github.com/MimEcoSys/PACK-digital-platform/blob/main/pack/digital-platform/07-map/DP.MAP.005-mcp-scenarios.md#к-выпуск-шаблона) | — | — | `_template`, `author-mode`, `iwe-platform-redteam`, `skill-creator` | — | — | — |
 
 #### Л. Команда, организация, отдельные продукты
 
@@ -1963,8 +1973,11 @@ Platform-space (обогащённое знание)
 | Детектор | Детектор — DP.ROLE.118 | R47 Детектор | — |
 | Учёт рассуждений агента | Учёт рассуждений агента — DP.ROLE.119 | — | DP.ROLE.047 Trace Recorder, 048 Replay Engine, 050 Pattern Miner |
 | Переводчик | Переводчик — DP.ROLE.121 (та же роль у подсистемы платформы, §4.1) | — | — |
+| Хранитель версий | описания роли нет | прежнее имя в §11 — «Хранитель» | — |
+| Наладчик IWE | описания роли нет | выделен из R11 Наладчик (решение пилота 09.11.2026) | — |
+| Верификатор | Верификатор — DP.ROLE.023 | R23, VR.R.001 | — |
 
-R24 Аудитор (DP.ROLE.024, VR.R.002) — не роль Техосмотрщика: Аудитор проверяет полноту паков, его уровень — «человек + IWE»; проверку установки выполняет роль подсистемы «Техосмотрщик». Вместо Шаблонизатора (R9) — две роли подсистем: Доставщика обновлений и Контролёра реестров. Описания всех пятнадцати ролей подсистем есть в паке (DP.ROLE.037, 059, 088, 104–115). Кандидаты в новые подсистемы (Верификатор, учёт рассуждений агента, сторож допуска и др.) — открытые вопросы DP.ROLE.001 §3.6.
+R24 Аудитор (DP.ROLE.024, VR.R.002) — не роль Техосмотрщика: Аудитор проверяет полноту паков, его уровень — «человек + IWE»; проверку установки выполняет роль подсистемы «Техосмотрщик». Вместо Шаблонизатора (R9) — две роли подсистем: Доставщика обновлений и Контролёра реестров. Описания ролей восемнадцати подсистем, принятых до 11.11.2026, есть в паке (DP.ROLE.037, 059, 088, 104–115, 118, 119, 121); роль Верификатора — DP.ROLE.023; описаний ролей Хранителя версий и Наладчика IWE пока нет. Верификатор и Наладчик IWE приняты подсистемами 11.11.2026; остальные кандидаты — открытые вопросы DP.ROLE.001 §3.6.
 
 **Подсистемы платформы и прежние псевдонимы исполнителей** (РП-611 Ф31, 11.11.2026; коды I* — DP.ROLE.001 §3.1). Описаний ролей у подсистем платформы, кроме Переводчика и Вестника, в каталоге пока нет; таблица называет только известные роли и псевдонимы.
 
@@ -2047,7 +2060,6 @@ R24 Аудитор (DP.ROLE.024, VR.R.002) — не роль Техосмотр�
 
 </summary>
 
-- Имена подсистем IWE решены пилотом 11.11.2026: подсистема носит имя роли, одна роль — одно имя. Новые имена — Хранитель версий, Наладчик IWE, Переносчик. Экземпляры в IWE подсистем платформы — Хранитель личных знаний, Проводник по пути. «Публикатор релизов» — роль Выпускающий. Запись в описание IWE — РП-616.
 - open.aisystant.com: в каком репозитории лежит код прокси (§5.1, DP.MAP.004).
 - Роль R10 Статистик у платформы не занята: pulse.sh — личная программа автора (§17). Нужна ли платформе своя статистика для всех — не решено.
 - Общие описания методов не выделены у Защитника секретов, Контролёра реестров и Табло работы, а также у роли IWE «Секретарь».
