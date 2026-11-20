@@ -7,10 +7,14 @@ Source of truth: pack/digital-platform/architecture-registry/*.yaml
   environment.yaml  - environment systems (not ours) and sites
   links.yaml        - performs, located_in, calls, deployed, paths
 Generated view: pack/digital-platform/architecture-registry.md (do not edit).
+Generated tables: DP.ARCH.001 §4.1 and §11.1а between the markers
+  <!-- architecture-registry:begin <label> --> ... <!-- architecture-registry:end <label> -->
+  (the «Модули» column and, in §11.1а, the «when» column come from the registry;
+  the «Что делает для целого» text of §4.1 stays hand-written).
 
 Usage:
-  architecture-registry.py build   # validate, write the generated view
-  architecture-registry.py check   # validate, fail if the view is stale (CI)
+  architecture-registry.py build   # validate, write the generated view and tables
+  architecture-registry.py check   # validate, fail if the view or the tables are stale (CI)
 """
 import re
 import sys
@@ -189,6 +193,8 @@ def compare_with_document(reg: Registry, doc: str):
             if cell is None:
                 findings.append(f"§{label}: нет строки «{s['name']}»")
                 continue
+            if cell in EMPTY_CELLS:
+                cell = ""
             written = [part for n in split_outside_parentheses(cell) for part in n.split(" и ")]
             known = {n: lookup(index, n) for n in written}
             resolved = {module_id for module_id in known.values() if module_id}
@@ -197,6 +203,93 @@ def compare_with_document(reg: Registry, doc: str):
             findings += [f"§{label} «{s['name']}»: указан {m}, связи «работает на» нет"
                          for m in sorted(resolved - expected[s["id"]])]
     return findings
+
+
+MARKER_BEGIN = "<!-- architecture-registry:begin {} -->"
+MARKER_END = "<!-- architecture-registry:end {} -->"
+NO_MODULES = {"проектируется": "нет (подсистема проектируется)"}
+NO_MODULES_DEFAULT = "не назначены"
+EMPTY_CELLS = {*NO_MODULES.values(), NO_MODULES_DEFAULT}
+
+
+def module_label(reg: Registry, module_id: str) -> str:
+    """Programs are shown by program name (the id, decision Р4), stores by their name."""
+    record = reg.module_by_id[module_id]
+    return module_id if record["kind"] in RUNNABLE else record["name"]
+
+
+def performed_by(reg: Registry, subsystem_id: str):
+    """(label, when, runnable) per distinct label, in registry order."""
+    seen, rows = set(), []
+    for link in reg.links["performs"]:
+        if link["subsystem"] != subsystem_id:
+            continue
+        label = module_label(reg, link["module"])
+        if label not in seen:
+            seen.add(label)
+            runnable = reg.module_by_id[link["module"]]["kind"] in RUNNABLE
+            rows.append((label, link.get("when") or "не установлено", runnable))
+    return rows
+
+
+def platform_subsystems(reg: Registry):
+    return [s for s in reg.subsystems if s["system"] == "платформа"]
+
+
+def modules_cell(subsystem, pairs, separator):
+    if pairs:
+        return separator.join(label for label, _, _ in pairs)
+    return NO_MODULES.get(subsystem["status"], NO_MODULES_DEFAULT)
+
+
+def table_41(reg: Registry, doc: str):
+    heading, key_col, _ = COMPARED_TABLES["4.1"]
+    purposes = table_rows(doc, heading, key_col, "Что делает для целого")
+    rows = ["| Подсистема | Что делает для целого | Модули |", "| --- | --- | --- |"]
+    for s in platform_subsystems(reg):
+        purpose = purposes.get(s["name"]) or cell(s["purpose"])
+        modules = modules_cell(s, performed_by(reg, s["id"]), ", ")
+        rows.append(f"| {s['name']} | {purpose} | {cell(modules)} |")
+    return rows
+
+
+def table_111a(reg: Registry, doc: str):
+    rows = ["| Функциональная подсистема | Модули | Когда модуль работает на подсистему |", "|---|---|---|"]
+    for s in platform_subsystems(reg):
+        pairs = performed_by(reg, s["id"])
+        programs = [(label, w) for label, w, runnable in pairs if runnable]
+        if any(w != "не установлено" for _, w in programs):
+            when = "; ".join(f"{label} — {w}" for label, w in programs)
+        else:
+            when = "не установлено"
+        rows.append(f"| {s['name']} | {cell(modules_cell(s, pairs, '; '))} | {cell(when)} |")
+    return rows
+
+
+DOC_TABLES = {"4.1": table_41, "11.1а": table_111a}
+
+
+def render_document(reg: Registry, doc: str):
+    """DP.ARCH.001 with the generated tables put between their markers.
+    Returns (document, errors); a missing or broken marker pair is an error,
+    so a target place cannot silently drop out of generation."""
+    errors = []
+    for label, make_table in DOC_TABLES.items():
+        begin, end = MARKER_BEGIN.format(label), MARKER_END.format(label)
+        heading = COMPARED_TABLES[label][0]
+        if doc.count(begin) != 1 or doc.count(end) != 1 or doc.index(begin) > doc.index(end):
+            errors.append(f"DP.ARCH.001 §{label}: нет пары меток сборки «{begin}» … «{end}»")
+            continue
+        head, rest = doc.split(begin, 1)
+        inside, tail = rest.split(end, 1)
+        if "architecture-registry:" in inside:
+            errors.append(f"DP.ARCH.001 §{label}: внутри пары меток сборки стоит чужая метка")
+            continue
+        if heading not in head:
+            errors.append(f"DP.ARCH.001 §{label}: заголовок «{heading}» не найден перед метками сборки")
+            continue
+        doc = head + "\n".join([begin, *make_table(reg, doc), end]) + tail
+    return doc, errors
 
 
 def access_maps(reg: Registry):
@@ -290,7 +383,7 @@ def render(reg: Registry, findings):
     out += ["", "Программы без подсистемы (с причиной):", ""]
     out += [f"- **{m['id']}**: {m['no_subsystem']}" for m in reg.modules if m.get("no_subsystem")]
     out += ["", "Не перенесено как модуль:", ""] + [f"- {reason}" for reason in reg.excluded]
-    out += ["", "## Расхождения с ручными таблицами DP.ARCH.001", ""]
+    out += ["", "## Обратная сверка собранных таблиц DP.ARCH.001 со справочниками", ""]
     out += [f"- {f}" for f in findings] or ["- нет"]
     return "\n".join(out) + "\n"
 
@@ -308,16 +401,25 @@ def main(argv):
         print(f"справочники архитектуры: ошибок {len(errors)}")
         print("\n".join(f"ОШИБКА: {e}" for e in errors))
         return 1
-    findings = compare_with_document(reg, ARCH_DOC.read_text())
+    current_doc = ARCH_DOC.read_text()
+    doc, doc_errors = render_document(reg, current_doc)
+    if doc_errors:
+        print("\n".join(f"ОШИБКА: {e}" for e in doc_errors))
+        return 1
+    findings = compare_with_document(reg, doc)
     view = render(reg, findings)
     if argv[1] == "check":
-        if not VIEW.exists() or VIEW.read_text() != view:
-            print("справочники архитектуры: architecture-registry.md устарел — запусти build")
+        stale = [name for name, fresh in ((VIEW.name, VIEW.exists() and VIEW.read_text() == view),
+                                          (ARCH_DOC.name, current_doc == doc)) if not fresh]
+        if stale:
+            print(f"справочники архитектуры: устарело ({', '.join(stale)}) — запусти build; "
+                  "таблицы между метками сборки руками не правят")
             return 1
-        print(f"справочники архитектуры: ошибок нет; расхождений с DP.ARCH.001: {len(findings)}")
+        print(f"справочники архитектуры: ошибок нет; расхождений собранных таблиц DP.ARCH.001: {len(findings)}")
         return 0
     VIEW.write_text(view)
-    print(f"справочники архитектуры: собрано; расхождений с DP.ARCH.001: {len(findings)}")
+    ARCH_DOC.write_text(doc)
+    print(f"справочники архитектуры: собрано; расхождений собранных таблиц DP.ARCH.001: {len(findings)}")
     return 0
 
 
