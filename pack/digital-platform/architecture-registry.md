@@ -126,11 +126,11 @@ generator: .github/scripts/architecture-registry.py
 | iwe-browser-extension | iwe-browser-extension |  | программа | IWE | существует | Расширение Chrome считает набор текста на claude.ai и отправляет боту. |
 | DS-iwe-session-trigger | DS-iwe-session-trigger | DS-iwe-session-trigger (расширение VS Code) | программа | IWE | существует | Наблюдает за файлами сессий и запускает Claude Code автоматически. |
 | DS-iwe-wp-panel | DS-iwe-wp-panel | DS-iwe-wp-panel (панель РП); iwe-wp-panel | программа | IWE | существует | Расширение VS Code: панель проектов и сессий агентов; происхождение: отдельно опубликованный продукт (п); в шаблоне нет. |
-| local-gateway | local-gateway | local-gateway (iwe-local-gateway) | программа | IWE | существует | Локальный MCP для блокировок файлов и статусов параллельных агентов; фактически (шаблон): setup/optional/setup-local-gateway.sh — установщик по выбору ставит программу из отдельного репозитория iwe-local-gateway; в DP.ARCH.001 §5.2 помечен (а) — правка описания на «да» пилота. |
+| local-gateway | local-gateway | local-gateway (iwe-local-gateway) | программа | IWE | существует | Локальный MCP для блокировок файлов и статусов параллельных агентов; происхождение: отдельно опубликованный продукт (п); в шаблоне: setup/optional/setup-local-gateway.sh — установщик по выбору ставит программу из отдельного репозитория iwe-local-gateway. |
 | google-drive-mcp | google-drive-mcp |  | программа | IWE | существует | Локальный MCP-коннектор к Google Drive владельца. |
 | agent-trace-recorder | agent-trace-recorder и agent-trace-uploader |  | программа | IWE | существует | Хуки записи трассы работы агентов и отправки её в event-gateway. |
 | agent-trace-uploader | agent-trace-recorder и agent-trace-uploader |  | программа | IWE | существует | Хуки записи трассы работы агентов и отправки её в event-gateway. |
-| translate-sync | перевод шаблона при обновлении |  | программа | платформа | существует | переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions) |
+| translate-sync | перевод шаблона при обновлении |  | программа | платформа | существует | переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions); запускает translate.py. |
 | iwe-translation-engine | движок перевода |  | программа | платформа | существует | перевод по утверждённому словарю понятий |
 | db:persona | база persona | база persona; БД persona | база данных | платформа | существует | база в проекте Neon aisystant (§5.1, строка проекта) |
 | db:journal | база journal | база journal; БД journal | база данных | платформа | существует | база в проекте Neon aisystant (§5.1, строка проекта) |
@@ -160,6 +160,9 @@ generator: .github/scripts/architecture-registry.py
 | precompact-restore.sh | precompact-restore.sh |  | программа | IWE | существует | хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/precompact-restore.sh |
 | memory-exocortex-sync.sh | memory-exocortex-sync.sh |  | программа | IWE | существует | хук Claude Code: зеркалирование памяти в резервную копию; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/memory-exocortex-sync.sh |
 | capture-bus.sh | capture-bus.sh |  | программа | IWE | существует | хук Claude Code: захват знаний для маршрутизации; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/capture-bus.sh |
+| detector_incident.sh | detector_incident.sh |  | программа | IWE | существует | скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_incident.sh |
+| detector_decision.sh | detector_decision.sh |  | программа | IWE | существует | скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_decision.sh |
+| detector_pattern_awareness.sh | detector_pattern_awareness.sh |  | программа | IWE | существует | скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_pattern_awareness.sh |
 | secret-leak-block.sh | secret-leak-block.sh |  | программа | IWE | существует | хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-leak-block.sh |
 | secret-file-read-block.sh | secret-file-read-block.sh |  | программа | IWE | существует | хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-file-read-block.sh |
 | secret-mcp-dump-guard.sh | secret-mcp-dump-guard.sh |  | программа | IWE | существует | хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-mcp-dump-guard.sh |
@@ -206,7 +209,7 @@ generator: .github/scripts/architecture-registry.py
 | secretary | программы Секретаря |  | набор программ | IWE | существует | программы, реализующие роль IWE «Секретарь» (§17): secretary.py, secretary-run.sh, secretary-dashboard.py, secretary-health-*.py, secretary-oura-sync.py, secretary-apple-sync.py, lib/secretary-telegram.sh; происхождение: только в установке автора (а); в шаблоне нет |
 | vscode-wakatime | WakaTime для VS Code |  | программа | IWE | существует | расширение редактора для учёта времени; происхождение: поставляет вендор или хост (х); в шаблоне нет |
 | iwe-trace.py | iwe-trace.py |  | программа | IWE | существует | выдаёт записанные следы агента для просмотра, поиска и разбора (§4.2 «Учёт рассуждений агента»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/iwe-trace.py |
-| translate.py | translate.py |  | программа | IWE | существует | переводит тексты пользователя по утверждённому словарю понятий (§4.2 «Переводчик»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/translate.py |
+| translate.py | translate.py |  | программа | IWE | существует | переводчик документов шаблона; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/translate.py |
 | restore-from-exocortex.sh | restore-from-exocortex.sh |  | программа | IWE | существует | восстанавливает память и инструкции агента из резервной копии (§4.2 «Наладчик IWE»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/restore-from-exocortex.sh |
 
 ## Системы окружения
@@ -280,6 +283,9 @@ generator: .github/scripts/architecture-registry.py
 | Загрузчик контекста | precompact-checkpoint.sh | на событиях ввода и сжатия беседы |
 | Загрузчик контекста | precompact-restore.sh | на событиях ввода и сжатия беседы |
 | Детектор | capture-bus.sh | на вызовах инструментов и при остановке |
+| Детектор | detector_decision.sh | на вызовах инструментов и при остановке |
+| Детектор | detector_incident.sh | на вызовах инструментов и при остановке |
+| Детектор | detector_pattern_awareness.sh | на вызовах инструментов и при остановке |
 | Учётчик событий | activity-hub | не установлено |
 | Учётчик событий | bridge-2-events-poller | при опросе LMS (частота не установлена) |
 | Учётчик событий | event-gateway | не установлено |
@@ -403,7 +409,7 @@ generator: .github/scripts/architecture-registry.py
 | VS Code пользователя | DS-iwe-session-trigger, DS-iwe-wp-panel, vscode-wakatime |
 | tsekh-1 | PostgreSQL 16 с pgvector на tsekh-1, bitcoind-ots-verify, iwe-onboarding-controller, iwe-profiler, iwe-render-pilot-guides, iwe-stage-controller, iwe-stage-evaluator, payment-registry, restic |
 | браузер пользователя | iwe-browser-extension |
-| машина пользователя | add-secret.sh, agent-trace-recorder, agent-trace-uploader, archive-done-wp.sh, artifactor.py, build-active-wp.py, capture-bus.sh, claude-code, close-gate-reminder.sh, close-wp.sh, create-wp.sh, day-open-pipeline.sh, destructive-guard.sh, ds-publish.sh, git, google-drive-mcp, inject-communication-style.sh, inject-fault-profile.sh, inject-role-prefixes.sh, isolate-push.sh, iwe-audit.sh, iwe-drift.sh, iwe-grep-secret.sh, iwe-trace.py, launchd, lazy-context-loader.sh, ledger-append.sh, local-gateway, memory-exocortex-sync.sh, os-filesystem, post-tool-use-scope-track.sh, pre-commit-secret-scan.sh, precompact-checkpoint.sh, precompact-restore.sh, protocol-completion-reminder.sh, protocol-stop-gate.sh, pull-on-touch.sh, residency-gate-init.sh, residency-gate-lazy.sh, residency-gate-skill-adapter.sh, response-clarity-hook.sh, restore-from-exocortex.sh, route-task.sh, secret-file-read-block.sh, secret-leak-block.sh, secret-leak-redact.sh, secret-mcp-dump-guard.sh, secretary, session-end-status.sh, session-guard.sh, session-open-gate.sh, session-start-hooks-bootstrap.sh, setup.sh, sql-pii-guard.sh, style-check-text.sh, systemd, translate.py, update.sh, wakatime-heartbeat.sh, wp-gate-reminder.sh |
+| машина пользователя | add-secret.sh, agent-trace-recorder, agent-trace-uploader, archive-done-wp.sh, artifactor.py, build-active-wp.py, capture-bus.sh, claude-code, close-gate-reminder.sh, close-wp.sh, create-wp.sh, day-open-pipeline.sh, destructive-guard.sh, detector_decision.sh, detector_incident.sh, detector_pattern_awareness.sh, ds-publish.sh, git, google-drive-mcp, inject-communication-style.sh, inject-fault-profile.sh, inject-role-prefixes.sh, isolate-push.sh, iwe-audit.sh, iwe-drift.sh, iwe-grep-secret.sh, iwe-trace.py, launchd, lazy-context-loader.sh, ledger-append.sh, local-gateway, memory-exocortex-sync.sh, os-filesystem, post-tool-use-scope-track.sh, pre-commit-secret-scan.sh, precompact-checkpoint.sh, precompact-restore.sh, protocol-completion-reminder.sh, protocol-stop-gate.sh, pull-on-touch.sh, residency-gate-init.sh, residency-gate-lazy.sh, residency-gate-skill-adapter.sh, response-clarity-hook.sh, restore-from-exocortex.sh, route-task.sh, secret-file-read-block.sh, secret-leak-block.sh, secret-leak-redact.sh, secret-mcp-dump-guard.sh, secretary, session-end-status.sh, session-guard.sh, session-open-gate.sh, session-start-hooks-bootstrap.sh, setup.sh, sql-pii-guard.sh, style-check-text.sh, systemd, translate.py, update.sh, wakatime-heartbeat.sh, wp-gate-reminder.sh |
 | не установлено | aisystant-com, bridge-scope-service, chat-analyst-service, iwe-interlocutor, iwe-translation-engine, kimi-adapter, learning-context-service, open.aisystant.com |
 
 ## Обращается к (DP.ARCH.001 §5.1 «Обращается к» (снято 01.11.2026), §10 и проба пути оплаты; «обращается» — направление не уточнено)
@@ -573,6 +579,9 @@ generator: .github/scripts/architecture-registry.py
 - **precompact-restore.sh**: по записанным связям ничего
 - **memory-exocortex-sync.sh**: по записанным связям ничего
 - **capture-bus.sh**: по записанным связям ничего
+- **detector_incident.sh**: по записанным связям ничего
+- **detector_decision.sh**: по записанным связям ничего
+- **detector_pattern_awareness.sh**: по записанным связям ничего
 - **secret-leak-block.sh**: по записанным связям ничего
 - **secret-file-read-block.sh**: по записанным связям ничего
 - **secret-mcp-dump-guard.sh**: по записанным связям ничего
@@ -688,8 +697,6 @@ flowchart LR
 
 - knowledge-mcp-template — документ (заготовка воркера), не модуль
 - Aisystant LMS PostgreSQL — чужая система (§5.3); строка §5.1 — расхождение (Р8)
-- настройка детекторов `.claude/config/capture-detectors.sh` — файл настройки, не модуль (§11.1, Детектор)
-- roles/verifier/ — промпты и установщик роли Верификатор (документы), не модуль (§11.1, Верификатор)
 
 ## Обратная сверка собранных таблиц DP.ARCH.001 со справочниками
 

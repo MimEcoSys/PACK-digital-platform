@@ -403,6 +403,15 @@ performs:
 - module: capture-bus.sh
   subsystem: detector
   when: на вызовах инструментов и при остановке
+- module: detector_incident.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: detector_decision.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: detector_pattern_awareness.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
 - module: agent-trace-recorder
   subsystem: agent-reasoning-log
   when: на вызовах инструментов и при остановке, если пользователь включил запись
@@ -936,6 +945,12 @@ deployed:
   - module: memory-exocortex-sync.sh
     site: машина пользователя
   - module: capture-bus.sh
+    site: машина пользователя
+  - module: detector_incident.sh
+    site: машина пользователя
+  - module: detector_decision.sh
+    site: машина пользователя
+  - module: detector_pattern_awareness.sh
     site: машина пользователя
   - module: secret-leak-block.sh
     site: машина пользователя

@@ -3,8 +3,6 @@ source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/
 excluded:
 - knowledge-mcp-template — документ (заготовка воркера), не модуль
 - Aisystant LMS PostgreSQL — чужая система (§5.3); строка §5.1 — расхождение (Р8)
-- настройка детекторов `.claude/config/capture-detectors.sh` — файл настройки, не модуль (§11.1, Детектор)
-- roles/verifier/ — промпты и установщик роли Верификатор (документы), не модуль (§11.1, Верификатор)
 modules:
 - id: gateway-mcp
   name: gateway-mcp
@@ -615,8 +613,8 @@ modules:
   status: существует
   aliases:
   - local-gateway (iwe-local-gateway)
-  purpose: 'Локальный MCP для блокировок файлов и статусов параллельных агентов; фактически (шаблон): setup/optional/setup-local-gateway.sh — установщик по выбору ставит программу из отдельного репозитория
-    iwe-local-gateway; в DP.ARCH.001 §5.2 помечен (а) — правка описания на «да» пилота.'
+  purpose: 'Локальный MCP для блокировок файлов и статусов параллельных агентов; происхождение: отдельно опубликованный продукт (п); в шаблоне: setup/optional/setup-local-gateway.sh — установщик по выбору
+    ставит программу из отдельного репозитория iwe-local-gateway.'
 - id: google-drive-mcp
   name: google-drive-mcp
   kind: программа
@@ -644,7 +642,7 @@ modules:
   system: платформа
   status: существует
   aliases: []
-  purpose: переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions)
+  purpose: переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions); запускает translate.py.
   source: §11.1а (в §5.1 нет)
 - id: iwe-translation-engine
   name: движок перевода
@@ -879,6 +877,27 @@ modules:
   status: существует
   aliases: []
   purpose: 'хук Claude Code: захват знаний для маршрутизации; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/capture-bus.sh'
+- id: detector_incident.sh
+  name: detector_incident.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_incident.sh'
+- id: detector_decision.sh
+  name: detector_decision.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_decision.sh'
+- id: detector_pattern_awareness.sh
+  name: detector_pattern_awareness.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_pattern_awareness.sh'
 - id: secret-leak-block.sh
   name: secret-leak-block.sh
   kind: программа
@@ -1211,7 +1230,7 @@ modules:
   system: IWE
   status: существует
   aliases: []
-  purpose: 'переводит тексты пользователя по утверждённому словарю понятий (§4.2 «Переводчик»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/translate.py'
+  purpose: 'переводчик документов шаблона; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/translate.py'
   source: §11.1 (в §5.2 нет)
 - id: restore-from-exocortex.sh
   name: restore-from-exocortex.sh
