@@ -108,7 +108,7 @@ terms:
   - {term: сервер, kind: system, stems: [сервер], status: pilot, basis: "тест «отключить от питания»"}
   - {term: бот, kind: system, stems: [бот], status: pilot, basis: "подтверждено пилотом 23.10: работающая программа"}
   - {term: шлюз, kind: system, stems: [шлюз], status: pilot, basis: "подтверждено пилотом 23.10: работающая программа"}
-  - {term: человек, kind: system, stems: [человек, пилот], status: fpf, basis: "A.1", also: [{kind: role_kind, when: "назван по вкладу в работу («пилот», «автор»)"}]}
+  - {term: человек, kind: system, stems: [человек, пилот, людей], status: fpf, basis: "A.1", also: [{kind: role_kind, when: "назван по вкладу в работу («пилот», «автор»)"}]}
   - {term: молоток, kind: system, stems: [молоток, молотк], status: pilot, basis: "пример пилота 23.10: одна вещь, три употребления; FPF A.1:4.9 — заполнение роли вид не меняет", also: [{kind: role_kind, when: "по вкладу в работу («молоток — инструмент забивания»)"}, {kind: ambiguous, when: "назван предметом («молоток лежит на столе»): в FPF это U.Entity без суждения о системности"}]}
   - {term: компьютер, kind: system, stems: [компьютер, "мак(?![а-яё])"], status: pilot, basis: "физическая система"}
   - {term: программа, kind: system, stems: [программ], status: pilot, basis: "решение пилота 31.10 (РП-616 Ф3): программа — запущенный на железе файл, тогда она система; незапущенный файл программы — документ", also: [{kind: document, when: "файл программы, не запущенный («программа лежит в репозитории»)"}, {kind: ambiguous, when: "программа развития, учебная программа — не программа для компьютера; назвать объект"}]}
@@ -152,7 +152,7 @@ terms:
   - {term: роль, kind: role_kind, stems: ["рол[ьиеюя](?![а-яё])"], status: pilot, basis: "Tier-A «Агент ≠ Роль»; FPF A.2 (вид) и A.2.1 (назначение). Слово «role» в перечне перегруженных голов E.10"}
   - {term: скилл, kind: capability, stems: [скилл, способност], status: pilot, basis: "Tier-A «Скилл»: способность; SKILL.md — документ"}
   # ---- совокупности ----
-  - {term: список, kind: collection, stems: [список, набор, перечен, совокупност], status: fpf, basis: "A.7:5.6"}
+  - {term: список, kind: collection, stems: [список, списки, набор, перечен, перечня, совокупност], status: fpf, basis: "A.7:5.6"}
   # ---- неоднозначные слова: детектор не блокирует ----
   - {term: функция, kind: ambiguous, stems: [функци], status: fpf, basis: "A.7:5.2", resolve: "вид, поведение, способность или преобразование?"}
   - {term: контекст, kind: ambiguous, stems: [контекст], status: fpf, basis: "E.10", resolve: "подаваемое модели описание, ограниченный контекст FPF или состояние?"}
