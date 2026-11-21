@@ -189,6 +189,9 @@ performs:
 - module: iwe-interlocutor
   subsystem: interlocutor
   when: по сообщению человека в окне разговора и по собственной инициативе (проектируется)
+- module: day-open-pipeline-watchdog
+  subsystem: background-attendant
+  when: ежедневно в 06:30 по таймеру на Цехе
 located_in:
 - module: db:persona
   in: 'Neon: проект aisystant'
@@ -678,6 +681,8 @@ deployed:
     site: Railway
   - module: iwe-interlocutor
     site: не установлено
+  - module: day-open-pipeline-watchdog
+    site: tsekh-1
 paths:
 - id: '10'
   need: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)

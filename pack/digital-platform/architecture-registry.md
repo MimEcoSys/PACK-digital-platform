@@ -35,6 +35,7 @@ generator: .github/scripts/architecture-registry.py
 | interlocutor | Собеседник |  | платформа | проектируется | ведёт разговор с человеком о его личном IWE в обе стороны: отвечает, предлагает, пишет первым; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
 | write-controller | Контролёр записи |  | платформа | проектируется | выдаёт одноразовые разрешения на запись в шлюзе: запись только после явного подтверждения человека; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
 | interlocutor-executor-choice | Выбор исполнителя Собеседника |  | платформа | проектируется | по настройке человека выбирает исполнителя Собеседника: агент платформы или собственный агент владельца; рабочее имя (заявка РП-262, И-61 во входящих РП-611, 19.11.2026); окончательное имя и отношение к подсистеме «Собеседник в мессенджере» — решение пилота |
+| background-attendant | Фоновый дежурный |  | IWE | существует | запускает работы по времени и событиям и сигналит пользователю; роль DP.ROLE.108; запись перенесена из DP.ARCH.001 §4.2 для первого случая РП-616 Ф12 |
 
 ## Модули
 
@@ -130,6 +131,7 @@ generator: .github/scripts/architecture-registry.py
 | db:railway-directus | база directus в Railway Postgres |  | база данных | платформа | существует | база в Railway Postgres (§5.1) |
 | db:railway-railway | база railway в Railway Postgres |  | база данных | платформа | существует | база в Railway Postgres (§5.1) |
 | iwe-interlocutor | агент-собеседник платформы |  | программа | платформа | проектируется | прототип РП-262 (хранилище aisystant/iwe-interlocutor); проверяет пропуск человека, обращается к шлюзу MCP его пропуском и к раздатчику моделей; постоянный владелец — команда ИТ (имя выбрал пилот 19.11, заявка И-61) |
+| day-open-pipeline-watchdog | дежурный открытия дня | iwe-day-open-watchdog | программа | IWE | существует | проверяет наличие плана дня, сигналит об отсутствии и один раз повторяет запуск открытия дня; скрипт DS-my-strategy/scripts/day-open-pipeline-watchdog.sh и две единицы systemd пользователя |
 
 ## Системы окружения
 
@@ -166,6 +168,7 @@ generator: .github/scripts/architecture-registry.py
 
 | Подсистема | Модуль | Когда |
 |---|---|---|
+| Фоновый дежурный | day-open-pipeline-watchdog | ежедневно в 06:30 по таймеру на Цехе |
 | Хранитель копий | Backblaze B2 бакет | не установлено |
 | Хранитель копий | bitcoind-ots-verify | не установлено |
 | Хранитель копий | restic | не установлено |
@@ -243,7 +246,7 @@ generator: .github/scripts/architecture-registry.py
 | Railway | Directus, Metabase, Railway Postgres, activity-hub, agent-runner, agent-status-service, aist_bot_newarchitecture, bridge-2-events-poller, checklist-mcp, db:railway-bot_data, db:railway-directus, db:railway-fsm, db:railway-railway, github-integration-service, hermes-agent, iwe-guide-web, iwe-llm-proxy, litellm, mentorship-service, multi-domain-projection-worker, simulator-lab, trace-accountant, user-profile-service |
 | VK Cloud | Ory, open.system-school.ru, plus.system-school.ru, system-school.ru |
 | VS Code пользователя | DS-iwe-session-trigger, DS-iwe-wp-panel |
-| tsekh-1 | PostgreSQL 16 с pgvector на tsekh-1, bitcoind-ots-verify, iwe-onboarding-controller, iwe-profiler, iwe-render-pilot-guides, iwe-stage-controller, iwe-stage-evaluator, payment-registry, restic |
+| tsekh-1 | PostgreSQL 16 с pgvector на tsekh-1, bitcoind-ots-verify, day-open-pipeline-watchdog, iwe-onboarding-controller, iwe-profiler, iwe-render-pilot-guides, iwe-stage-controller, iwe-stage-evaluator, payment-registry, restic |
 | браузер пользователя | iwe-browser-extension |
 | машина пользователя | agent-trace-recorder, agent-trace-uploader, google-drive-mcp, local-gateway |
 | не установлено | aisystant-com, bridge-scope-service, chat-analyst-service, iwe-interlocutor, iwe-translation-engine, kimi-adapter, learning-context-service, open.aisystant.com |
@@ -406,6 +409,7 @@ generator: .github/scripts/architecture-registry.py
 - **translate-sync**: по записанным связям ничего
 - **iwe-translation-engine**: по записанным связям ничего
 - **iwe-interlocutor**: aist_bot_newarchitecture (вызывает iwe-interlocutor); iwe-browser-extension (вызывает aist_bot_newarchitecture); user-profile-service (вызывает aist_bot_newarchitecture)
+- **day-open-pipeline-watchdog**: по записанным связям ничего
 
 ## Путь 10: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)
 
@@ -475,4 +479,5 @@ flowchart LR
 
 ## Обратная сверка собранных таблиц DP.ARCH.001 со справочниками
 
-- нет
+- §4.1: нет строки «Фоновый дежурный»
+- §11.1а: нет строки «Фоновый дежурный»
