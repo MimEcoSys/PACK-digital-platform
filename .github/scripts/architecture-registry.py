@@ -188,7 +188,7 @@ def compare_with_document(reg: Registry, doc: str):
             findings.append(f"§{label}: заголовок «{heading}» не найден — сверка таблицы пропущена")
             continue
         rows = table_rows(doc, heading, key_col, value_col)
-        for s in reg.subsystems:
+        for s in platform_subsystems(reg):
             cell = rows.get(s["name"])
             if cell is None:
                 findings.append(f"§{label}: нет строки «{s['name']}»")
