@@ -811,3 +811,13 @@ modules:
   aliases: []
   purpose: прототип РП-262 (хранилище aisystant/iwe-interlocutor); проверяет пропуск человека, обращается к шлюзу MCP его пропуском и к раздатчику моделей; постоянный владелец — команда ИТ (имя выбрал пилот
     19.11, заявка И-61)
+
+- id: day-open-pipeline-watchdog
+  name: дежурный открытия дня
+  kind: программа
+  system: IWE
+  status: существует
+  aliases:
+  - iwe-day-open-watchdog
+  purpose: 'проверяет наличие плана дня, сигналит об отсутствии и один раз повторяет запуск открытия дня; скрипт DS-my-strategy/scripts/day-open-pipeline-watchdog.sh и две единицы systemd пользователя'
+  availability: только у автора; не поставляется шаблоном
