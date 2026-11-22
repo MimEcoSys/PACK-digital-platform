@@ -232,6 +232,9 @@ performs:
 - module: capture-bus.sh
   subsystem: knowledge-router
   when: на вызовах инструментов
+- module: extractor.sh
+  subsystem: knowledge-router
+  when: 'по расписанию и по вызову: разбор входящих, аудит паков'
 - module: route-task.sh
   subsystem: task-router
   when: при разборе запроса
@@ -292,6 +295,21 @@ performs:
 - module: day-open-pipeline.sh
   subsystem: background-attendant
   when: по расписанию
+- module: scheduler.sh
+  subsystem: background-attendant
+  when: по расписанию
+- module: code-scan.sh
+  subsystem: background-attendant
+  when: по расписанию
+- module: daily-report.sh
+  subsystem: background-attendant
+  when: по расписанию
+- module: notify.sh
+  subsystem: background-attendant
+  when: когда программа роли отправляет уведомление
+- module: strategist.sh
+  subsystem: background-attendant
+  when: по расписанию и по вызову
 - module: git
   subsystem: background-attendant
   when: по расписанию
@@ -361,6 +379,9 @@ performs:
 - module: post-tool-use-scope-track.sh
   subsystem: agent-coordinator
   when: на вызовах инструментов
+- module: sync-files.sh
+  subsystem: agent-coordinator
+  when: по вызову
 - module: local-gateway
   subsystem: agent-coordinator
   when: при общих блокировках
@@ -1038,6 +1059,24 @@ deployed:
   - module: systemd
     site: машина пользователя
   - module: launchd
+    site: машина пользователя
+  - module: strategist.sh
+    site: машина пользователя
+  - module: extractor.sh
+    site: машина пользователя
+  - module: scheduler.sh
+    site: машина пользователя
+  - module: code-scan.sh
+    site: машина пользователя
+  - module: notify.sh
+    site: машина пользователя
+  - module: daily-report.sh
+    site: машина пользователя
+  - module: dt-collect.sh
+    site: машина пользователя
+  - module: dt-collect-neon.py
+    site: машина пользователя
+  - module: sync-files.sh
     site: машина пользователя
   - module: git
     site: машина пользователя
