@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.047
-name: Trace Recorder (Архивариус решений)
+name: Архивариус решений
+name_ru: Архивариус решений
+name_en: Trace Recorder
+aliases:
+  - Trace Recorder
 alias: R30
 type: role-description
 status: draft
@@ -20,11 +24,13 @@ related:
     - DP.ROLE.050 Pattern Miner  # кластеризует по (trace, outcome)
     - DP.ROLE.001 IWE Creator    # retrieval API при OnSessionStart
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-11-22
 wp: WP-295
 ---
 
-# Trace Recorder — DP.ROLE.047 (R30 Архивариус решений)
+# Архивариус решений — DP.ROLE.047
+
+> **Прежнее имя** — «Trace Recorder»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4); номер R из заголовка убран — он занят другими ролями (DP.ROLE.001 §3.6 п. 1, §3.7).
 
 > # see DP.SC.037, DP.ROLE.047
 >

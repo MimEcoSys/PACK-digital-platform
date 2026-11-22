@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.032
-name: Event Ingester
+name: Регистратор событий
+name_ru: Регистратор событий
+name_en: Event Ingester
+aliases:
+  - Event Ingester
 type: role-description
 status: draft
 valid_from: 2026-04-24
@@ -12,10 +16,12 @@ related:
   uses:
     - DP.ARCH.004
 created: 2026-04-24
-updated: 2026-04-24
+updated: 2026-11-22
 ---
 
-# Event Ingester (DP.ROLE.032)
+# Регистратор событий (DP.ROLE.032)
+
+> **Прежнее имя** — «Event Ingester»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > **Kind:** Infrastructure Role (инфраструктурная роль, не доменная).
 > **Owner Role:** Платформенная команда (source-of-truth — карта БД DP.ARCH.004).

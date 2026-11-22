@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.034
-name: Rewards Projector
+name: Начислитель баллов
+name_ru: Начислитель баллов
+name_en: Rewards Projector
+aliases:
+  - Rewards Projector
 type: role-description
 status: draft
 valid_from: 2026-04-24
@@ -14,10 +18,12 @@ related:
     - DP.SC.020
     - DP.ECON.001
 created: 2026-04-24
-updated: 2026-11-14
+updated: 2026-11-22
 ---
 
-# Rewards Projector (DP.ROLE.034)
+# Начислитель баллов (DP.ROLE.034)
+
+> **Прежнее имя** — «Rewards Projector»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > **Kind:** Infrastructure Role (инфраструктурная роль — проекция, не домен).
 > **Owner Role:** Платформенная команда (source-of-truth — карта БД DP.ARCH.004 §3.12).

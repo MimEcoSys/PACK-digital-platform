@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.045
-name: Agent Task Dispatcher
+name: Диспетчер задач агентов
+name_ru: Диспетчер задач агентов
+name_en: Agent Task Dispatcher
+aliases:
+  - Agent Task Dispatcher
 type: role-description
 status: draft
 valid_from: 2026-05-17
@@ -22,11 +26,13 @@ related:
     - DP.ROLE.072 Разработчик-исполнитель — получает задачи конвейера из очереди
     - Scout CCR — пишет findings + auto-promotes в tasks/ для P0
 created: 2026-05-17
-updated: 2026-06-09
+updated: 2026-11-22
 wp: WP-324
 ---
 
-# Agent Task Dispatcher — DP.ROLE.045
+# Диспетчер задач агентов — DP.ROLE.045
+
+> **Прежнее имя** — «Agent Task Dispatcher»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > # see DP.SC.135, DP.ROLE.045
 >

@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.039
-name: Peer Agent (равноправный peer-агент в multi-agent сессии)
+name: Соработник
+name_ru: Соработник
+name_en: Peer Agent
+aliases:
+  - Peer Agent
 type: role-description
 status: draft
 valid_from: 2026-05-11
@@ -14,11 +18,13 @@ related:
     - DP.SC.063   # agent connect & select (подключение агента, до координации)
     - DP.SC.154   # multi-agent conversational session (conversational-режим)
 created: 2026-05-11
-updated: 2026-07-23
+updated: 2026-11-22
 wp: WP-150 Ф7, WP-337-З-Ф1, WP-367 Ф5, WP-499 Ф3
 ---
 
-# Peer Agent (DP.ROLE.039)
+# Соработник (DP.ROLE.039)
+
+> **Прежнее имя** — «Peer Agent»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 <!-- see DP.SC.034, DP.SC.035, WP-150 Ф7 -->
 

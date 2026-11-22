@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.038
-name: MCP Tool Consumer
+name: Подборщик инструментов
+name_ru: Подборщик инструментов
+name_en: MCP Tool Consumer
+aliases:
+  - MCP Tool Consumer
 type: role-description
 status: draft
 valid_from: 2026-05-11
@@ -11,11 +15,13 @@ related:
   uses:
     - DP.SC.025   # capture-bus для логирования fallback-событий
 created: 2026-05-11
-updated: 2026-05-11
+updated: 2026-11-22
 wp: WP-5
 ---
 
-# MCP Tool Consumer (DP.ROLE.038)
+# Подборщик инструментов (DP.ROLE.038)
+
+> **Прежнее имя** — «MCP Tool Consumer»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 <!-- see DP.SC.129, WP-5 #16 -->
 

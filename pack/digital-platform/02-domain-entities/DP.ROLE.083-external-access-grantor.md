@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.083
-name: External Access Grantor (выдающий пропуска внешним ИИ-клиентам)
+name: Выдающий пропуска
+name_ru: Выдающий пропуска
+name_en: External Access Grantor
+aliases:
+  - External Access Grantor
 type: role-description
 status: draft
 valid_from: 2026-07-11
@@ -11,11 +15,13 @@ related:
   uses:
     - DP.SC.025   # capture-bus (failure logging)
 created: 2026-07-11
-updated: 2026-07-11
+updated: 2026-11-22
 wp: WP-5
 ---
 
-# External Access Grantor (DP.ROLE.083)
+# Выдающий пропуска (DP.ROLE.083)
+
+> **Прежнее имя** — «External Access Grantor»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 <!-- see DP.SC.190, WP-5, фаза «Подключение внешних AI-клиентов» -->
 
