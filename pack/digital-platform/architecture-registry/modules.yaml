@@ -1195,6 +1195,75 @@ modules:
   status: существует
   aliases: []
   purpose: 'планировщик ОС; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: strategist.sh
+  name: strategist.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа запуска роли Стратег: запускает рантайм агента по одному из семи сценариев роли — по таймерам утренний, разбор заметок, обзор недели; остальные — по вызову; ставится вместе с шаблоном;
+    происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/strategist/scripts/strategist.sh'
+- id: extractor.sh
+  name: extractor.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа запуска роли Экстрактор: запускает рантайм агента для извлечения знаний (разбор входящих, аудит паков); ставится по выбору; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/extractor/scripts/extractor.sh'
+- id: scheduler.sh
+  name: scheduler.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа-диспетчер роли Синхронизатор: по расписанию решает, какие работы запустить, и запускает их; ставится по выбору; на сервере автора работает свой планировщик из DS-ai-systems, не этот;
+    происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/scheduler.sh'
+- id: code-scan.sh
+  name: code-scan.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа ночного обхода репозиториев пользователя: собирает коммиты за сутки в журнал активности; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/code-scan.sh'
+- id: notify.sh
+  name: notify.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа отправки уведомлений программ ролей в Telegram по шаблонам текста роли; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/notify.sh'
+- id: daily-report.sh
+  name: daily-report.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа ежедневного отчёта о работах по расписанию: что должно было запуститься, что запустилось, что нет; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/daily-report.sh'
+- id: dt-collect.sh
+  name: dt-collect.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа сбора данных активности пользователя для цифрового двойника; личные сборщики подключаются файлами `collectors.d/`; у пользователя без секретов базы платформы не запускается, работает
+    только в установке автора; пользовательский путь записи — инструмент MCP `dt_write_digital_twin`; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/dt-collect.sh'
+  no_subsystem: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
+- id: dt-collect-neon.py
+  name: dt-collect-neon.py
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа записи собранных данных активности в базу цифрового двойника (Neon); у пользователя без секретов базы платформы не запускается, работает только в установке автора; пользовательский
+    путь записи — инструмент MCP `dt_write_digital_twin`; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/dt-collect-neon.py'
+  no_subsystem: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
+- id: sync-files.sh
+  name: sync-files.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа выборочного обновления названных файлов из удалённого репозитория, не трогающая остальные локальные правки; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/sync-files.sh'
 - id: git
   name: git
   kind: программа

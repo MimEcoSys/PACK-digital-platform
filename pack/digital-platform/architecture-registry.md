@@ -205,6 +205,15 @@ generator: .github/scripts/architecture-registry.py
 | update.sh | update.sh |  | программа | IWE | существует | программы установки и обновления; происхождение: есть в шаблоне IWE (ш); в шаблоне: update.sh |
 | systemd | systemd (Linux) |  | программа | IWE | существует | планировщик ОС; происхождение: поставляет вендор или хост (х); в шаблоне нет |
 | launchd | launchd (macOS) |  | программа | IWE | существует | планировщик ОС; происхождение: поставляет вендор или хост (х); в шаблоне нет |
+| strategist.sh | strategist.sh |  | программа | IWE | существует | программа запуска роли Стратег: запускает рантайм агента по одному из семи сценариев роли — по таймерам утренний, разбор заметок, обзор недели; остальные — по вызову; ставится вместе с шаблоном; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/strategist/scripts/strategist.sh |
+| extractor.sh | extractor.sh |  | программа | IWE | существует | программа запуска роли Экстрактор: запускает рантайм агента для извлечения знаний (разбор входящих, аудит паков); ставится по выбору; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/extractor/scripts/extractor.sh |
+| scheduler.sh | scheduler.sh |  | программа | IWE | существует | программа-диспетчер роли Синхронизатор: по расписанию решает, какие работы запустить, и запускает их; ставится по выбору; на сервере автора работает свой планировщик из DS-ai-systems, не этот; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/scheduler.sh |
+| code-scan.sh | code-scan.sh |  | программа | IWE | существует | программа ночного обхода репозиториев пользователя: собирает коммиты за сутки в журнал активности; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/code-scan.sh |
+| notify.sh | notify.sh |  | программа | IWE | существует | программа отправки уведомлений программ ролей в Telegram по шаблонам текста роли; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/notify.sh |
+| daily-report.sh | daily-report.sh |  | программа | IWE | существует | программа ежедневного отчёта о работах по расписанию: что должно было запуститься, что запустилось, что нет; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/daily-report.sh |
+| dt-collect.sh | dt-collect.sh |  | программа | IWE | существует | программа сбора данных активности пользователя для цифрового двойника; личные сборщики подключаются файлами `collectors.d/`; у пользователя без секретов базы платформы не запускается, работает только в установке автора; пользовательский путь записи — инструмент MCP `dt_write_digital_twin`; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/dt-collect.sh |
+| dt-collect-neon.py | dt-collect-neon.py |  | программа | IWE | существует | программа записи собранных данных активности в базу цифрового двойника (Neon); у пользователя без секретов базы платформы не запускается, работает только в установке автора; пользовательский путь записи — инструмент MCP `dt_write_digital_twin`; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/dt-collect-neon.py |
+| sync-files.sh | sync-files.sh |  | программа | IWE | существует | программа выборочного обновления названных файлов из удалённого репозитория, не трогающая остальные локальные правки; происхождение: есть в шаблоне IWE (ш); в шаблоне: roles/synchronizer/scripts/sync-files.sh |
 | git | git |  | программа | IWE | существует | программа контроля версий и служба ОС, хранящие рабочие копии репозиториев и каталоги состояния среды выполнения; происхождение: поставляет вендор или хост (х); в шаблоне нет |
 | os-filesystem | файловая система ОС |  | хранилище | IWE | существует | программа контроля версий и служба ОС, хранящие рабочие копии репозиториев и каталоги состояния среды выполнения; происхождение: поставляет вендор или хост (х); в шаблоне нет |
 | secretary | программы Секретаря |  | набор программ | IWE | существует | программы, реализующие роль IWE «Секретарь» (§17): secretary.py, secretary-run.sh, secretary-dashboard.py, secretary-health-*.py, secretary-oura-sync.py, secretary-apple-sync.py, lib/secretary-telegram.sh; происхождение: только в установке автора (а); в шаблоне нет |
@@ -256,14 +265,20 @@ generator: .github/scripts/architecture-registry.py
 | Координатор агентов | post-tool-use-scope-track.sh | на вызовах инструментов |
 | Координатор агентов | pull-on-touch.sh | на вызовах инструментов |
 | Координатор агентов | session-guard.sh | при открытии и закрытии сессии |
+| Координатор агентов | sync-files.sh | по вызову |
 | Учёт рассуждений агента | agent-trace-recorder | на вызовах инструментов и при остановке, если пользователь включил запись |
 | Учёт рассуждений агента | agent-trace-uploader | на вызовах инструментов и при остановке, если пользователь включил запись |
 | Учёт рассуждений агента | iwe-trace.py | по вызову |
+| Фоновый дежурный | code-scan.sh | по расписанию |
+| Фоновый дежурный | daily-report.sh | по расписанию |
 | Фоновый дежурный | day-open-pipeline-watchdog | ежедневно в 06:30 по таймеру на Цехе |
 | Фоновый дежурный | day-open-pipeline.sh | по расписанию |
 | Фоновый дежурный | git | по расписанию |
 | Фоновый дежурный | launchd | по расписанию |
+| Фоновый дежурный | notify.sh | когда программа роли отправляет уведомление |
 | Фоновый дежурный | os-filesystem | по расписанию |
+| Фоновый дежурный | scheduler.sh | по расписанию |
+| Фоновый дежурный | strategist.sh | по расписанию и по вызову |
 | Фоновый дежурный | systemd | по расписанию |
 | Хранитель копий | Backblaze B2 бакет | не установлено |
 | Хранитель копий | bitcoind-ots-verify | не установлено |
@@ -311,6 +326,7 @@ generator: .github/scripts/architecture-registry.py
 | Загрузчик знаний | local-gateway | при вызове инструментов MCP платформы |
 | Маршрутизатор знаний | capture-bus.sh | на вызовах инструментов |
 | Маршрутизатор знаний | claude-code | когда агент по протоколу записывает знание |
+| Маршрутизатор знаний | extractor.sh | по расписанию и по вызову: разбор входящих, аудит паков |
 | Рабочее место наставника | Neon: проект mentorship | не установлено |
 | Рабочее место наставника | chat-analyst-service | не установлено |
 | Рабочее место наставника | mentorship-service | не установлено |
@@ -411,7 +427,7 @@ generator: .github/scripts/architecture-registry.py
 | VS Code пользователя | DS-iwe-session-trigger, DS-iwe-wp-panel, vscode-wakatime |
 | tsekh-1 | PostgreSQL 16 с pgvector на tsekh-1, bitcoind-ots-verify, day-open-pipeline-watchdog, iwe-onboarding-controller, iwe-profiler, iwe-render-pilot-guides, iwe-stage-controller, iwe-stage-evaluator, payment-registry, restic |
 | браузер пользователя | iwe-browser-extension |
-| машина пользователя | add-secret.sh, agent-trace-recorder, agent-trace-uploader, archive-done-wp.sh, artifactor.py, build-active-wp.py, capture-bus.sh, claude-code, close-gate-reminder.sh, close-wp.sh, create-wp.sh, day-open-pipeline.sh, destructive-guard.sh, detector_decision.sh, detector_incident.sh, detector_pattern_awareness.sh, ds-publish.sh, git, google-drive-mcp, inject-communication-style.sh, inject-fault-profile.sh, inject-role-prefixes.sh, isolate-push.sh, iwe-audit.sh, iwe-drift.sh, iwe-grep-secret.sh, iwe-trace.py, launchd, lazy-context-loader.sh, ledger-append.sh, local-gateway, memory-exocortex-sync.sh, os-filesystem, post-tool-use-scope-track.sh, pre-commit-secret-scan.sh, precompact-checkpoint.sh, precompact-restore.sh, protocol-completion-reminder.sh, protocol-stop-gate.sh, pull-on-touch.sh, residency-gate-init.sh, residency-gate-lazy.sh, residency-gate-skill-adapter.sh, response-clarity-hook.sh, restore-from-exocortex.sh, route-task.sh, secret-file-read-block.sh, secret-leak-block.sh, secret-leak-redact.sh, secret-mcp-dump-guard.sh, secretary, session-end-status.sh, session-guard.sh, session-open-gate.sh, session-start-hooks-bootstrap.sh, setup.sh, sql-pii-guard.sh, style-check-text.sh, systemd, translate.py, update.sh, wakatime-heartbeat.sh, wp-gate-reminder.sh |
+| машина пользователя | add-secret.sh, agent-trace-recorder, agent-trace-uploader, archive-done-wp.sh, artifactor.py, build-active-wp.py, capture-bus.sh, claude-code, close-gate-reminder.sh, close-wp.sh, code-scan.sh, create-wp.sh, daily-report.sh, day-open-pipeline.sh, destructive-guard.sh, detector_decision.sh, detector_incident.sh, detector_pattern_awareness.sh, ds-publish.sh, dt-collect-neon.py, dt-collect.sh, extractor.sh, git, google-drive-mcp, inject-communication-style.sh, inject-fault-profile.sh, inject-role-prefixes.sh, isolate-push.sh, iwe-audit.sh, iwe-drift.sh, iwe-grep-secret.sh, iwe-trace.py, launchd, lazy-context-loader.sh, ledger-append.sh, local-gateway, memory-exocortex-sync.sh, notify.sh, os-filesystem, post-tool-use-scope-track.sh, pre-commit-secret-scan.sh, precompact-checkpoint.sh, precompact-restore.sh, protocol-completion-reminder.sh, protocol-stop-gate.sh, pull-on-touch.sh, residency-gate-init.sh, residency-gate-lazy.sh, residency-gate-skill-adapter.sh, response-clarity-hook.sh, restore-from-exocortex.sh, route-task.sh, scheduler.sh, secret-file-read-block.sh, secret-leak-block.sh, secret-leak-redact.sh, secret-mcp-dump-guard.sh, secretary, session-end-status.sh, session-guard.sh, session-open-gate.sh, session-start-hooks-bootstrap.sh, setup.sh, sql-pii-guard.sh, strategist.sh, style-check-text.sh, sync-files.sh, systemd, translate.py, update.sh, wakatime-heartbeat.sh, wp-gate-reminder.sh |
 | не установлено | aisystant-com, bridge-scope-service, chat-analyst-service, iwe-interlocutor, iwe-translation-engine, kimi-adapter, learning-context-service, open.aisystant.com |
 
 ## Обращается к (DP.ARCH.001 §5.1 «Обращается к» (снято 01.11.2026), §10 и проба пути оплаты; «обращается» — направление не уточнено)
@@ -626,6 +642,15 @@ generator: .github/scripts/architecture-registry.py
 - **update.sh**: по записанным связям ничего
 - **systemd**: по записанным связям ничего
 - **launchd**: по записанным связям ничего
+- **strategist.sh**: по записанным связям ничего
+- **extractor.sh**: по записанным связям ничего
+- **scheduler.sh**: по записанным связям ничего
+- **code-scan.sh**: по записанным связям ничего
+- **notify.sh**: по записанным связям ничего
+- **daily-report.sh**: по записанным связям ничего
+- **dt-collect.sh**: по записанным связям ничего
+- **dt-collect-neon.py**: по записанным связям ничего
+- **sync-files.sh**: по записанным связям ничего
 - **git**: по записанным связям ничего
 - **secretary**: по записанным связям ничего
 - **vscode-wakatime**: по записанным связям ничего
@@ -694,6 +719,8 @@ flowchart LR
 
 - **Metabase**: отчёты для команды по базам Neon; функции платформы для пользователей не выполняет (решение 19.11.2026: «Общие базы и управление данными» — подпись группы, не подсистема)
 - **secret-leak-redact.sh**: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
+- **dt-collect.sh**: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
+- **dt-collect-neon.py**: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
 - **secretary**: реализует роль IWE «Секретарь» (§17) целиком, не функциональную подсистему (DP.ARCH.001 §11.1)
 
 Не перенесено как модуль:
