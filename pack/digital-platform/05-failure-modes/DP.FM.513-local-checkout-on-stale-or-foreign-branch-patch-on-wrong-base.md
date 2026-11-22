@@ -5,21 +5,21 @@ status: draft
 created: "2026-10-02"
 valid_from: "2026-10-02"
 name: "Локальный чекаут стоит на устаревшей или чужой ветке: патч ложится на базу на 8-15 коммитов позади origin/main, ревью и тесты проходят на несуществующем состоянии"
-name_ru: "Локальный чекаут стоит на устаревшей или чужой ветке: патч ложится на базу на 8-15 коммитов позади origin/main, ревью и тесты проходят на несуществующем состоянии"
-name_en: "A local checkout sits on a stale or foreign branch: the patch lands on a base 8-15 commits behind origin/main, and review and tests pass against a state that does not exist"
+name_ru: "Локальный чекаут стоит на устаревшей или чужой ветке: патч ложится на несуществующую базу"
+name_en: "A local checkout sits on a stale or foreign branch, so review and tests use a state that does not exist in origin/main"
 summary: "Дважды агент начинал правку на чекауте, который выглядел «на main», но фактически стоял не на актуальном origin/main. В gateway-mcp чекаут стоял на ветке другого РП (15 коммитов позади), в checklist-mcp на устаревшей локальной ветке (8 позади); отдельное наблюдение 21.09 (WP-7): клон шаблона стоял на устаревшей ветке, правка не начиналась. Код-ревью читало не ту базу, коммит уже был сделан; спасла явная проверка предка (`git merge-base --is-ancestor`) до пуша. Правило AR.006 (Pull-on-Touch) требует обновить репозиторий перед первой правкой, но не проверяет, что ветка именно та, что ожидается. «На main» по имени ветки не равно «на origin/main» по содержимому."
 pack: PACK-digital-platform
 domain: digital-platform / multi-agent-git-coordination
 schema_version: 1
 trust: medium
 epistemic_stage: forming
-source: "git commit 92816c410 в DS-my-strategy (gateway-mcp, 15 коммитов позади); 748b0b96 в MC-sessions (checklist-mcp, 8 коммитов позади); WP-7 Ф168 (peer-session 2026-09-22-13-incident-knowledge-mcp), WP-522 (peer-session 2026-09-22-08-wp522-checklist-actualize-phases)"
-source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3190"
-extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-09-23-inbox-check-4.md (кандидат #3)"
-source_candidate: "23.4#3"
+source: "git commit 92816c410 в DS-my-strategy (gateway-mcp, 15 коммитов позади); 748b0b96 в MC-sessions (checklist-mcp, 8 коммитов позади); WP-7 Ф168; WP-522; вариант WP-619 11.11.2026"
+source_capture: "DS-my-strategy/inbox/captures/2026-09.md:3190; DS-my-strategy/inbox/captures/2026-11.md — «Отпечаток содержимого чужого репозитория…»"
+extraction_report: "DS-my-strategy/inbox/extraction-reports/2026-09-23-inbox-check-4.md (кандидат #3); 2026-11-21-inbox-check-2.md (кандидат #5)"
+source_candidate: "23.4#3; 21-2#5"
 related:
-  see_also: ["AR.006", "DP.M.138", "DP.FM.070"]
-tags: [git, stale-checkout, preflight, merge-base, multi-agent]
+  see_also: ["AR.006", "DP.M.138", "DP.FM.070", "DP.FM.728", "DP.M.602"]
+tags: [git, stale-checkout, preflight, merge-base, multi-agent, cross-repo-build]
 ---
 
 # DP.FM.513 — Чекаут на устаревшей или чужой ветке: патч ложится на несуществующую базу
@@ -40,8 +40,23 @@ tags: [git, stale-checkout, preflight, merge-base, multi-agent]
 
 «Перед первой правкой в существующем локальном чекауте (не свежем clone или worktree) выполнены `git fetch origin main` и `git merge-base --is-ancestor HEAD origin/main`, и текущая ветка та, что ожидается для этой работы?» Нет → воспроизведён DP.FM.513: возможна правка на устаревшей или чужой базе, которую ревью и тесты не отличат от актуальной. Повторная проверка нужна и перед пушем. При промахе патч пересобирается на свежей ветке от `origin/main`, а не rebase поверх чужой ветки (по тексту захвата).
 
+## Вариант 11.11.2026: сборка читает соседний репозиторий на чужой ветке
+
+По захвату WP-619, компилятор реестра стилей читал источник из соседнего репозитория, локальная копия которого стояла на ветке другого РП. Пересчёт lock-файла по этой копии откатил бы отпечаток источника и оставил собранный фрагмент без правила, на которое он ссылался. Ошибку нашли до отправки.
+
+Это другая точка входа того же сбоя: неверная база принадлежит не редактируемому, а соседнему репозиторию, из которого сборка читает источники. Дополнительно проверка по названию раздела могла пройти ложно, потому что название встречалось в других источниках фрагмента.
+
+**Меры — вывод разбора кандидата, не факт исходного захвата:**
+1. Содержимое и отпечатки чужих источников брать из одного опубликованного состояния, например `origin/main`, а не из рабочей копии.
+2. Проверку свежести lock сверять с опубликованной веткой; тесты не должны перезаписывать коммитируемый lock.
+3. Наличие раздела проверять по заголовку в самом источнике, а не по вхождению его названия в собранный фрагмент.
+
+Исправление компилятора и тестов этой карточкой не утверждается.
+
+Источник: кандидат 5 отчёта 2026-11-21-inbox-check-2; решение о дополнении принято пилотом 21.11.2026.
+
 ## Происхождение и статус проверки
 
-Источник: git commit `92816c410` в DS-my-strategy (WP-7 Ф168, peer-session `2026-09-22-13-incident-knowledge-mcp`); `748b0b96` в MC-sessions (WP-522, peer-session `2026-09-22-08-wp522-checklist-actualize-phases`). Захват: `DS-my-strategy/inbox/captures/2026-09.md:3190`. Связь: WP-7, WP-522.
+Источник: git commit `92816c410` в DS-my-strategy (WP-7 Ф168, peer-session `2026-09-22-13-incident-knowledge-mcp`); `748b0b96` в MC-sessions (WP-522, peer-session `2026-09-22-08-wp522-checklist-actualize-phases`). Захват: `DS-my-strategy/inbox/captures/2026-09.md:3190`. Связь: WP-7, WP-522, WP-619.
 
 Описанная проверка задаёт критерий приёмки, не утверждает наличие автоматизированного гейта.
