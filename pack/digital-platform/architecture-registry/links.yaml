@@ -1,4 +1,5 @@
-source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34; сторона IWE — DP.ARCH.001 §4.2, §5.2, §11.1, PACK-digital-platform origin/main 21.11.2026;
+  перенос РП-616 Ф7
 performs:
 - module: gateway-mcp
   subsystem: tool-dispatcher
@@ -192,6 +193,255 @@ performs:
 - module: day-open-pipeline-watchdog
   subsystem: background-attendant
   when: ежедневно в 06:30 по таймеру на Цехе
+- module: claude-code
+  subsystem: work-executor
+  when: 'в каждой сессии: агент выполняет задачу'
+- module: claude-code
+  subsystem: context-loader
+  when: при старте сессии читает инструкции и память
+- module: lazy-context-loader.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: inject-communication-style.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: inject-fault-profile.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: inject-role-prefixes.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: precompact-checkpoint.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: precompact-restore.sh
+  subsystem: context-loader
+  when: на событиях ввода и сжатия беседы
+- module: memory-exocortex-sync.sh
+  subsystem: context-loader
+  when: при записи файла памяти
+- module: git
+  subsystem: context-loader
+  when: не установлено
+- module: os-filesystem
+  subsystem: context-loader
+  when: не установлено
+- module: claude-code
+  subsystem: knowledge-router
+  when: когда агент по протоколу записывает знание
+- module: capture-bus.sh
+  subsystem: knowledge-router
+  when: на вызовах инструментов
+- module: route-task.sh
+  subsystem: task-router
+  when: при разборе запроса
+- module: artifactor.py
+  subsystem: task-router
+  when: при разборе запроса
+- module: claude-code
+  subsystem: task-router
+  when: когда скрипт передал задачу агенту
+- module: secret-leak-block.sh
+  subsystem: secrets-guard
+  when: перед и после вызова инструмента
+- module: secret-file-read-block.sh
+  subsystem: secrets-guard
+  when: перед и после вызова инструмента
+- module: secret-mcp-dump-guard.sh
+  subsystem: secrets-guard
+  when: перед и после вызова инструмента
+- module: sql-pii-guard.sh
+  subsystem: secrets-guard
+  when: перед и после вызова инструмента
+- module: destructive-guard.sh
+  subsystem: secrets-guard
+  when: перед и после вызова инструмента
+- module: residency-gate-init.sh
+  subsystem: secrets-guard
+  when: при запуске скилла и доступе к личным данным
+- module: residency-gate-lazy.sh
+  subsystem: secrets-guard
+  when: при запуске скилла и доступе к личным данным
+- module: residency-gate-skill-adapter.sh
+  subsystem: secrets-guard
+  when: при запуске скилла и доступе к личным данным
+- module: pre-commit-secret-scan.sh
+  subsystem: secrets-guard
+  when: перед коммитом
+- module: iwe-grep-secret.sh
+  subsystem: secrets-guard
+  when: по вызову
+- module: add-secret.sh
+  subsystem: secrets-guard
+  when: по вызову
+- module: iwe-drift.sh
+  subsystem: registry-controller
+  when: по расписанию и по вызову
+- module: systemd
+  subsystem: registry-controller
+  when: по расписанию и по вызову
+- module: launchd
+  subsystem: registry-controller
+  when: по расписанию и по вызову
+- module: systemd
+  subsystem: background-attendant
+  when: по расписанию
+- module: launchd
+  subsystem: background-attendant
+  when: по расписанию
+- module: day-open-pipeline.sh
+  subsystem: background-attendant
+  when: по расписанию
+- module: git
+  subsystem: background-attendant
+  when: по расписанию
+- module: os-filesystem
+  subsystem: background-attendant
+  when: по расписанию
+- module: claude-code
+  subsystem: installation-inspector
+  when: по вызову скилла audit-installation
+- module: iwe-audit.sh
+  subsystem: installation-inspector
+  when: по вызову скилла audit-installation
+- module: create-wp.sh
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: close-wp.sh
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: build-active-wp.py
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: ledger-append.sh
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: archive-done-wp.sh
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: session-start-hooks-bootstrap.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: session-open-gate.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: wp-gate-reminder.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: protocol-stop-gate.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: close-gate-reminder.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: protocol-completion-reminder.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: session-end-status.sh
+  subsystem: work-accountant
+  when: на событиях старта, ввода, остановки и конца сессии
+- module: session-guard.sh
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: git
+  subsystem: work-accountant
+  when: при открытии и закрытии работы
+- module: session-guard.sh
+  subsystem: agent-coordinator
+  when: при открытии и закрытии сессии
+- module: isolate-push.sh
+  subsystem: agent-coordinator
+  when: при отправке коммита
+- module: ds-publish.sh
+  subsystem: agent-coordinator
+  when: при отправке коммита
+- module: pull-on-touch.sh
+  subsystem: agent-coordinator
+  when: на вызовах инструментов
+- module: post-tool-use-scope-track.sh
+  subsystem: agent-coordinator
+  when: на вызовах инструментов
+- module: local-gateway
+  subsystem: agent-coordinator
+  when: при общих блокировках
+- module: git
+  subsystem: agent-coordinator
+  when: не установлено
+- module: os-filesystem
+  subsystem: agent-coordinator
+  when: не установлено
+- module: setup.sh
+  subsystem: update-deliverer
+  when: при установке, по вызову обновления и по расписанию
+- module: update.sh
+  subsystem: update-deliverer
+  when: при установке, по вызову обновления и по расписанию
+- module: systemd
+  subsystem: update-deliverer
+  when: при установке, по вызову обновления и по расписанию
+- module: launchd
+  subsystem: update-deliverer
+  when: при установке, по вызову обновления и по расписанию
+- module: claude-code
+  subsystem: knowledge-loader
+  when: при вызове инструментов MCP платформы
+- module: local-gateway
+  subsystem: knowledge-loader
+  when: при вызове инструментов MCP платформы
+- module: response-clarity-hook.sh
+  subsystem: clarity-controller
+  when: при остановке
+- module: style-check-text.sh
+  subsystem: clarity-controller
+  when: при проверке реплик напарников
+- module: DS-iwe-wp-panel
+  subsystem: work-board
+  when: пока открыт редактор
+- module: wakatime-heartbeat.sh
+  subsystem: time-recorder
+  when: на событиях рантайма и редактора
+- module: vscode-wakatime
+  subsystem: time-recorder
+  when: на событиях рантайма и редактора
+- module: capture-bus.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: detector_incident.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: detector_decision.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: detector_pattern_awareness.sh
+  subsystem: detector
+  when: на вызовах инструментов и при остановке
+- module: agent-trace-recorder
+  subsystem: agent-reasoning-log
+  when: на вызовах инструментов и при остановке, если пользователь включил запись
+- module: agent-trace-uploader
+  subsystem: agent-reasoning-log
+  when: на вызовах инструментов и при остановке, если пользователь включил запись
+- module: iwe-trace.py
+  subsystem: agent-reasoning-log
+  when: по вызову
+- module: translate.py
+  subsystem: iwe-translator
+  when: по вызову пользователя
+- module: git
+  subsystem: version-keeper
+  when: при каждой записи и публикации
+- module: os-filesystem
+  subsystem: version-keeper
+  when: при каждой записи и публикации
+- module: restore-from-exocortex.sh
+  subsystem: iwe-repairer
+  when: по вызову скиллов iwe-restore, restore-exocortex
+- module: claude-code
+  subsystem: iwe-repairer
+  when: по вызову скиллов iwe-restore, restore-exocortex
+- module: claude-code
+  subsystem: verifier
+  when: по вызову скилла verify
 located_in:
 - module: db:persona
   in: 'Neon: проект aisystant'
@@ -683,6 +933,126 @@ deployed:
     site: не установлено
   - module: day-open-pipeline-watchdog
     site: tsekh-1
+  - module: claude-code
+    site: машина пользователя
+  - module: lazy-context-loader.sh
+    site: машина пользователя
+  - module: inject-communication-style.sh
+    site: машина пользователя
+  - module: inject-role-prefixes.sh
+    site: машина пользователя
+  - module: inject-fault-profile.sh
+    site: машина пользователя
+  - module: precompact-checkpoint.sh
+    site: машина пользователя
+  - module: precompact-restore.sh
+    site: машина пользователя
+  - module: memory-exocortex-sync.sh
+    site: машина пользователя
+  - module: capture-bus.sh
+    site: машина пользователя
+  - module: detector_incident.sh
+    site: машина пользователя
+  - module: detector_decision.sh
+    site: машина пользователя
+  - module: detector_pattern_awareness.sh
+    site: машина пользователя
+  - module: secret-leak-block.sh
+    site: машина пользователя
+  - module: secret-file-read-block.sh
+    site: машина пользователя
+  - module: secret-mcp-dump-guard.sh
+    site: машина пользователя
+  - module: sql-pii-guard.sh
+    site: машина пользователя
+  - module: destructive-guard.sh
+    site: машина пользователя
+  - module: secret-leak-redact.sh
+    site: машина пользователя
+  - module: residency-gate-skill-adapter.sh
+    site: машина пользователя
+  - module: residency-gate-init.sh
+    site: машина пользователя
+  - module: residency-gate-lazy.sh
+    site: машина пользователя
+  - module: session-start-hooks-bootstrap.sh
+    site: машина пользователя
+  - module: session-open-gate.sh
+    site: машина пользователя
+  - module: wp-gate-reminder.sh
+    site: машина пользователя
+  - module: protocol-stop-gate.sh
+    site: машина пользователя
+  - module: close-gate-reminder.sh
+    site: машина пользователя
+  - module: protocol-completion-reminder.sh
+    site: машина пользователя
+  - module: session-end-status.sh
+    site: машина пользователя
+  - module: pull-on-touch.sh
+    site: машина пользователя
+  - module: post-tool-use-scope-track.sh
+    site: машина пользователя
+  - module: response-clarity-hook.sh
+    site: машина пользователя
+  - module: style-check-text.sh
+    site: машина пользователя
+  - module: wakatime-heartbeat.sh
+    site: машина пользователя
+  - module: route-task.sh
+    site: машина пользователя
+  - module: artifactor.py
+    site: машина пользователя
+  - module: pre-commit-secret-scan.sh
+    site: машина пользователя
+  - module: iwe-grep-secret.sh
+    site: машина пользователя
+  - module: add-secret.sh
+    site: машина пользователя
+  - module: iwe-drift.sh
+    site: машина пользователя
+  - module: iwe-audit.sh
+    site: машина пользователя
+  - module: day-open-pipeline.sh
+    site: машина пользователя
+  - module: create-wp.sh
+    site: машина пользователя
+  - module: close-wp.sh
+    site: машина пользователя
+  - module: build-active-wp.py
+    site: машина пользователя
+  - module: ledger-append.sh
+    site: машина пользователя
+  - module: archive-done-wp.sh
+    site: машина пользователя
+  - module: session-guard.sh
+    site: машина пользователя
+  - module: isolate-push.sh
+    site: машина пользователя
+  - module: ds-publish.sh
+    site: машина пользователя
+  - module: setup.sh
+    site: машина пользователя
+  - module: update.sh
+    site: машина пользователя
+  - module: systemd
+    site: машина пользователя
+  - module: launchd
+    site: машина пользователя
+  - module: git
+    site: машина пользователя
+  - module: os-filesystem
+    site: машина пользователя
+  - module: secretary
+    site: машина пользователя
+  - module: vscode-wakatime
+    site: VS Code пользователя
+  - module: iwe-trace.py
+    site: машина пользователя
+  - module: translate.py
+    site: машина пользователя
+  - module: restore-from-exocortex.sh
+    site: машина пользователя
 paths:
 - id: '10'
   need: Участник оплачивает подписку (ветка ЮKassa, DP.ARCH.001 §10)

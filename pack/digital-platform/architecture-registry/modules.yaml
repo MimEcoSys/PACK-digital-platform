@@ -1,4 +1,5 @@
-source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34
+source: DP.ARCH.001 §4.1, §5.1, §5.3, §11.1а, PACK-digital-platform origin/main 19.11.2026; перенос РП-611 Ф34; сторона IWE — DP.ARCH.001 §4.2, §5.2, §11.1, PACK-digital-platform origin/main 21.11.2026;
+  перенос РП-616 Ф7
 excluded:
 - knowledge-mcp-template — документ (заготовка воркера), не модуль
 - Aisystant LMS PostgreSQL — чужая система (§5.3); строка §5.1 — расхождение (Р8)
@@ -601,7 +602,8 @@ modules:
   status: существует
   aliases:
   - DS-iwe-wp-panel (панель РП)
-  purpose: 'Расширение VS Code: панель проектов и сессий агентов.'
+  - iwe-wp-panel
+  purpose: 'Расширение VS Code: панель проектов и сессий агентов; происхождение: отдельно опубликованный продукт (п); в шаблоне нет.'
   calls_unresolved:
   - карточки и реестр РП
 - id: local-gateway
@@ -611,7 +613,8 @@ modules:
   status: существует
   aliases:
   - local-gateway (iwe-local-gateway)
-  purpose: Локальный MCP для блокировок файлов и статусов параллельных агентов.
+  purpose: 'Локальный MCP для блокировок файлов и статусов параллельных агентов; происхождение: отдельно опубликованный продукт (п); в шаблоне: setup/optional/setup-local-gateway.sh — установщик по выбору
+    ставит программу из отдельного репозитория iwe-local-gateway.'
 - id: google-drive-mcp
   name: google-drive-mcp
   kind: программа
@@ -639,7 +642,7 @@ modules:
   system: платформа
   status: существует
   aliases: []
-  purpose: переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions)
+  purpose: переводит тексты шаблона IWE при обновлении основной ветки (GitHub Actions); запускает translate.py.
   source: §11.1а (в §5.1 нет)
 - id: iwe-translation-engine
   name: движок перевода
@@ -811,7 +814,6 @@ modules:
   aliases: []
   purpose: прототип РП-262 (хранилище aisystant/iwe-interlocutor); проверяет пропуск человека, обращается к шлюзу MCP его пропуском и к раздатчику моделей; постоянный владелец — команда ИТ (имя выбрал пилот
     19.11, заявка И-61)
-
 - id: day-open-pipeline-watchdog
   name: дежурный открытия дня
   kind: программа
@@ -819,5 +821,431 @@ modules:
   status: существует
   aliases:
   - iwe-day-open-watchdog
-  purpose: 'проверяет наличие плана дня, сигналит об отсутствии и один раз повторяет запуск открытия дня; скрипт DS-my-strategy/scripts/day-open-pipeline-watchdog.sh и две единицы systemd пользователя'
+  purpose: проверяет наличие плана дня, сигналит об отсутствии и один раз повторяет запуск открытия дня; скрипт DS-my-strategy/scripts/day-open-pipeline-watchdog.sh и две единицы systemd пользователя
   availability: только у автора; не поставляется шаблоном
+- id: claude-code
+  name: Claude Code
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'CLI-рантайм агента; варианты — Codex CLI, Kimi CLI, Hermes Agent; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: lazy-context-loader.sh
+  name: lazy-context-loader.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/lazy-context-loader.sh'
+- id: inject-communication-style.sh
+  name: inject-communication-style.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/inject-communication-style.sh'
+- id: inject-role-prefixes.sh
+  name: inject-role-prefixes.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/inject-role-prefixes.sh'
+- id: inject-fault-profile.sh
+  name: inject-fault-profile.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/inject-fault-profile.sh'
+- id: precompact-checkpoint.sh
+  name: precompact-checkpoint.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/precompact-checkpoint.sh'
+- id: precompact-restore.sh
+  name: precompact-restore.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: подача контекста; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/precompact-restore.sh'
+- id: memory-exocortex-sync.sh
+  name: memory-exocortex-sync.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук Claude Code: зеркалирование памяти в резервную копию; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/memory-exocortex-sync.sh'
+- id: capture-bus.sh
+  name: capture-bus.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук Claude Code: захват знаний для маршрутизации; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/capture-bus.sh'
+- id: detector_incident.sh
+  name: detector_incident.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_incident.sh'
+- id: detector_decision.sh
+  name: detector_decision.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_decision.sh'
+- id: detector_pattern_awareness.sh
+  name: detector_pattern_awareness.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты-детекторы: их запускает `capture-bus.sh` по списку `config/capture-detectors.sh` (список — файл настройки, не модуль); происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/detectors/detector_pattern_awareness.sh'
+- id: secret-leak-block.sh
+  name: secret-leak-block.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-leak-block.sh'
+- id: secret-file-read-block.sh
+  name: secret-file-read-block.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-file-read-block.sh'
+- id: secret-mcp-dump-guard.sh
+  name: secret-mcp-dump-guard.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/secret-mcp-dump-guard.sh'
+- id: sql-pii-guard.sh
+  name: sql-pii-guard.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/sql-pii-guard.sh'
+- id: destructive-guard.sh
+  name: destructive-guard.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/destructive-guard.sh'
+- id: secret-leak-redact.sh
+  name: secret-leak-redact.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: защита секретов и опасных действий; происхождение: только в установке автора (а); в шаблоне нет'
+  no_subsystem: в DP.ARCH.001 §11.1 не назван ни у одной подсистемы
+- id: residency-gate-skill-adapter.sh
+  name: residency-gate-skill-adapter.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук и программы проверки согласия на доступ к личным данным; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/residency-gate-skill-adapter.sh'
+- id: residency-gate-init.sh
+  name: residency-gate-init.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук и программы проверки согласия на доступ к личным данным; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/residency-gate-init.sh'
+- id: residency-gate-lazy.sh
+  name: residency-gate-lazy.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук и программы проверки согласия на доступ к личным данным; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/residency-gate-lazy.sh'
+- id: session-start-hooks-bootstrap.sh
+  name: session-start-hooks-bootstrap.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/session-start-hooks-bootstrap.sh'
+- id: session-open-gate.sh
+  name: session-open-gate.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/session-open-gate.sh'
+- id: wp-gate-reminder.sh
+  name: wp-gate-reminder.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/wp-gate-reminder.sh'
+- id: protocol-stop-gate.sh
+  name: protocol-stop-gate.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/protocol-stop-gate.sh'
+- id: close-gate-reminder.sh
+  name: close-gate-reminder.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/close-gate-reminder.sh'
+- id: protocol-completion-reminder.sh
+  name: protocol-completion-reminder.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/protocol-completion-reminder.sh'
+- id: session-end-status.sh
+  name: session-end-status.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: порядок открытия и закрытия работы; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/session-end-status.sh'
+- id: pull-on-touch.sh
+  name: pull-on-touch.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: свежесть копий и учёт затронутых файлов; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/pull-on-touch.sh'
+- id: post-tool-use-scope-track.sh
+  name: post-tool-use-scope-track.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хуки Claude Code: свежесть копий и учёт затронутых файлов; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/post-tool-use-scope-track.sh'
+- id: response-clarity-hook.sh
+  name: response-clarity-hook.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук Claude Code: проверка ясности ответа; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/response-clarity-hook.sh'
+- id: style-check-text.sh
+  name: style-check-text.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипт проверки стиля для ответов агентов-напарников; происхождение: есть в шаблоне IWE (ш); в шаблоне: .claude/hooks/style-check-text.sh'
+- id: wakatime-heartbeat.sh
+  name: wakatime-heartbeat.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'хук Claude Code: отметки времени в рантайме; происхождение: только в установке автора (а); в шаблоне нет'
+- id: route-task.sh
+  name: route-task.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты маршрутизации задач; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/route-task.sh'
+- id: artifactor.py
+  name: artifactor.py
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты маршрутизации задач; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/artifactor.py'
+- id: pre-commit-secret-scan.sh
+  name: pre-commit-secret-scan.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты сканирования и хранения секретов; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/pre-commit-secret-scan.sh'
+- id: iwe-grep-secret.sh
+  name: iwe-grep-secret.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты сканирования и хранения секретов; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/iwe-grep-secret.sh'
+- id: add-secret.sh
+  name: add-secret.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты сканирования и хранения секретов; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/add-secret.sh'
+- id: iwe-drift.sh
+  name: iwe-drift.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипт сверки установки с манифестом шаблона; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/iwe-drift.sh'
+- id: iwe-audit.sh
+  name: iwe-audit.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипт аудита установки; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/iwe-audit.sh'
+- id: day-open-pipeline.sh
+  name: day-open-pipeline.sh
+  kind: набор программ
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты открытия дня (с сопутствующими day-open-*); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/day-open-pipeline.sh, seed/strategy/scripts/day-open-pipeline.sh'
+- id: create-wp.sh
+  name: create-wp.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты учёта рабочих продуктов и журнала; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/create-wp.sh'
+- id: close-wp.sh
+  name: close-wp.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты учёта рабочих продуктов и журнала; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/close-wp.sh'
+- id: build-active-wp.py
+  name: build-active-wp.py
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты учёта рабочих продуктов и журнала; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/build-active-wp.py'
+- id: ledger-append.sh
+  name: ledger-append.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты учёта рабочих продуктов и журнала; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/ledger-append.sh, seed/strategy/scripts/ledger-append.sh'
+- id: archive-done-wp.sh
+  name: archive-done-wp.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'скрипты учёта рабочих продуктов и журнала; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/archive-done-wp.sh'
+- id: session-guard.sh
+  name: session-guard.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа учёта открытых сессий и разграничения правок; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/session-guard.sh'
+- id: isolate-push.sh
+  name: isolate-push.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программы публикации коммита из изолированной копии; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/isolate-push.sh, seed/strategy/scripts/isolate-push.sh'
+- id: ds-publish.sh
+  name: ds-publish.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программы публикации коммита из изолированной копии; происхождение: есть в шаблоне IWE (ш); в шаблоне: seed/strategy/scripts/ds-publish.sh'
+- id: setup.sh
+  name: setup.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программы установки и обновления; происхождение: есть в шаблоне IWE (ш); в шаблоне: setup.sh'
+- id: update.sh
+  name: update.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программы установки и обновления; происхождение: есть в шаблоне IWE (ш); в шаблоне: update.sh'
+- id: systemd
+  name: systemd (Linux)
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'планировщик ОС; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: launchd
+  name: launchd (macOS)
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'планировщик ОС; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: git
+  name: git
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа контроля версий и служба ОС, хранящие рабочие копии репозиториев и каталоги состояния среды выполнения; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: os-filesystem
+  name: файловая система ОС
+  kind: хранилище
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа контроля версий и служба ОС, хранящие рабочие копии репозиториев и каталоги состояния среды выполнения; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: secretary
+  name: программы Секретаря
+  kind: набор программ
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программы, реализующие роль IWE «Секретарь» (§17): secretary.py, secretary-run.sh, secretary-dashboard.py, secretary-health-*.py, secretary-oura-sync.py, secretary-apple-sync.py, lib/secretary-telegram.sh;
+    происхождение: только в установке автора (а); в шаблоне нет'
+  no_subsystem: реализует роль IWE «Секретарь» (§17) целиком, не функциональную подсистему (DP.ARCH.001 §11.1)
+- id: vscode-wakatime
+  name: WakaTime для VS Code
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'расширение редактора для учёта времени; происхождение: поставляет вендор или хост (х); в шаблоне нет'
+- id: iwe-trace.py
+  name: iwe-trace.py
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'выдаёт записанные следы агента для просмотра, поиска и разбора (§4.2 «Учёт рассуждений агента»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/iwe-trace.py'
+  source: §11.1 (в §5.2 нет)
+- id: translate.py
+  name: translate.py
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'переводчик документов шаблона; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/translate.py'
+  source: §11.1 (в §5.2 нет)
+- id: restore-from-exocortex.sh
+  name: restore-from-exocortex.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'восстанавливает память и инструкции агента из резервной копии (§4.2 «Наладчик IWE»); происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/restore-from-exocortex.sh'
+  source: §11.1 (в §5.2 нет)
