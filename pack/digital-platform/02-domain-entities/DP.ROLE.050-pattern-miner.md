@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.050
-name: Pattern Miner (Старатель паттернов)
+name: Старатель паттернов
+name_ru: Старатель паттернов
+name_en: Pattern Miner
+aliases:
+  - Pattern Miner
 alias: R33
 type: role-description
 status: draft
@@ -22,11 +26,13 @@ related:
     - DP.ROLE.005 Architect          # monthly audit правил
     - executor-catalog.yaml reflexes:  # адаптер B (WP-423): reflex-кандидат, approve пилот
 created: 2026-05-17
-updated: 2026-06-21
+updated: 2026-11-22
 wp: WP-295
 ---
 
-# Pattern Miner — DP.ROLE.050 (R33 Старатель паттернов)
+# Старатель паттернов — DP.ROLE.050
+
+> **Прежнее имя** — «Pattern Miner»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4); номер R из заголовка убран — он занят другими ролями (DP.ROLE.001 §3.6 п. 1, §3.7).
 
 > # see DP.SC.040, DP.ROLE.050
 >

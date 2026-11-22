@@ -1,6 +1,11 @@
 ---
 id: DP.ROLE.051
-name: Points Redeemer (Burn-эмиттер баллов)
+name: Погаситель бонусов
+name_ru: Погаситель бонусов
+name_en: Points Redeemer
+aliases:
+  - Points Redeemer
+  - Burn-эмиттер баллов
 type: role-description
 status: draft
 valid_from: 2026-05-17
@@ -15,9 +20,12 @@ related:
     - DP.ECON.001
     - DP.ROLE.034
 created: 2026-05-17
+updated: 2026-11-22
 ---
 
-# Points Redeemer (DP.ROLE.051)
+# Погаситель бонусов (DP.ROLE.051)
+
+> **Прежнее имя** — «Points Redeemer», «Burn-эмиттер баллов»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 > **Kind:** Infrastructure Role (инфраструктурная роль — burn-эмиссия событий, не доменная логика).
 > **Owner Role:** Платформенная команда.

@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.079
-name: Bot Agent Session Orchestrator
+name: Распорядитель агентных сессий
+name_ru: Распорядитель агентных сессий
+name_en: Bot Agent Session Orchestrator
+aliases:
+  - Bot Agent Session Orchestrator
 type: role-description
 status: active           # WP-428 Ф5 live-smoke принят (single-tenant пилот)
 scope: single-tenant (пилот)  # multi-tenant enforcement → спин-офф WP-4XX
@@ -19,11 +23,13 @@ related:
     - DP.ROLE.001 IWE Creator — пилот запускает агента из Telegram, получает артефакты
     - DP.ROLE.072 Разработчик-исполнитель (T3-scoped, WP-431) — scoped-агент с approve-before-commit
 created: 2026-06-20
-updated: 2026-06-20
+updated: 2026-11-22
 wp: WP-428
 ---
 
-# Bot Agent Session Orchestrator — DP.ROLE.079
+# Распорядитель агентных сессий — DP.ROLE.079
+
+> **Прежнее имя** — «Bot Agent Session Orchestrator»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 ## Kind и Owner Role
 

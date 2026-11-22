@@ -116,20 +116,20 @@ Base LLM (Anthropic Claude / OpenAI GPT / etc.)
 
 | Прежний код | Прежняя запись | Что это на самом деле | Где описано теперь |
 |---|---|---|---|
-| A1 | Claude | в IWE — запущенный Claude Code (рантайм агента), обращающийся к модели Claude (система окружения); в боте платформы — обращение бота к модели Claude через API (в §3.5 — «Claude Haiku via I1») | DP.ARCH.001 §5.2, §5.4 |
-| A2 | Пользователь | конкретный человек; «Пользователь» — роль, а не исполнитель | §3.2, DP.ARCH.001 §2 |
+| A1 | Claude | в IWE — запущенный Claude Code (рантайм агента), обращающийся к модели Claude (система окружения); в боте платформы — обращение бота к модели Claude через API (в §3.5 — «Claude Haiku via I1») | модуль `claude-code` — DP.ARCH.001 §5.2, §11.1; модель — система окружения, §5.4; в боте платформы — прежняя запись до решения РП-611 (входящее его ящика) |
+| A2 | Пользователь | конкретный человек; «Пользователь» — роль, а не исполнитель | человек; для IWE — система окружения «Пользователь», DP.ARCH.001 §5.4; в §3.6 его роли отмечены флагом «Чел» |
 | I1 | Бот Aist | бот платформы aist_bot_newarchitecture — модуль подсистемы «Собеседник в мессенджере» | DP.ARCH.001 §4.1, §5.1, §17 |
-| I2 | Синхронизатор (bash) | скрипты IWE и системный планировщик, играющие роль R8 Синхронизатор | DP.ARCH.001 §5.2, §11.1 (Фоновый дежурный) |
-| I3 | Шаблонизатор (bash) | у пользователя — `setup.sh`, `update.sh`, `iwe-drift.sh`; у автора шаблона — `template-sync.sh`, `validate-template.sh` (инструменты сопровождения шаблона, не модули IWE пользователя); играют роль R9 Шаблонизатор | DP.ARCH.001 §5.2, §11.1 |
+| I2 | Синхронизатор (bash) | скрипты IWE и системный планировщик, играющие роль Фонового дежурного (DP.ROLE.108; R8 — прежний псевдоним) | модули `launchd`, `systemd`, `scheduler.sh`, `code-scan.sh`, `notify.sh`, `daily-report.sh`, `day-open-pipeline.sh` подсистемы «Фоновый дежурный», играют её роль DP.ROLE.108 (DP.ARCH.001 §5.2, §11.1) |
+| I3 | Шаблонизатор (bash) | у пользователя — `setup.sh`, `update.sh`, `iwe-drift.sh`; у автора шаблона — `template-sync.sh`, `validate-template.sh` (инструменты сопровождения шаблона, не модули IWE пользователя); играют роли Доставщика обновлений (DP.ROLE.111) и Контролёра реестров (DP.ROLE.107), которые заменили R9 | модули `setup.sh`, `update.sh` (Доставщик обновлений, DP.ROLE.111) и `iwe-drift.sh` (Контролёр реестров, DP.ROLE.107) — DP.ARCH.001 §5.2, §11.1; `template-sync.sh`, `validate-template.sh` — инструменты автора шаблона |
 | I4 | MCP-серверы | класс; шлюз gateway-mcp — модуль Диспетчера инструментов, остальные серверы — модули своих подсистем и внешние сервисы | DP.MAP.004, DP.ARCH.001 §5.1, §7, §17 |
-| I5 | launchd | планировщик macOS (модуль IWE; на Linux — systemd) | DP.ARCH.001 §5.2 |
+| I5 | launchd | планировщик macOS (модуль IWE; на Linux — systemd) | модули `launchd` (macOS) и `systemd` (Linux) — DP.ARCH.001 §5.2; работают на Фонового дежурного, Контролёра реестров, Доставщика обновлений (§11.1) |
 | I6 | Статистик | pulse.sh — личная программа автора (launchd на его Mac, ежедневно в 7:00), играет роль R10 Статистик; не программа платформы (решение пилота 11.11.2026) | DP.ARCH.001 §17, §20; DS-ai-systems/pulse/system.yaml |
 | I7 | Наладчик (bash/bot) | механизм восстановления бота платформы; играет роль R11 «Наладчик бота»; восстановление памяти и инструкций IWE из резервной копии — отдельная роль «Наладчик IWE» (решение пилота 09.11.2026, §3.6) | §3.6 |
 | I8 | Оценщик | evaluator.py в боте платформы (подсистема «Собеседник в мессенджере»), играющий роль R12 Оценщик | DP.ARCH.001 §17 |
 | I9 | Публикатор (bot scheduler) | программа DS-ai-systems/publisher, играющая роль R21 Публикатор постов клуба, — вне подсистем платформы; ту же роль держит код бота handlers/discourse.py (I1, подсистема «Собеседник в мессенджере») | DP.ARCH.001 §17 |
-| I10 | WakaTime (SaaS + VS Code ext) | сервис учёта времени (система окружения) и расширение VS Code (модуль IWE) | DP.ARCH.001 §5.2, §5.4 |
+| I10 | WakaTime (SaaS + VS Code ext) | сервис учёта времени (система окружения) и расширение VS Code (модуль IWE) | модуль `vscode-wakatime` и хук `wakatime-heartbeat.sh` подсистемы «Учётчик времени», играют её роль DP.ROLE.115 (DP.ARCH.001 §5.2, §11.1); сервис WakaTime — система окружения, §5.4 |
 | I11 | Профилировщик (Python) | iwe-profiler — модуль подсистемы «Держатель портрета», играет роль Профилировщика (DP.ROLE.116) | DP.ARCH.001 §5.1, §11.1а, §17 |
-| I12 | Capture-bus (shell hooks) | хук `capture-bus.sh` (модуль IWE) | DP.ARCH.001 §5.2 |
+| I12 | Capture-bus (shell hooks) | хук `capture-bus.sh` (модуль IWE) | модуль `capture-bus.sh` — работает на Детектора (DP.ROLE.118) и Маршрутизатора знаний (DP.ROLE.088), DP.ARCH.001 §5.2, §11.1 |
 
 ### 3.2. Каталог ролей платформы
 
@@ -744,7 +744,7 @@ grade: 2+
 | R42 | **Диагност** | Система персонального развития | CAT Dialogue (≤5 Q), cp-Profile Assessment, Background Invalidation Monitor | Ответы пилота, bh-прокси Аттестатора, активность | learning.cp_assessments (cp-профиль + bottleneck + skip_to_stage), сигналы активным ролям |
 | R43 | **Лаборант** | Система персонального развития | Scenario Simulation, Pilot-mode Output | Профиль + паттерн поведения, Scenario.run() | DataFrame траектории, прогноз ступеней |
 | R44 | **Почтальон** (прежнее имя: Notification Dispatcher; с 18.11.2026 планирование, очередь и учёт — DP.ROLE.124–126) | Платформа DP | Доставка в канал, ровно один раз | поручение из очереди | выпуск в канале, исход доставки |
-| R45 | **Agent Task Dispatcher** | Экзокортекс | Inbox Polling, Task Routing, Lifecycle Tracking | `inbox/agent/tasks/*.md`, статусы | Запуск задачи через канал (CCR/systemd/local), audit-trail |
+| R45 | **Диспетчер задач агентов** (прежнее имя: Agent Task Dispatcher, решение пилота 22.11.2026) | Экзокортекс | Inbox Polling, Task Routing, Lifecycle Tracking | `inbox/agent/tasks/*.md`, статусы | Запуск задачи через канал (CCR/systemd/local), audit-trail |
 | R46 | **Контролёр развития** | Система персонального развития | Daily Scan, Marker Comparison, Cool-down Check, Channel Selection (TG / render / Навигатор / Проводник / Диагност-напоминание). Specializes R22 Оркестратор. Бывш. «IWE Stage Controller» до 2026-05-20. Ось контроля параметризуется: развитие / квалификация / стиль / домен | tracking_consent (opt-in), stage_transitions, cp_assessments, nudge_journal | nudge_journal (решение), guide_render_queue (enqueue), TG-нудж через DP.SC.134, сигналы Навигатору/Проводнику/Диагносту по типу разрыва |
 
 > **R8-R12, R21** — полное описание роли: `DS-ai-systems/<system>/system.yaml` (synchronizer, setup, pulse, fixer, evaluator, publisher)
@@ -1237,7 +1237,7 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 
 ### 3.5. Таблица РА (Роли × Исполнители × Инструменты)
 
-> **Читать через §3.1.** Коды A1-A2, I1-I12 в этой таблице — прежние псевдонимы исполнителей; их подписи («Синхронизатор (bash)», «Статистик», «Пользователь» и т.п.) даны по прежней записи и часто совпадают с именами ролей. Что является исполнителем на самом деле — §3.1; модули IWE — DP.ARCH.001 §5.2. Перевод таблицы на модули — РП-616 Ф4. Статистика ниже посчитана по прежней записи.
+> **Исполнители ролей в этой таблице — модули IWE по справочнику модулей (DP.ARCH.001 §5.2; ключи справочника — в обратных кавычках); роли — коды пака (§3.7), у ролей без описания в паке — прежний псевдоним R.** Прежние псевдонимы A1-A2, I2, I3, I10 переведены на модули (РП-616 Ф4, решения пилота 22.11.2026). В строках, где Claude Code играет роли уровня платформы (R7, R10, R11, R12), исполнитель `claude-code` записан здесь, а уровень этих ролей и судьбу строк решает РП-611 (входящее его ящика). Прежнюю запись сохраняют строки исполнителей платформы (I1, I6-I9, «Bot (Haiku)», «A1 Claude Haiku (via I1 Bot)»). Что является исполнителем — §3.1.
 
 > **Назначение:** Сводная таблица: какой исполнитель играет какую роль, с каким Grade, какими инструментами и в каких сценариях.
 > Это проекция (viewOf) данных из `current_holders` описаний ролей (§3.2). Source-of-truth: описания ролей.
@@ -1245,34 +1245,38 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 
 | Исполнитель | Роль | Grade | Инструменты | Сценарии |
 |-------------|------|-------|-------------|----------|
-| **A1 Claude (CLI headless)** | R1 Стратег | 3 | strategist.sh, prompts/*.md, MCP (knowledge, guides, DT) | Day-plan, Session-prep, Note-review, Week-review |
-| **A1 Claude (CLI interactive)** | R1 Стратег | 3 | Claude Code CLI (CLAUDE.md + memory/), MCP | Evening-review, Check-plan, Update-priorities, Add-WP |
-| **A1 Claude (CLI headless)** | R2 Экстрактор | 3 | extractor.sh, prompts/*.md, MCP (knowledge) | Knowledge Extraction, Inbox Check |
-| **A1 Claude (CLI interactive)** | R2 Экстрактор | 3 | Claude Code CLI, MCP, Pack repos | Ontology Sync, On-demand |
+| **Claude Code (`claude-code`), запуск без человека: `strategist.sh` по таймеру `launchd`/`systemd`** | Стратег — DP.ROLE.012 | 3 | strategist.sh, prompts/*.md, MCP (knowledge, guides, DT) | Note-review, Week-review |
+| **Claude Code (`claude-code`), запуск без человека: `strategist.sh` по таймеру `launchd`/`systemd`** | Плановик — DP.ROLE.066 (сценарии переданы от Стратега, §3.6 п. 9; своей программы запуска в шаблоне нет. Day-plan по таймеру собирает `day-open-pipeline.sh` без Claude Code; Claude Code — в Session-prep и при ручном `strategist.sh day-plan`) | 3 | strategist.sh, day-open-pipeline.sh, prompts/*.md, MCP (knowledge, guides, DT) | Day-plan, Session-prep |
+| **Claude Code (`claude-code`) вместе с человеком** | Стратег — DP.ROLE.012 | 3 | Claude Code CLI (CLAUDE.md + memory/), MCP | Evening-review, Check-plan, Update-priorities, Add-WP |
+| **Claude Code (`claude-code`), запуск без человека: `extractor.sh` по таймеру `launchd`/`systemd`** | Экстрактор (R2) | 3 | extractor.sh, prompts/*.md, MCP (knowledge) | Knowledge Extraction, Inbox Check |
+| **Claude Code (`claude-code`)** | Экстрактор (R2) | 3 | Claude Code CLI, MCP, Pack repos | Ontology Sync, On-demand |
 | **A1 Claude Haiku (via I1 Bot)** | R3 Консультант | 3 | Claude API (Haiku), knowledge-mcp, guides-mcp, DT-mcp, TG Bot API | Q&A, DZ-Check, Content-Generation |
-| **A1 Claude (CLI interactive)** | R4 Автор | 3 | Claude Code CLI, knowledge-mcp, DS-Knowledge-Index, Marp CLI | Post-Writing, Presentation, Description |
-| **A1 Claude (CLI interactive)** | R5 Архитектор | 3 | Claude Code CLI, CLAUDE.md + memory/sota-reference.md, knowledge-mcp | ArchGate, BC-Mapping, ADR, SOTA-Update |
-| **A1 Claude (CLI interactive)** | R6 Кодировщик | 3 | Claude Code CLI (git, bash, file ops), repo CLAUDE.md, knowledge-mcp | Implementation, Refactoring, Bug-Fix |
+| **Claude Code (`claude-code`) вместе с человеком** | Автор (R4) | 3 | Claude Code CLI, knowledge-mcp, DS-Knowledge-Index, Marp CLI | Post-Writing, Presentation, Description |
+| **Claude Code (`claude-code`) вместе с человеком** | Архитектор (R5) | 3 | Claude Code CLI, CLAUDE.md + memory/sota-reference.md, knowledge-mcp | ArchGate, BC-Mapping, ADR, SOTA-Update |
+| **Claude Code (`claude-code`) вместе с человеком** | Кодировщик (R6) | 3 | Claude Code CLI (git, bash, file ops), repo CLAUDE.md, knowledge-mcp | Implementation, Refactoring, Bug-Fix |
 | **Bot (Haiku)** | R7 Триажёр | 1 | feedback_triage.py, Claude Haiku API, Neon DB, TG Bot API | Auto-Triage |
-| **A1 Claude (CLI interactive)** | R7 Триажёр | 3 | Claude Code CLI, feedback_triage DB, inbox files, GitHub API | Triage-Session |
-| **I2 Синхронизатор (bash)** | R8 Синхронизатор | 0-1 | scheduler.sh, code-scan.sh, pack-project.sh, notify.sh | Scheduler Dispatch, Code Scan, Pack Projection, Notify |
-| **A1 Claude** | R8 Синхронизатор | 2 | Claude Code CLI, Pack repos, downstream repos | Consistency Audit |
-| **I3 Шаблонизатор (bash)** | R9 Шаблонизатор | 0 | template-sync.sh, validate-template.sh | Template Sync, Validation |
-| **A1 Claude** | R9 Шаблонизатор | 2 | Claude Code CLI, FMT-exocortex-template/ | Drift Detection, Semantic Validation |
+| **Claude Code (`claude-code`)** | Триажёр техдолга (R7) | 3 | Claude Code CLI, feedback_triage DB, inbox files, GitHub API | Triage-Session |
+| **`scheduler.sh`, `code-scan.sh`, `notify.sh`, `daily-report.sh`, `day-open-pipeline.sh` по таймеру `launchd`/`systemd`** | Фоновый дежурный — DP.ROLE.108 (R8 Синхронизатор — прежний псевдоним) | 0-1 | scheduler.sh, code-scan.sh, notify.sh, daily-report.sh, day-open-pipeline.sh | Scheduler Dispatch, Code Scan, Notify, Daily Report |
+| **Claude Code (`claude-code`), запуск без человека: `extractor.sh` в режиме аудита по таймеру Аудитора знаний (DP.ROLE.092)** | Экстрактор (R2) в режиме аудита | 2 | extractor.sh, Claude Code CLI, Pack repos, downstream repos | Consistency Audit |
+| **`update.sh`, `setup.sh` по вызову и таймеру `launchd`/`systemd`** | Доставщик обновлений — DP.ROLE.111 (вместо R9 Шаблонизатор) | 0 | update.sh, setup.sh | Template Sync |
+| **`iwe-drift.sh` по вызову и таймеру `launchd`/`systemd`** | Контролёр реестров — DP.ROLE.107 (вместо R9 Шаблонизатор) | 0 | iwe-drift.sh | Validation |
+| **Claude Code (`claude-code`) по вызову навыка `audit-installation`** | Техосмотрщик — DP.ROLE.109 (вместо R9 Шаблонизатор) | 2 | iwe-audit.sh, навык `audit-installation` | Drift Detection |
 | **I6 Статистик (bash)** | R10 Статистик | 1 | pulse.sh, Neon DB (SQL queries) | Metrics Collection |
-| **I10 WakaTime** | R10 Статистик | 0 | VS Code extension, WakaTime SaaS API | Time Tracking |
-| **A1 Claude** | R10 Статистик | 2 | Claude Code CLI, метрики | Analytics Report |
+| **`vscode-wakatime` (WakaTime для VS Code) и `wakatime-heartbeat.sh`; сервис WakaTime — система окружения** | Учётчик времени — DP.ROLE.115 | 0 | VS Code extension, WakaTime SaaS API | Time Tracking |
+| **Claude Code (`claude-code`)** | Статистик (R10) | 2 | Claude Code CLI, метрики | Analytics Report |
 | **I7 Наладчик (bash/bot)** | R11 Наладчик бота | 0-1 | health-check.sh, restart scripts, bot code | L1 Unstick, L3 Restart |
-| **A1 Claude** | R11 Наладчик бота | 2-3 | Claude Code CLI, error_logs, GitHub API | L2 Auto-fix, L4 Escalate |
+| **Claude Code (`claude-code`)** | Наладчик бота (R11) | 2-3 | Claude Code CLI, error_logs, GitHub API | L2 Auto-fix, L4 Escalate |
 | **I8 Оценщик (bot code)** | R12 Оценщик | 1 | evaluator.py (bot) | Fixation |
-| **A1 Claude** | R12 Оценщик | 2 | Claude Code CLI, Pack, SPF | Bloom Eval, WP Validation |
+| **Claude Code (`claude-code`)** | Оценщик (R12) | 2 | Claude Code CLI, Pack, SPF | Bloom Eval, WP Validation |
 | **I1 Бот** | R13 Проводник | 1 | aiogram FSM, middleware, TG Bot API, Neon DB (user_profiles) | FSM-Routing, Access-Control, Tier-Gating |
 | **I1 Бот + I9** | R21 Публикатор постов клуба | 1 | handlers/discourse.py, Discourse API, GitHub API, Neon DB, TG Bot API | All scenarios |
 | **TBD** | R22 Оркестратор | 2 | TBD (Ф3 MVP) | Orchestration-Dispatch, Rhythm-Adaptation |
 | **guide-kit** | R27 Портной | 2 | planner.py, horizons.py, prompt.md, adapter.py | Portion-Assembly, Full-Guide-Generation |
-| **A2 Пользователь** | R14-R20 | 4 | TG, Claude Code CLI, VS Code, бумага | Все пользовательские сценарии |
+| **Человек — пользователь IWE (для IWE — система окружения «Пользователь», DP.ARCH.001 §5.4)** | Заказчик, Валидатор, Ученик, Стратег (интерактив), Автор заметок, Тестировщик, Рецензент (R14-R20) | 4 | TG, Claude Code CLI, VS Code, бумага | Все пользовательские сценарии |
 
-**Статистика РА:** 2 агента (A1 Claude, A2 Пользователь) × 23 роли → ~26 уникальных назначений, 10 инструментов (I1-I10).
+**Пояснения к переводу (РП-616 Ф4, решения пилота 22.11.2026).** Сценарии Day-plan и Session-prep перенесены из строки Стратега в строку Плановика (DP.ROLE.066), как решено в §3.6 п. 9; каталог §3.2 по Стратегу не менялся. У строки Фонового дежурного убраны `pack-project.sh` и сценарий Pack Projection: такой программы в шаблоне нет. Consistency Audit выполняет Экстрактор (R2) в режиме аудита, а запускает его таймер Аудитора знаний (DP.ROLE.092); исполнителем роли 092 Claude Code не записан (решение 09.11.2026, §3.6 п. 10). Прежняя строка R9 «Шаблонизатор» разделена на роли Доставщика обновлений и Контролёра реестров; в колонке «Инструменты» прежние `template-sync.sh`, `validate-template.sh` заменены на `update.sh`, `setup.sh`, `iwe-drift.sh`: `template-sync.sh` — инструмент автора шаблона, не модуль IWE пользователя, `validate-template.sh` лежит в шаблоне (`setup/validate-template.sh`), но в справочнике модулей не назван (§3.1, I3). Прежняя строка «Drift Detection, Semantic Validation» отнесена к Техосмотрщику (DP.ROLE.109); проверка смысла самого шаблона (Semantic Validation) — работа автора шаблона, вне IWE пользователя. В строке Фонового дежурного сценарий Daily Report новый (`daily-report.sh`), в каталоге R8 §3.2 его нет; `notify.sh` работает не по таймеру, а когда программа роли отправляет уведомление (DP.ARCH.001 §11.1). Записи исполнителей (holder) в §3.2, проекцией которых служит эта таблица, и каталог R8 (сценарий Pack Projection) не менялись — отдельным проходом.
+
+**Статистика РА (пересчитано 22.11.2026, РП-616 Ф4):** 28 строк назначений. На модули IWE переведены 19: Claude Code (`claude-code`) — 14 (из них 4 с запуском без человека программами `strategist.sh`, `extractor.sh`), программы шаблона по таймеру `launchd`/`systemd` — 3, WakaTime для VS Code с хуком — 1, человек — пользователь IWE — 1. Прежней записью — 7 (строки исполнителей платформы, до решения РП-611); без псевдонима — 2 (TBD, guide-kit). Прежний счёт: 2 агента (A1 Claude, A2 Пользователь) × 23 роли → около 26 назначений, 10 инструментов (I1-I10).
 
 ### 3.6. Уровни владельца ролей (черновик, 31.10.2026)
 
@@ -1291,26 +1295,26 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 | DP.ROLE.023 | Верификатор | Ч-IWE | | Верификатор (подсистема §4.2, принята 11.11.2026, уточнено 19.11.2026: отдельно запущенный агент, работающий по `/verify`; 10.11.2026 в таблицу не принят) |
 | DP.ROLE.024 | Аудитор | ЧИ | | — (не роль подсистемы: проверку установки выполняет роль подсистемы «Техосмотрщик», решение пилота 07.11.2026) |
 | DP.ROLE.031 | Терминолог | ЧИ | | — |
-| DP.ROLE.032 | Event Ingester | Ч-П | | — |
+| DP.ROLE.032 | Регистратор событий (прежнее имя: Event Ingester, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.033 | Редактор контента | ЧИ | | — |
-| DP.ROLE.034 | Rewards Projector | Ч-П | | — |
+| DP.ROLE.034 | Начислитель баллов (прежнее имя: Rewards Projector, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.035 | Platform Observer | Ч-П | | — |
 | DP.ROLE.036 | Коннектор клуба | Ч-П | | — |
 | DP.ROLE.037 | Учётчик работы (прежнее имя — Регистратор РП, решение пилота 07.11.2026) | Ч-IWE | | Учётчик работы |
-| DP.ROLE.038 | MCP Tool Consumer | Ч-П | | — |
-| DP.ROLE.039 | Peer Agent | Ч-IWE | | Координатор агентов |
-| DP.ROLE.040 | OAuth Orchestrator | Ч-П | | — |
+| DP.ROLE.038 | Подборщик инструментов (прежнее имя: MCP Tool Consumer, решение пилота 22.11.2026) | Ч-П | | — |
+| DP.ROLE.039 | Соработник (прежнее имя: Peer Agent, решение пилота 22.11.2026) | Ч-IWE | | Координатор агентов |
+| DP.ROLE.040 | Распорядитель подключений (прежнее имя: OAuth Orchestrator, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.041 | Аттестатор | Ч-П | | — |
 | DP.ROLE.042 | Диагност | Ч-П | (внутри IWE та же роль играется скиллом `/diagnose` — Ч-IWE) | — |
 | DP.ROLE.043 | Лаборант | Ч-П | | — |
 | DP.ROLE.044 | Почтальон (прежнее имя: Notification Dispatcher, решение пилота 18.11.2026) | Ч-П | | Вестник (функциональная часть) |
-| DP.ROLE.045 | Agent Task Dispatcher | Ч-IWE | | Фоновый дежурный |
+| DP.ROLE.045 | Диспетчер задач агентов (прежнее имя: Agent Task Dispatcher, решение пилота 22.11.2026) | Ч-IWE | | Фоновый дежурный |
 | DP.ROLE.046 | Контролёр развития | Ч-П | | — |
-| DP.ROLE.047 | Trace Recorder | Ч-IWE | | Учёт рассуждений агента |
-| DP.ROLE.048 | Replay Engine | Ч-IWE | | Учёт рассуждений агента |
-| DP.ROLE.049 | Path Coordinator | Ч-IWE | | Координатор агентов |
-| DP.ROLE.050 | Pattern Miner | Ч-IWE | | Учёт рассуждений агента |
-| DP.ROLE.051 | Points Redeemer | Ч-П | | — |
+| DP.ROLE.047 | Архивариус решений (прежнее имя: Trace Recorder, решение пилота 22.11.2026) | Ч-IWE | | Учёт рассуждений агента |
+| DP.ROLE.048 | Воспроизводитель сессий (прежнее имя: Replay Engine, Машина повторов, решение пилота 22.11.2026) | Ч-IWE | | Учёт рассуждений агента |
+| DP.ROLE.049 | Координатор путей (прежнее имя: Path Coordinator, решение пилота 22.11.2026) | Ч-IWE | | Координатор агентов |
+| DP.ROLE.050 | Старатель паттернов (прежнее имя: Pattern Miner, решение пилота 22.11.2026) | Ч-IWE | | Учёт рассуждений агента |
+| DP.ROLE.051 | Погаситель бонусов (прежнее имя: Points Redeemer, Burn-эмиттер баллов, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.052 | Когнитивный прокси-аналитик | Ч-П | | — |
 | DP.ROLE.053 | Декомпозитор | ЧИ | | — |
 | DP.ROLE.054 | Аналитик ограничений | ЧИ | | — |
@@ -1338,11 +1342,11 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 | DP.ROLE.076 | Ревьюер инженерного стиля кода | Ч-IWE | | — (кандидат «Контролёр стиля кода» не принят 10.11.2026: проверка есть только у автора) |
 | DP.ROLE.077 | Учётчик следов | Ч-П | | — |
 | DP.ROLE.078 | Владелец тира | Ч-П | | — |
-| DP.ROLE.079 | Bot Agent Session Orchestrator | Ч-П | | — |
+| DP.ROLE.079 | Распорядитель агентных сессий (прежнее имя: Bot Agent Session Orchestrator, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.080 | Владелец выдачи согласия | Ч-П | | — |
 | DP.ROLE.081 | Ретранслятор канона | Ч-П | | — |
 | DP.ROLE.082 | Руководитель продвижения | — | Орг | — |
-| DP.ROLE.083 | External Access Grantor | Ч-П | | — |
+| DP.ROLE.083 | Выдающий пропуска (прежнее имя: External Access Grantor, решение пилота 22.11.2026) | Ч-П | | — |
 | DP.ROLE.085 | Разметчик типов данных | Ч-П | (носитель — пакет сборки руководства, по аналогии с DP.ROLE.083; решение пилота 09.11.2026) | — |
 | DP.ROLE.086 | Диспетчер отложенного запуска РП | Ч-IWE | | Фоновый дежурный |
 | DP.ROLE.087 | Куратор личного бренда | ЧИ | | — |
@@ -1432,8 +1436,8 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 10. **Спорные пары** (один род — разные уровни). **Решено (решение пилота 09.11.2026):** R2 Экстрактор и DP.ROLE.092 Аудитор знаний — две роли разных подсистем: Аудитор знаний — ежемесячный таймер Фонового дежурного, который запускает Экстрактора в режиме аудита; R21 Публикатор переименован в «Публикатор постов клуба», DP.ROLE.100 «Публикатор материалов практикума» — другая роль с другим предметом; DP.ROLE.085 Разметчик — часть платформы (Ч-П); R11 Наладчик разделён: «Наладчик бота» (R11, часть платформы) и «Наладчик IWE» (принят 11.11.2026 с функцией восстановления памяти и инструкций из резервной копии).
 11. **Уровень определяется по работе, а не по месту программы**: DP.ROLE.066 Плановик работает на сервере, но роль — ЧИ (планирует вместе с человеком).
 7. **Кандидаты в новые подсистемы**: Верификатор, Учёт рассуждений агента (DP.ROLE.047/048/050), Сторож допуска (DP.ROLE.102/103), Контролёр стиля кода (DP.ROLE.076), Детектор (R47), Наладчик IWE, Публикатор материалов практикума (DP.ROLE.100). **Решения пилота 10.11.2026** (DP.ARCH.001 §4.2): приняты Детектор и Учёт рассуждений агента; не приняты Сторож допуска, Контролёр стиля кода, Публикатор материалов практикума, Верификатор (в шаблоне только инструкция агенту — SKILL.md; инструкция не система). **Решено 11.11.2026, уточнено 19.11.2026:** приняты Верификатор (отдельно запущенный агент) и Наладчик IWE; Хранитель версий — новая подсистема; Сборщик ИИ-среды, Переносчик, Хранитель личных знаний и Проводник по пути в IWE — имена приняты, программы в шаблоне нет.
-8. **17 ролей с английскими именами** без русских.
-9. **Устаревшее:** R1 Стратег в каталогах всё ещё держит план дня и недели, хотя они переданы Плановику (DP.ROLE.066); ссылки «Owner Role: DP.ROLE.001 (IWE Creator)» в DP.ROLE.064, 091, 092, 102, 103 указывают на реестр, а не на роль; личные роли автора (DP.ROLE.033, 060) лежат в паке платформы.
+8. **17 ролей с английскими именами** без русских. **Решено (решение пилота 22.11.2026, РП-616 Ф4):** по переписи на 21.11.2026 таких ролей было 15, а не 17 (DP.ROLE.044 переименован раньше, 18.11.2026). Русские имена получили 13: DP.ROLE.032, 034, 038, 039, 040, 045, 047, 048, 049, 050, 051, 079, 083 — новое имя в описании роли и в таблице выше, прежнее — пометкой; имена файлов не менялись. Без русского имени остаются 2: DP.ROLE.035 Platform Observer (имя зависит от решения РП-611 о подсистеме «Сторож исправности») и DP.ROLE.061 External Session Adapter (предложенное «Посредник внешних сессий» пересекается по слову с «IWE-посредником»).
+9. **Устаревшее:** R1 Стратег в каталогах всё ещё держит план дня и недели, хотя они переданы Плановику (DP.ROLE.066) (в таблице §3.5 сценарии Day-plan и Session-prep переданы Плановику 22.11.2026, РП-616 Ф4; каталог §3.2 не менялся); ссылки «Owner Role: DP.ROLE.001 (IWE Creator)» в DP.ROLE.064, 091, 092, 102, 103 указывают на реестр, а не на роль; личные роли автора (DP.ROLE.033, 060) лежат в паке платформы.
 
 ### 3.7. Коды ролей: номера R — псевдонимы (решение 31.10.2026)
 
@@ -1473,15 +1477,15 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 | R30 (шпаргалка в памяти) | Создатель паков | DP.ROLE.062 |
 | R30 (DP.ROLE.054) | Аналитик ограничений | DP.ROLE.054 |
 | R30 (DP.ROLE.059) | Маршрутизатор задач | DP.ROLE.059 |
-| R30 (DP.ROLE.047) | Архивариус решений (Trace Recorder) | DP.ROLE.047 |
+| R30 (DP.ROLE.047) | Архивариус решений (прежнее имя: Trace Recorder) | DP.ROLE.047 |
 | R31 | Менеджер оргразвития | DP.ROLE.063 |
-| R31 (DP.ROLE.048) | Машина повторов (Replay Engine) | DP.ROLE.048 |
+| R31 (DP.ROLE.048) | Воспроизводитель сессий (прежние имена: Replay Engine, Машина повторов) | DP.ROLE.048 |
 | R32 | Мейнтейнер скиллов | DP.ROLE.056 |
-| R32 (DP.ROLE.049) | Координатор путей (Path Coordinator) | DP.ROLE.049 |
+| R32 (DP.ROLE.049) | Координатор путей (прежнее имя: Path Coordinator) | DP.ROLE.049 |
 | R33 | Автор скилла | DP.ROLE.057 |
-| R33 (DP.ROLE.050) | Старатель паттернов (Pattern Miner) | DP.ROLE.050 |
+| R33 (DP.ROLE.050) | Старатель паттернов (прежнее имя: Pattern Miner) | DP.ROLE.050 |
 | R35 | Когнитивный прокси-аналитик | DP.ROLE.052 |
-| R41-R46 | Аттестатор, Диагност, Лаборант, Почтальон (прежнее имя: Notification Dispatcher), Agent Task Dispatcher, Контролёр развития | DP.ROLE.041-046 (псевдонимы по номеру файла; в заголовках описаний номера R нет — «R28» из заголовка 042 убран 08.11.2026, РП-616 Ф4) |
+| R41-R46 | Аттестатор, Диагност, Лаборант, Почтальон (прежнее имя: Notification Dispatcher), Диспетчер задач агентов (прежнее имя: Agent Task Dispatcher), Контролёр развития | DP.ROLE.041-046 (псевдонимы по номеру файла; в заголовках описаний номера R нет — «R28» из заголовка 042 убран 08.11.2026, РП-616 Ф4) |
 | R60 | Презентатор | DP.ROLE.060 |
 | R47 | Детектор | DP.ROLE.118 (роль подсистемы «Детектор»; прежнее описание — раздел R47 выше) |
 

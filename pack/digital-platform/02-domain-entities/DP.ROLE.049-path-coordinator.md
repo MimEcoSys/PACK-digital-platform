@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.049
-name: Path Coordinator (Координатор путей)
+name: Координатор путей
+name_ru: Координатор путей
+name_en: Path Coordinator
+aliases:
+  - Path Coordinator
 alias: R32
 type: role-description
 status: draft
@@ -21,11 +25,13 @@ related:
     - DP.ROLE.005 Architect       # 3 архитектурных альтернативы
     - DP.ROLE.025 Reviewer        # 3 структуры поста/deck
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-11-22
 wp: WP-295
 ---
 
-# Path Coordinator — DP.ROLE.049 (R32 Координатор путей)
+# Координатор путей — DP.ROLE.049
+
+> **Прежнее имя** — «Path Coordinator»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4); номер R из заголовка убран — он занят другими ролями (DP.ROLE.001 §3.6 п. 1, §3.7).
 
 > # see DP.SC.039, DP.ROLE.049
 >

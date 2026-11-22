@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.040
-name: OAuth Orchestrator (единая точка OAuth-flows для всех каналов IWE)
+name: Распорядитель подключений
+name_ru: Распорядитель подключений
+name_en: OAuth Orchestrator
+aliases:
+  - OAuth Orchestrator
 type: role-description
 status: draft
 valid_from: 2026-05-12
@@ -12,11 +16,13 @@ related:
     - DP.SC.025   # capture-bus (failure logging)
     - DP.SC.130   # OAuth Gateway SC
 created: 2026-05-12
-updated: 2026-11-14
+updated: 2026-11-22
 wp: WP-305 Ф1
 ---
 
-# OAuth Orchestrator (DP.ROLE.040)
+# Распорядитель подключений (DP.ROLE.040)
+
+> **Прежнее имя** — «OAuth Orchestrator»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4).
 
 <!-- see DP.SC.130, WP-305 Ф1 -->
 

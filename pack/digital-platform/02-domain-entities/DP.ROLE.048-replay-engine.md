@@ -1,6 +1,11 @@
 ---
 id: DP.ROLE.048
-name: Replay Engine (Машина повторов)
+name: Воспроизводитель сессий
+name_ru: Воспроизводитель сессий
+name_en: Replay Engine
+aliases:
+  - Replay Engine
+  - Машина повторов
 alias: R31
 type: role-description
 status: draft
@@ -21,11 +26,13 @@ related:
     - DP.ROLE.005 Architect       # для архитектурного «что-если»
     - DP.ROLE.049 Path Coordinator # multi-path форки = N replay'ев от одной точки
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-11-22
 wp: WP-295
 ---
 
-# Replay Engine — DP.ROLE.048 (R31 Машина повторов)
+# Воспроизводитель сессий — DP.ROLE.048
+
+> **Прежнее имя** — «Replay Engine», «Машина повторов»; переименовано решением пилота 22.11.2026 (DP.ROLE.001 §3.6, РП-616 Ф4); номер R из заголовка убран — он занят другими ролями (DP.ROLE.001 §3.6 п. 1, §3.7).
 
 > # see DP.SC.038, DP.ROLE.048
 >
