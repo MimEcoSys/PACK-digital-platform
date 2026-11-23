@@ -1,6 +1,8 @@
 ---
 id: DP.D.386
 name: "Исходный код ≠ Промпт"
+name_ru: "Исходный код ≠ Промпт"
+name_en: "Source code ≠ Prompt"
 type: distinction
 pack: PACK-digital-platform
 domain: digital-platform
@@ -11,6 +13,7 @@ valid_from: 2026-11-23
 created: 2026-11-23
 source: "решение пилота 23.11.2026 (РП-581/608) по итогам пробного прогона Open MCP 22.11.2026"
 see_also: [DP.D.048]
+related: [DP.D.048]
 schema_version: 1
 ---
 
