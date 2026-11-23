@@ -743,7 +743,7 @@ grade: 2+
 | R41 | **Аттестатор** | Система персонального развития | Activity Hub Scan, bh-Calculation, Stage Transition Detection | learning.domain_event, w_reflections, iwe-actions-catalog | learning.stage_transitions (ступень), bh-сигнал (auto) |
 | R42 | **Диагност** | Система персонального развития | CAT Dialogue (≤5 Q), cp-Profile Assessment, Background Invalidation Monitor | Ответы пилота, bh-прокси Аттестатора, активность | learning.cp_assessments (cp-профиль + bottleneck + skip_to_stage), сигналы активным ролям |
 | R43 | **Лаборант** | Система персонального развития | Scenario Simulation, Pilot-mode Output | Профиль + паттерн поведения, Scenario.run() | DataFrame траектории, прогноз ступеней |
-| R44 | **Почтальон** (прежнее имя: Notification Dispatcher; с 18.11.2026 планирование, очередь и учёт — DP.ROLE.124–126) | Платформа DP | Доставка в канал, ровно один раз | поручение из очереди | выпуск в канале, исход доставки |
+| R44 | **Почтальон** (прежнее имя: Notification Dispatcher; с 18.11.2026 планирование, очередь и учёт — DP.ROLE.124–126; с 23.11.2026 роль играет отдельная подсистема, не часть Вестника) | Платформа DP и IWE | Доставка готового отправления адресату, один раз на идентификатор доставки | отправление и ссылка на адрес | отправление в месте адресата, исход доставки |
 | R45 | **Диспетчер задач агентов** (прежнее имя: Agent Task Dispatcher, решение пилота 22.11.2026) | Экзокортекс | Inbox Polling, Task Routing, Lifecycle Tracking | `inbox/agent/tasks/*.md`, статусы | Запуск задачи через канал (CCR/systemd/local), audit-trail |
 | R46 | **Контролёр развития** | Система персонального развития | Daily Scan, Marker Comparison, Cool-down Check, Channel Selection (TG / render / Навигатор / Проводник / Диагност-напоминание). Specializes R22 Оркестратор. Бывш. «IWE Stage Controller» до 2026-05-20. Ось контроля параметризуется: развитие / квалификация / стиль / домен | tracking_consent (opt-in), stage_transitions, cp_assessments, nudge_journal | nudge_journal (решение), guide_render_queue (enqueue), TG-нудж через DP.SC.134, сигналы Навигатору/Проводнику/Диагносту по типу разрыва |
 
@@ -1307,7 +1307,7 @@ Level 1/2: Domain-specific (MIM/PD/*) ← привязаны к одному д�
 | DP.ROLE.041 | Аттестатор | Ч-П | | — |
 | DP.ROLE.042 | Диагност | Ч-П | (внутри IWE та же роль играется скиллом `/diagnose` — Ч-IWE) | — |
 | DP.ROLE.043 | Лаборант | Ч-П | | — |
-| DP.ROLE.044 | Почтальон (прежнее имя: Notification Dispatcher, решение пилота 18.11.2026) | Ч-П | | Вестник (функциональная часть) |
+| DP.ROLE.044 | Почтальон (прежнее имя: Notification Dispatcher, решение пилота 18.11.2026; выделен из Вестника 23.11.2026) | Ч-П, Ч-IWE | | Почтальон (подсистема платформы и IWE) |
 | DP.ROLE.045 | Диспетчер задач агентов (прежнее имя: Agent Task Dispatcher, решение пилота 22.11.2026) | Ч-IWE | | Фоновый дежурный |
 | DP.ROLE.046 | Контролёр развития | Ч-П | | — |
 | DP.ROLE.047 | Архивариус решений (прежнее имя: Trace Recorder, решение пилота 22.11.2026) | Ч-IWE | | Учёт рассуждений агента |

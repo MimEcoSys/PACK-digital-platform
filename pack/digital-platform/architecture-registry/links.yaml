@@ -154,6 +154,12 @@ performs:
 - module: aist_bot_newarchitecture
   subsystem: herald
   when: не установлено
+- module: aist_bot_newarchitecture
+  subsystem: postman
+  when: на каждое поручение доставки в Telegram
+- module: wp-inbox.sh
+  subsystem: postman-iwe
+  when: когда сессия передаёт запись в ящик другого РП
 - module: SystemsSchool_bot
   subsystem: messenger
   when: не установлено

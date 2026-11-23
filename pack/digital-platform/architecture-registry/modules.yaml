@@ -1153,6 +1153,13 @@ modules:
   status: существует
   aliases: []
   purpose: 'программа учёта открытых сессий и разграничения правок; происхождение: есть в шаблоне IWE (ш); в шаблоне: scripts/session-guard.sh'
+- id: wp-inbox.sh
+  name: wp-inbox.sh
+  kind: программа
+  system: IWE
+  status: существует
+  aliases: []
+  purpose: 'программа ящиков входящих РП: дописывает запись в ящик чужого РП под блокировкой и возвращает её номер; происхождение: есть в шаблоне IWE'
 - id: isolate-push.sh
   name: isolate-push.sh
   kind: программа
