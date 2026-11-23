@@ -167,7 +167,7 @@ U_composite = min(U_critical_services)  # worst-of по critical-path
 ## Связи
 
 - **Парный SC (для команды):** [DP.SC.123 Platform Observability](DP.SC.123-platform-observability.md) — internal observability, источник probes для status page.
-- **Реализуется ролью:** [DP.ROLE.035 Platform Observer](../02-domain-entities/DP.ROLE.035-platform-observer.md) implementations C+E (status page rendering + alert routing).
+- **Реализуется ролью:** [DP.ROLE.035 Сторож исправности](../02-domain-entities/DP.ROLE.035-platform-observer.md) implementations C+E (status page rendering + alert routing).
 - **Реализуется WP:** [WP-244](../../../DS-my-strategy/inbox/WP-244-platform-observability.md) фазы Ф2 (настройка Better Stack) + Ф4 (alert routing) + Ф7 (TG-канал @aisystant_status).
 - **Внешняя зависимость:** Better Stack SaaS (https://betterstack.com) — пишет, агрегирует, рендерит status page, рассылает email/RSS.
 - **Использует AIST Bot:** для постинга в TG-канал @aisystant_status (webhook receiver).
