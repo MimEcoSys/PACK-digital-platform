@@ -154,7 +154,7 @@ related:
 
 ## Связи
 
-- **Реализуется ролью:** [DP.ROLE.035 Platform Observer](../02-domain-entities/DP.ROLE.035-platform-observer.md)
+- **Реализуется ролью:** [DP.ROLE.035 Сторож исправности](../02-domain-entities/DP.ROLE.035-platform-observer.md)
 - **Реализуется WP:** [WP-244](../../../DS-my-strategy/inbox/WP-244-platform-observability.md)
 - **Парный SC (для пользователей):** [DP.SC.144 User-Facing Platform Health](DP.SC.144-user-facing-platform-health.md) — composite SLA, public status page, информирование пользователей.
 - **Использует данные от:** DP.SC.020 Event Ingest (event-gateway пишет structured logs), DP.SC.122 Rewards Projection (projection-worker latency для Ф9.6 reliability gate).

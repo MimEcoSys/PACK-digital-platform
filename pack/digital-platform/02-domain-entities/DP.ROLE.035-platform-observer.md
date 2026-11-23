@@ -1,6 +1,10 @@
 ---
 id: DP.ROLE.035
-name: Platform Observer
+name: Сторож исправности
+name_ru: Сторож исправности
+name_en: Platform Observer
+aliases:
+  - Platform Observer
 type: role-description
 status: draft
 valid_from: 2026-04-25
@@ -15,10 +19,12 @@ related:
     - DP.SC.122   # rewards projection как источник latency-метрик
 external_dependency: "Better Stack SaaS — owner external observability data (probes, logs, incidents, composite SLA, status page rendering, public subscriptions). ArchGate β зафиксирован 25 апр 2026."
 created: 2026-04-25
-updated: 2026-11-14
+updated: 2026-11-23
 ---
 
-# Platform Observer (DP.ROLE.035)
+# Сторож исправности (DP.ROLE.035)
+
+> **Прежнее имя** — «Platform Observer»; переименовано решением пилота 23.11.2026 (РП-611, заявка И-85; DP.ROLE.001 §3.6).
 
 > **Kind:** Infrastructure Role (инфраструктурная роль, не доменная).
 > **Owner Role:** Платформенная команда (R2 Архитектор + R5 CRM+оплата как стейкхолдеры алертов).
