@@ -9,7 +9,7 @@ version: 0.1.0
 created: 2026-05-21
 related:
   specializes: DP.IWE.001
-  referenced_by: [DP.SC.046, DP.SC.019]
+  referenced_by: [DP.SC.046, DP.SC.019, DP.ROLE.129, DP.D.389]
   related: [DP.IWE.003, DP.IWE.005]
 source: WP-337 направление-Ж (стратсессия 21 мая 2026)
 ---
