@@ -5,7 +5,7 @@ type: reference
 generated_from: concept-kinds-registry.yaml
 ---
 
-<!-- index-health: skip-cells reference table, long basis cells are expected -->
+<!-- index-health: skip -->
 
 # Реестр понятий и родов
 

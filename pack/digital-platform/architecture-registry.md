@@ -5,6 +5,8 @@ source: pack/digital-platform/architecture-registry/*.yaml
 generator: .github/scripts/architecture-registry.py
 ---
 
+<!-- index-health: skip -->
+
 # Справочники архитектуры платформы и IWE
 
 > Собрано программой из справочников `architecture-registry/`; руками не править. Правило и порядок изменения — абзац «Справочники имён и связей» в [DP.ARCH.001](02-domain-entities/DP.ARCH.001-platform-architecture.md). Имена систем, подсистем и модулей бери отсюда.
