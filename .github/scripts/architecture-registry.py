@@ -334,6 +334,9 @@ def render(reg: Registry, findings):
     out = ["---", "id: DP.ARCH.001-registry-view", "type: generated-view",
            "source: pack/digital-platform/architecture-registry/*.yaml",
            "generator: .github/scripts/architecture-registry.py", "---", "",
+           # Generated tables are long by design; the index-health check skips this view
+           # (c1a746f added the marker by hand and the view check then failed).
+           "<!-- index-health: skip -->", "",
            "# Справочники архитектуры платформы и IWE",
            "",
            "> Собрано программой из справочников `architecture-registry/`; руками не править. "
